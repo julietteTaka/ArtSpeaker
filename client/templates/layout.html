@@ -1,0 +1,41 @@
+<!doctype>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Job offer for artists">
+    <title>ArtSpeaker</title>
+
+</head>
+
+<body>
+        {% block title %}{% endblock %}
+
+<section style="border:1px solid black; float:left;">
+            {% if user %}
+                    <img style="width:50px;"src="{{user.picture}}" />
+                    <p>> {{user.name}}</p>
+                {% if user.gender %}
+                    {% set gender = user.gender %}
+                {% else %}
+                    {% set gender = "N/A" %}
+                {% endif %}
+                    <p>gender : {{gender}}</p>
+                    <ul>
+                        <li><a href='/offer/creation'>manage Offers</a></li>
+                        <li><a href='/portfolio/creation'>manage Portfolio</a></li>
+                    </ul>
+                    <a href="/logout">Logout</a>
+            {% else %}
+                    <p>
+                        <a class="signedIn" href="/login">Login</a>
+                    </p>
+                </li>
+            {% endif %}
+</section>
+
+<section style="border:1px solid black; float:left;">
+    {% block content %}{% endblock %}
+</section>
+</body>
+</html>

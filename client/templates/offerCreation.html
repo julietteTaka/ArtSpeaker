@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    <h1>Create a very cool job offer !</h1>
+{% endblock %}
+
+{% block content %}
+
+{% if user %}
+    <section>
+        <form>
+            <fieldset>
+                <input style='width:800px;' type='text' id="title" required placeholder="Title" /> <br/>
+                <input style='height:100px; width:800px;' type='text' id="text" required placeholder="Text" />
+                 <br/>
+                <input style='width:800px;' type='text' id="entreprise" required placeholder="Your entreprise's name" />
+                 <br/>
+                <input type='submit' value = 'Create' attr-id="{{user.id}}">
+            </fieldset>
+        </form>
+    </section>
+{% else %}
+<p>you must be logged to see this page.</p>
+<a href="/"> back home </a>
+{% endif %}
+
+{% endblock %}

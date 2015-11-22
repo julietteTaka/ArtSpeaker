@@ -64,6 +64,21 @@ def index():
         return render_template("index.html", user=user)
     return render_template("index.html")
 
+# --------- OFFERS  ---------
+
+@config.g_app.route('/offer/')
+def allOffers():
+    if 'google_token' in session:
+        user = config.google.get('userinfo').data
+        return render_template("offers.html", user=user)
+    return render_template("offers.html")
+
+@config.g_app.route('/offer/creation')
+def offerCreation():
+    if 'google_token' in session:
+        user = config.google.get('userinfo').data
+        return render_template("offerCreation.html", user=user)
+    return render_template("offerCreation.html")
 
 if __name__ == '__main__':
     config.g_app.run(host="0.0.0.0",port=config.clientPort,debug=True)
