@@ -11,7 +11,7 @@
 <body>
         {% block title %}{% endblock %}
 
-<section style="border:1px solid black; float:left;">
+<section>
             {% if user %}
                     <img style="width:50px;"src="{{user.picture}}" />
                     <p>> {{user.name}}</p>
@@ -34,7 +34,7 @@
             {% endif %}
 </section>
 
-<section style="border:1px solid black; float:left;">
+<section>
     {% block content %}{% endblock %}
 </section>
 </body>
