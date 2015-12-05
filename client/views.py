@@ -1,5 +1,6 @@
 import logging
 import config
+import requests
 from functools import wraps
 from flask import (
     request,
@@ -68,10 +69,12 @@ def index():
 
 @config.g_app.route('/offer/')
 def allOffers():
+    offers = requests.get(config.serverRootUri+"/offer")
+
     if 'google_token' in session:
         user = config.google.get('userinfo').data
-        return render_template("offers.html", user=user)
-    return render_template("offers.html")
+        return render_template("offers.html", user=user, offers=offers.json())
+    return render_template("offers.html", offers=offers.json())
 
 @config.g_app.route('/offer/creation')
 def offerCreation():
@@ -79,6 +82,13 @@ def offerCreation():
         user = config.google.get('userinfo').data
         return render_template("offerCreation.html", user=user)
     return render_template("offerCreation.html")
+
+@config.g_app.route('/user')
+def userAccount():
+    if 'google_token' in session:
+        user = config.google.get('userinfo').data
+        return render_template("userAccount.html", user=user)
+    return render_template("index.html")
 
 if __name__ == '__main__':
     config.g_app.run(host="0.0.0.0",port=config.clientPort,debug=True)
