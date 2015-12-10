@@ -1,0 +1,43 @@
+<!doctype>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Job offer for artists">
+    <title>ArtSpeaker</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+</head>
+
+<body>
+        {% block title %}{% endblock %}
+
+<section>
+            {% if user %}
+                    <img style="width:50px;"src="{{user.picture}}" />
+                    <p>> {{user.name}}</p>
+                {% if user.gender %}
+                    {% set gender = user.gender %}
+                {% else %}
+                    {% set gender = "N/A" %}
+                {% endif %}
+                    <p>gender : {{gender}}</p>
+                    <ul>
+                        <li><a href='/offer/creation'>manage Offers</a></li>
+                        <li><a href='/portfolio/creation'>manage Portfolio</a></li>
+                    </ul>
+                    <a href="/logout">Logout</a>
+            {% else %}
+                    <p>
+                        <a class="signedIn" href="/login">Login</a>
+                    </p>
+                </li>
+            {% endif %}
+</section>
+
+<section>
+    {% block content %}{% endblock %}
+</section>
+</body>
+</html>

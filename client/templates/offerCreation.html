@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    <h1>Create a very cool job offer !</h1>
+{% endblock %}
+
+{% block content %}
+
+{% if user %}
+  <script>
+  $(function() {
+    $( ".datepicker" ).datepicker();
+  });
+  </script>
+<style>
+input {
+    
+}
+</style>
+    <section>
+        <form>
+            <fieldset>
+                <p>Titre du projet :
+                <input style='width:800px;' type='text' id="projectTitle" required placeholder="Title" /></p>
+
+                <p>Lieu d'activité :
+                <input style='width:800px;' type='text' id="text" required placeholder="Entreprise XYZ" />
+                
+
+                <p>Domaine d'activité :
+                <input style='width:800px;' type='text' id="entreprise" required placeholder="ex: Graphisme et Motion Design" />
+                </p>
+
+                <p>Réseaux :
+                <select name="numeros" size="1">
+                    <option value="website" selected="selected">website</option>
+                    <option value="Facebook">Facebook</option>
+                    <option value="Twitter">Twitter</option>
+                  </select>
+                <input style='width:800px;' type='text' id="entreprise" required placeholder="www.monsite.com" />
+                </p>
+
+                <p>Date de début du projet :
+                <input type="text" class="datepicker">
+                </p>
+
+                <p>Date de fin du projet :
+                <input type="text" class="datepicker">
+                </p>
+
+                <p>Contact :
+                <input type="text" placeholder={{user.name}}>
+                <input type="text" placeholder="numero de tél.">
+                <input type="text" placeholder="addresse mail">
+                </p>
+                <p>Profiles recherchés :
+                <input type="text" placeholder="separate,words,with,coma">
+                </p>                
+                <p>Rémunération :
+                <input type="text" placeholder="ex: $3000">
+                </p>
+                <input type='submit' value = 'Create' attr-id="{{user.id}}">
+            </fieldset>
+        </form>
+    </section>
+{% else %}
+<p>you must be logged to see this page.</p>
+<a href="/"> back home </a>
+{% endif %}
+
+{% endblock %}

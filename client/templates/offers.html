@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    <h1>Offer page !</h1>
+{% endblock %}
+
+{% block content %}
+
+    <div>
+        <h2> Offers ({{offers.offers|length }}) :</h2>
+        {% if offers.offers|length > 0 %}
+        <ul>
+            {% for offer in offers.offers %}
+                {% set profileType=offer.wantedProfiles %}
+
+            <li>
+                <h3>{{ offer.title }}</h3>
+                <p>
+                    Type de profil : 
+                    {% for profile in profileType %}
+                    {{ profile }},
+                    {% endfor %}
+                </p>
+                <p>Rémunération : {{ offer.remuneration }}</p>
+            </li>
+            <hr />
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Sorry, no offer where found.</p>
+        {% endif %}
+    </div>
+
+
+{% endblock %}
+

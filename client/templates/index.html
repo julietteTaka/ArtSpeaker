@@ -1,14 +1,20 @@
-<!doctype>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Job offer for artists">
-    <title>ArtSpeaker</title>
+{% extends "layout.html" %}
 
-</head>
+{% block title %}
+    <h1>Home Page !</h1>
+{% endblock %}
 
-<body>
-    <h1>Hi, this is a very cool app !</h1>
-</body>
-</html>
+{% block content %}
+
+    <div>
+        <h2> In this page :</h2>
+        <ul>
+            <li>the last offers</li>
+            <li>the last portfolios</li>
+            <li>the last completed project</li>
+            <li>some people that are happy because of our amazing website</li>
+        </ul>
+    </div>
+
+
+{% endblock %}

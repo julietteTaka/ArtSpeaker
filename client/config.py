@@ -14,6 +14,7 @@ g_app.config['GOOGLE_ID'] = config.get('OAUTH_CONFIG', 'googleId')
 g_app.config['GOOGLE_SECRET'] = config.get('OAUTH_CONFIG', 'googleSecret')
 clientPort = config.getint('APP_CLIENT', 'port')
 g_app.debug = True
+g_app.secret_key = config.get('APP_CLIENT', 'secretKey')
 
 oauth = OAuth(g_app)
 
