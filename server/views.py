@@ -20,7 +20,7 @@ def createOffer():
 
     offerId = str(ObjectId())
     userId = request.get_json().get('userId', None)
-    title = request.get_json().get('offerTitle', None)
+    projectTitle = request.get_json().get('projectTitle', None)
     enterpriseLogo = request.get_json().get('entrepriseLogo', None)
     place = request.get_json().get('place', None)
     worktype = request.get_json().get('worktype', None)
@@ -29,11 +29,11 @@ def createOffer():
     wantedProfiles = request.get_json().get('wantedProfiles', None)
     remuneration = request.get_json().get('remuneration', None)
 
-    if  offerId == None or title == None or userId == None:
-        logging.error("The offer ID, the user ID or the offer title is undefined")
-        abort(make_response("The offer ID, the user ID or the offer title is undefined", 500))
+    if  offerId == None or projectTitle == None or userId == None:
+        logging.error("The offer ID, the user ID or the project title is undefined")
+        abort(make_response("The offer ID, the user ID or the project title is undefined", 500))
 
-    offer = Offer(offerId, userId, title)
+    offer = Offer(offerId, userId, projectTitle)
     if remuneration is not None :
         offer.remuneration = remuneration
     if wantedProfiles is not None :
@@ -55,6 +55,24 @@ def createOffer():
 
     config.offerTable.insert(offer.__dict__)
     requestResult = config.offerTable.find_one({"offerId": offerId})
+
+    return mongodoc_jsonify(requestResult)
+
+@config.g_app.route("/offer/<offerId>/content")
+def offerContent(offerId):
+    
+    text = request.get_json().get('text', None)
+    title = request.get_json().get('title', None)
+    sector = request.get_json().get('sector', None)
+    tags = request.get_json().get('tags', None)
+
+    config.offerTable.update_one(
+        {"offerId": offerId},
+        {"$set":{   "text": text, 
+                    "title":title,
+                    "sector":sector,
+                    "tags":tags}}
+    )
 
     return mongodoc_jsonify(requestResult)
 

@@ -18,12 +18,11 @@ class Offer(object):
         # first step data
         self.userId = userId
         self.offerId = offerId
-        self.title = title
+        self.projectTitle = projectTitle
         self.enterpriseLogo = None
         self.place = ""
         self.remuneration = None
         self.workType = ""
-        self.tags = []
         self.artists = []
         self.isOpen = False
         self.website = ""
@@ -33,3 +32,6 @@ class Offer(object):
         self.wantedProfiles = []
         # last step data
         self.text = ""
+        self.title = ""
+        self.tags = []
+        self.sector = []
