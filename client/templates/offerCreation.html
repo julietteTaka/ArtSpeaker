@@ -18,7 +18,7 @@ input {
 }
 </style>
     <section>
-        <form>
+        <form id='offerStepOne'>
             <fieldset>
                 <p>Titre du projet :
                 <input style='width:800px;' type='text' id="projectTitle" required placeholder="Title" /></p>
@@ -37,32 +37,36 @@ input {
                     <option value="Facebook">Facebook</option>
                     <option value="Twitter">Twitter</option>
                   </select>
-                <input style='width:800px;' type='text' id="entreprise" required placeholder="www.monsite.com" />
+                <input style='width:800px;' type='text' id="networking" required placeholder="www.monsite.com" />
                 </p>
 
                 <p>Date de début du projet :
-                <input type="text" class="datepicker">
+                <input type="text" id="begin" class="datepicker">
                 </p>
 
                 <p>Date de fin du projet :
-                <input type="text" class="datepicker">
+                <input type="text" id="end" class="datepicker">
                 </p>
 
                 <p>Contact :
-                <input type="text" placeholder={{user.name}}>
-                <input type="text" placeholder="numero de tél.">
-                <input type="text" placeholder="addresse mail">
+                <input type="text" id="name" placeholder={{user.name}}>
+                <input type="text" id="phone" placeholder="numero de tél.">
+                <input type="text" id="mail" placeholder="addresse mail">
                 </p>
-                <p>Profiles recherchés :
-                <input type="text" placeholder="separate,words,with,coma">
+
+                <p>Profils recherchés :
+                <input type="text" id="profiles" placeholder="separate,words,with,coma">
                 </p>                
                 <p>Rémunération :
-                <input type="text" placeholder="ex: $3000">
+                <input type="text" id="remuneration" placeholder="ex: $3000">
                 </p>
-                <input type='submit' value = 'Create' attr-id="{{user.id}}">
+                <input type='submit' id="createOffer" value= "Create !" data-userID="{{user.id}}">
             </fieldset>
         </form>
     </section>
+
+<script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
+
 {% else %}
 <p>you must be logged to see this page.</p>
 <a href="/"> back home </a>

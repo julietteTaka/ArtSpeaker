@@ -2,12 +2,15 @@
 
 
 {% block title %}
-    <h1>Offer page !</h1>
+    <h1>My Offers</h1>
 {% endblock %}
 
 {% block content %}
 
+{% if user %}
     <div>
+        <h2> <a href="/offer"> Create an Offer !</a></h2>
+
         <h2> Offers ({{offers.offers|length }}) :</h2>
         {% if offers.offers|length > 0 %}
         <ul>
@@ -15,7 +18,7 @@
                 {% set profileType=offer.wantedProfiles %}
 
             <li>
-                <h3>{{ offer.title }} - {{offer.userId}}</h3>
+                <h3>{{ offer.title }}</h3>
                 <p>
                     Type de profil : 
                     {% for profile in profileType %}
@@ -34,13 +37,17 @@
 
             </li>
 
+            <button id="deleteOffer" data-offerId="{{ offer.offerId }}" value="Delete">Delete</button>
             <hr />
             {% endfor %}
         </ul>
         {% endif %}
 
     </div>
-
+{% else %}
+<p> You must be logged to see this page ! </p>
+{% endif %}
+<script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
 
 {% endblock %}
 

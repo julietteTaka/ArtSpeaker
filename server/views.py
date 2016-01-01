@@ -17,12 +17,15 @@ def createOffer():
     '''
     Create the offer with minimal requierement.
     '''
+    # logging.error(request.get_json())
 
     offerId = str(ObjectId())
     userId = request.get_json().get('userId', None)
     projectTitle = request.get_json().get('projectTitle', None)
     enterpriseLogo = request.get_json().get('entrepriseLogo', None)
     place = request.get_json().get('place', None)
+    networking = request.get_json().get('networking', None)
+
     worktype = request.get_json().get('worktype', None)
     projectDate = request.get_json().get('projectDate', None)
     offerDate = request.get_json().get('offerDate', None)
@@ -38,8 +41,6 @@ def createOffer():
         offer.remuneration = remuneration
     if wantedProfiles is not None :
         offer.wantedProfiles = wantedProfiles
-    if wantedProfiles is not None :
-        offer.wantedProfiles = wantedProfiles
     if worktype is not None :
         offer.worktype = worktype
     if enterpriseLogo is not None :
@@ -50,8 +51,8 @@ def createOffer():
         offer.offerDate = offerDate
     if place is not None :
         offer.place = place
-    if social is not None :
-        offer.social = social
+    if networking is not None :
+        offer.networking = networking
 
     config.offerTable.insert(offer.__dict__)
     requestResult = config.offerTable.find_one({"offerId": offerId})
@@ -80,6 +81,16 @@ def offerContent(offerId):
 def getOffers():
     offers = config.offerTable.find()
     return mongodoc_jsonify({"offers":[ result for result in offers ]})
+
+@config.g_app.route("/user/<userId>/offer", methods=["GET"])
+def getOffersFromUser(userId):
+    offers = config.offerTable.find({"userId": userId})
+    return mongodoc_jsonify({"offers":[ result for result in offers ]})
+
+@config.g_app.route("/offer/<offerId>", methods=["DELETE"])
+def deleteOffers(offerId):
+    deletedOffer = config.offerTable.remove({"offerId": offerId})
+    return mongodoc_jsonify(deletedOffer)
 
 def mongodoc_jsonify(*args, **kwargs):
     return Response(json.dumps(args[0], default=json_util.default), mimetype='application/json')

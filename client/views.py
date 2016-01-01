@@ -1,6 +1,7 @@
 import logging
 import config
 import requests
+import json
 from functools import wraps
 from flask import (
     request,
@@ -50,7 +51,7 @@ def authorized():
 def logout():
     session.pop('google_token', None)
     redirectTarget = request.values.get('next') or request.referrer
-    return redirect( redirectTarget )
+    return render_template("index.html")
 
 @config.google.tokengetter
 def get_google_oauth_token():
@@ -67,7 +68,7 @@ def index():
 
 # --------- OFFERS  ---------
 
-@config.g_app.route('/offer/')
+@config.g_app.route('/offers', methods=['GET'])
 def allOffers():
     offers = requests.get(config.serverRootUri+"/offer")
 
@@ -76,8 +77,33 @@ def allOffers():
         return render_template("offers.html", user=user, offers=offers.json())
     return render_template("offers.html", offers=offers.json())
 
-@config.g_app.route('/offer/creation')
-def offerCreation():
+@config.g_app.route('/user/<userId>/offers', methods=['GET'])
+def userOffers(userId):
+    offers = requests.get(config.serverRootUri+"/user/"+userId+"/offer")
+
+    if 'google_token' in session:
+        user = config.google.get('userinfo').data
+        return render_template("myOffers.html", user=user, offers=offers.json())
+    return render_template("index.html")
+
+@config.g_app.route('/offer', methods=['POST'])
+def newOffer():
+    header = {'content-type' : 'application/json'}
+    result = requests.post(config.serverRootUri + '/offer', data=json.dumps(request.form), headers=header)
+    if result.status_code != 200:
+        abort(req.status_code,  {'message': 'il y a eu une erreur lors de la soumission de votre formulaire.'})
+    return jsonify(**result.json())
+
+@config.g_app.route('/offer/<offerID>', methods=['DELETE'])
+def deleteOffer(offerID):
+    result = requests.delete(config.serverRootUri + '/offer/' + offerID)
+    if result.status_code != 200:
+        abort(req.status_code,  {'message': 'il y a eu une erreur lors la suppression de l\'offre.'})
+    return jsonify(**result.json())
+
+
+@config.g_app.route('/offer', methods=['GET'])
+def offerCreationForm():
     if 'google_token' in session:
         user = config.google.get('userinfo').data
         return render_template("offerCreation.html", user=user)

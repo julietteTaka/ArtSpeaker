@@ -16,6 +16,7 @@
 <section>
             {% if user %}
                     <img style="width:50px;"src="{{user.picture}}" />
+                    {{user.id}}
                     <p>> {{user.name}}</p>
                 {% if user.gender %}
                     {% set gender = user.gender %}
@@ -24,8 +25,8 @@
                 {% endif %}
                     <p>gender : {{gender}}</p>
                     <ul>
-                        <li><a href='/offer/creation'>manage Offers</a></li>
-                        <li><a href='/portfolio/creation'>manage Portfolio</a></li>
+                        <li><a href='/user/{{ user.id }}/offers'>manage Offers</a></li>
+                        <li><a href='/portfolio'>manage Portfolio</a></li>
                     </ul>
                     <a href="/logout">Logout</a>
             {% else %}

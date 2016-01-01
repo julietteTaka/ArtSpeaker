@@ -1,5 +1,5 @@
 class Offer(object):
-    def __init__(self, offerId, userId, title):
+    def __init__(self, offerId, userId, projectTitle):
         '''
         define all datas in the offer table
 
@@ -18,7 +18,7 @@ class Offer(object):
         # first step data
         self.userId = userId
         self.offerId = offerId
-        self.projectTitle = projectTitle
+        self.title = projectTitle
         self.enterpriseLogo = None
         self.place = ""
         self.remuneration = None
@@ -26,12 +26,11 @@ class Offer(object):
         self.artists = []
         self.isOpen = False
         self.website = ""
-        self.social = []
+        self.networking = []
         self.projectDate = []
         self.offerDate = []
         self.wantedProfiles = []
         # last step data
         self.text = ""
-        self.title = ""
         self.tags = []
         self.sector = []
