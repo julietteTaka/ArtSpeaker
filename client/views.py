@@ -89,16 +89,17 @@ def userOffers(userId):
 @config.g_app.route('/offer', methods=['POST'])
 def newOffer():
     header = {'content-type' : 'application/json'}
-    result = requests.post(config.serverRootUri + '/offer', data=json.dumps(request.form), headers=header)
+    logging.error(request.data)
+    result = requests.post(config.serverRootUri + '/offer', data=request.data, headers=header)
     if result.status_code != 200:
-        abort(req.status_code,  {'message': 'il y a eu une erreur lors de la soumission de votre formulaire.'})
+        abort(result.status_code,  {'message': 'il y a eu une erreur lors de la soumission de votre formulaire.'})
     return jsonify(**result.json())
 
 @config.g_app.route('/offer/<offerID>', methods=['DELETE'])
 def deleteOffer(offerID):
     result = requests.delete(config.serverRootUri + '/offer/' + offerID)
     if result.status_code != 200:
-        abort(req.status_code,  {'message': 'il y a eu une erreur lors la suppression de l\'offre.'})
+        abort(result.status_code,  {'message': 'il y a eu une erreur lors la suppression de l\'offre.'})
     return jsonify(**result.json())
 
 

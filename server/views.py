@@ -17,18 +17,20 @@ def createOffer():
     '''
     Create the offer with minimal requierement.
     '''
-    # logging.error(request.get_json())
+    logging.error(request.get_json())
+    logging.error(request.json)
 
     offerId = str(ObjectId())
-    userId = request.get_json().get('userId', None)
-    projectTitle = request.get_json().get('projectTitle', None)
+    userId = request.get_json().get("userId", None)
+    projectTitle = request.get_json().get("projectTitle", None)
     enterpriseLogo = request.get_json().get('entrepriseLogo', None)
     place = request.get_json().get('place', None)
     networking = request.get_json().get('networking', None)
-
+    activity = request.get_json().get('activity', None)
     worktype = request.get_json().get('worktype', None)
     projectDate = request.get_json().get('projectDate', None)
     offerDate = request.get_json().get('offerDate', None)
+
     wantedProfiles = request.get_json().get('wantedProfiles', None)
     remuneration = request.get_json().get('remuneration', None)
 
@@ -43,16 +45,20 @@ def createOffer():
         offer.wantedProfiles = wantedProfiles
     if worktype is not None :
         offer.worktype = worktype
+    if activity is not None :
+        offer.activity = activity
     if enterpriseLogo is not None :
         offer.enterpriseLogo = enterpriseLogo
     if projectDate is not None :
         offer.projectDate = projectDate
     if offerDate is not None :
-        offer.offerDate = offerDate
+        offer.offerDate['begin'] = offerDate['begin']
+        offer.offerDate['end'] = offerDate['end']
     if place is not None :
         offer.place = place
     if networking is not None :
-        offer.networking = networking
+        for network in networking:
+            offer.networking[networking["network"]] = networking["url"]
 
     config.offerTable.insert(offer.__dict__)
     requestResult = config.offerTable.find_one({"offerId": offerId})

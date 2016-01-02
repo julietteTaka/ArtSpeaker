@@ -16,18 +16,18 @@
         <ul>
             {% for offer in offers.offers %}
                 {% set profileType=offer.wantedProfiles %}
-
+<strong>{{ offer }}</strong>
             <li>
                 <h3>{{ offer.title }}</h3>
                 <p>
                     Type de profil : 
                     {% for profile in profileType %}
-                    {{ profile }},
+                    {{ profile }} | 
                     {% endfor %}
                 </p>
                 <p>Rémunération : {{ offer.remuneration }}</p>
-                <p>Date de début : {{ offer.begin }}</p>
-                <p>Date de fin : {{ offer.end }}</p>
+                <p>Date de début : {{ offer.offerDate["begin"] }}</p>
+                <p>Date de fin : {{ offer.offerDate["end"] }}</p>
                 <p>Lieu : {{ offer.place }}</p>
                 <p>Liens :
                     {% for network in networking %}
