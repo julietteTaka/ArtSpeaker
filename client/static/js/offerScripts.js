@@ -7,7 +7,6 @@ $( document ).ready(function() {
         var text = $("#text").val();
         var place = $("#place").val();
         var entreprise = $("#entreprise").val();
-        var networking = $("#networking").val();
         var begin = $("#begin").val();
         var end = $("#end").val();
         var phone = $("#phone").val();
@@ -20,6 +19,15 @@ $( document ).ready(function() {
                             'end' : end,
                         }
 
+        var networking = []
+
+        $("#networks div").each(function(){
+            networking.push({
+                'network' : $(this).find("select option:selected").val(),
+                'url' : $(this).find("input").val(),
+            })
+        })
+        console.log(networking)
         $.ajax({
             type : 'POST',
             url : '/offer',
@@ -58,4 +66,23 @@ $( document ).ready(function() {
             }
         });
     })
+
+    var i = $('#networks div').size() + 1;
+
+    $('.addField').click(function(event){
+        i = $('#networks div').size() + 1;
+        $('<div><select name="social" size="1"><option value="website" selected="selected">website</option><option value="Facebook">Facebook</option><option value="Twitter">Twitter</option><option value="Other">Custom link</option></select><input style="width:800px; type="text" class="link" placeholder="www.monsite.com" /> <span class="removeField" style="cursor:pointer;"> Remove </span></div>').appendTo("#networks")
+        i++;
+    });
+
+    /*FIXME
+
+    $(".removeField").click(function(event){
+        console.log("remove")
+        if( i > 2 ) {
+            $(this).parents('div').remove();
+            i--;
+        }
+    });
+    */
 });

@@ -17,9 +17,6 @@ def createOffer():
     '''
     Create the offer with minimal requierement.
     '''
-    logging.error(request.get_json())
-    logging.error(request.json)
-
     offerId = str(ObjectId())
     userId = request.get_json().get("userId", None)
     projectTitle = request.get_json().get("projectTitle", None)
@@ -57,8 +54,7 @@ def createOffer():
     if place is not None :
         offer.place = place
     if networking is not None :
-        for network in networking:
-            offer.networking[networking["network"]] = networking["url"]
+        offer.networking = networking
 
     config.offerTable.insert(offer.__dict__)
     requestResult = config.offerTable.find_one({"offerId": offerId})

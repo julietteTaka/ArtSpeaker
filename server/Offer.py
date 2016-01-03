@@ -3,15 +3,15 @@ class Offer(object):
         '''
         define all datas in the offer table
 
-        example for social [{
+        example for social {
             [{  network : "website",
                 url : me.com}],
-        }]
+        }
 
-        example for projectDate[{
+        example for projectDate{
             "begin" : "01/02/2016",
             "end": "01/08/2016",
-        }]
+        }
         '''
         # first step data
         self.userId = userId
@@ -25,7 +25,7 @@ class Offer(object):
         self.artists = []
         self.isOpen = False
         self.website = ""
-        self.networking = {}
+        self.networking = []
         self.projectDate = {}
         self.offerDate = {}
         self.wantedProfiles = []

@@ -9,7 +9,6 @@
 
 {% if user %}
     <div>
-        <h2> <a href="/offer"> Create an Offer !</a></h2>
 
         <h2> Offers ({{offers.offers|length }}) :</h2>
         {% if offers.offers|length > 0 %}
@@ -29,9 +28,9 @@
                 <p>Date de début : {{ offer.offerDate["begin"] }}</p>
                 <p>Date de fin : {{ offer.offerDate["end"] }}</p>
                 <p>Lieu : {{ offer.place }}</p>
-                <p>Liens :
-                    {% for network in networking %}
-                    <a href={{ network }}>{{ network }}<a/><br/>
+                <p>Liens :<br/>
+                    {% for network in offer.networking %}
+                    {{ network["network"] }} <a href={{ network }}> {{ network["url"] }}<a/><br/>
                     {% endfor %}
                 </p>
 

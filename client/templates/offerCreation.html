@@ -31,14 +31,19 @@ input {
                 <input style='width:800px;' type='text' id="activity" placeholder="ex: Graphisme et Motion Design" />
                 </p>
 
-                <p>Réseaux :
-                <select name="numeros" size="1">
-                    <option value="website" selected="selected">website</option>
-                    <option value="Facebook">Facebook</option>
-                    <option value="Twitter">Twitter</option>
-                  </select>
-                <input style='width:800px;' type='text' id="networking" placeholder="www.monsite.com" />
-                </p>
+                <div id="networks">
+                    <p> Réseaux <span class="addField" style="cursor:pointer; color:green; font-size:20px; font-weight:bold;">+</span></p>
+                    
+                    <div>
+                        <select id="social" size="1">
+                            <option value="website" selected="selected">website</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Twitter">Twitter</option>
+                            <option value="Other">Custom link</option>
+                          </select>
+                        <input style='width:800px;' type='text' class="link" placeholder="www.monsite.com" />
+                    </div>
+                </div>
 
                 <p>Date de début du projet :
                 <input type="text" id="begin" class="datepicker">
