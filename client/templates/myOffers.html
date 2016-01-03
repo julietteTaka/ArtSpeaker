@@ -9,13 +9,13 @@
 
 {% if user %}
     <div>
+        <h2> <a href="/offer"> Create an Offer !</a></h2>
 
         <h2> Offers ({{offers.offers|length }}) :</h2>
         {% if offers.offers|length > 0 %}
         <ul>
             {% for offer in offers.offers %}
                 {% set profileType=offer.wantedProfiles %}
-<strong>{{ offer }}</strong>
             <li>
                 <h3>{{ offer.title }}</h3>
                 <p>
