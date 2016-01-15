@@ -24,6 +24,7 @@ class Offer(object):
         self.workType = ""
         self.artists = []
         self.isOpen = False
+        self.isComplete = False
         self.website = ""
         self.networking = []
         self.projectDate = {}
