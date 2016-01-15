@@ -58,7 +58,7 @@ def createOffer():
 
     config.offerTable.insert(offer.__dict__)
     requestResult = config.offerTable.find_one({"offerId": offerId})
-
+    logging.error(requestResult)
     return mongodoc_jsonify(requestResult)
 
 @config.g_app.route("/offer/<offerId>/content")
@@ -93,6 +93,11 @@ def getOffersFromUser(userId):
 def deleteOffers(offerId):
     deletedOffer = config.offerTable.remove({"offerId": offerId})
     return mongodoc_jsonify(deletedOffer)
+
+@config.g_app.route("/offer/<offerId>", methods=["GET"])
+def getOfferById(offerId):
+    offer = config.offerTable.find_one({"offerId": offerId})
+    return mongodoc_jsonify(offer)
 
 def mongodoc_jsonify(*args, **kwargs):
     return Response(json.dumps(args[0], default=json_util.default), mimetype='application/json')
