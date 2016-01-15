@@ -67,6 +67,15 @@ $( document ).ready(function() {
         });
     })
 
+    $('button#completeOffer').click(function(event){
+        event.preventDefault();
+        var offerId = $(this).attr("data-offerId")
+        location.href = '/offer/'+ offerId+'/step/2';
+    });
+
+
+
+
     var i = $('#networks div').size() + 1;
 
     $('.addField').click(function(event){

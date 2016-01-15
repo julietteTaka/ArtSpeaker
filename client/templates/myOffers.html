@@ -37,6 +37,11 @@
             </li>
 
             <button id="deleteOffer" data-offerId="{{ offer.offerId }}" value="Delete">Delete</button>
+            {% if offer.complete %}
+            <button id="editOffer" data-offerId="{{ offer.offerId }}" value="Delete">Edit</button>
+            {% else %}
+            <button id="completeOffer" data-offerId="{{ offer.offerId }}" value="Delete">Complete</button>
+            {% endif %}
             <hr />
             {% endfor %}
         </ul>
