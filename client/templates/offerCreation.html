@@ -1,7 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    <h1>Create a very cool job offer !</h1>
+        {% if step %}
+        <img src="http://lorempixel.com/900/200/abstract"></img>
+        {% else %}
+        <h1>Create a very cool job offer !</h1>
+        {% endif %}
+
 {% endblock %}
 
 {% block content %}
@@ -17,7 +22,57 @@ input {
     
 }
 </style>
+
+<a href="/user/{{user.id}}/offers">Retourner aux offres </a>
+
     <section>
+        {% if step %}
+
+<p> > user : {{ user.name }}</p>
+
+        <form id='offerStepTwo'>
+            <fieldset>
+
+
+            <p> > Secteur d'activité : </p>
+            <input style='width:800px;' type='text' id="activity" placeholder="graphisme"/>
+
+            <p>Offre disponible du
+                <input type="text" id="begin" class="datepicker" value="{{ offer.offerDate['begin'] }}">
+                au :
+                <input type="text" id="end" class="datepicker" value="{{ offer.offerDate['end']}}">.</p>
+
+            <h3> {{ offer.title }} </h3>
+
+                <p>Domaines d'activité recherchés :</p>
+                    <input style='width:800px;' type='text' id="activity" placeholder="graphisme" />
+
+                <p>Tags de l'annonce : </p>
+                    <input style='width:800px;' type='text' id="activity" placeholder="#illustration" />
+
+                <p>Profils recherchés :</p>
+                <input type="text" id="wantedProfiles" placeholder="separate,words,with,coma">
+
+
+                <p>Votre message :<br/>
+                <textarea style='width:800px; height:500px' type="text" id="text" placeholder="here is you announce"></textarea>
+                </p>  
+
+                <p>Rémunération :
+                <select id="devise" size="1">
+                    <option value="Dollards" >$</option>
+                    <option value="Euros" selected="selected">€</option>
+                    <option value="Livres">£</option>
+                </select>
+                <input type="text" id="remuneration" placeholder="ex: $3000">
+
+                </p>
+
+                <input type='submit' id="createOffer" value= "Submit !" data-userID="{{user.id}}">
+            </fieldset>
+        </form>
+
+        {% else %}
         <form id='offerStepOne'>
             <fieldset>
                 <p>Titre du projet :
@@ -26,10 +81,6 @@ input {
                 <p>Lieu d'activité :
                 <input style='width:800px;' type='text' id="place" placeholder="ex: Paris, 75" />
                 
-
-                <p>Domaine d'activité :
-                <input style='width:800px;' type='text' id="activity" placeholder="ex: Graphisme et Motion Design" />
-                </p>
 
                 <div id="networks">
                     <p> Réseaux <span class="addField" style="cursor:pointer; color:green; font-size:20px; font-weight:bold;">+</span></p>
@@ -45,11 +96,9 @@ input {
                     </div>
                 </div>
 
-                <p>Date de début du projet :
+                <p>L'annonce sera visible du :
                 <input type="text" id="begin" class="datepicker">
-                </p>
-
-                <p>Date de fin du projet :
+                au :
                 <input type="text" id="end" class="datepicker">
                 </p>
 
@@ -59,15 +108,10 @@ input {
                 <input type="text" id="mail" placeholder="addresse mail">
                 </p>
 
-                <p>Profils recherchés :
-                <input type="text" id="wantedProfiles" placeholder="separate,words,with,coma">
-                </p>                
-                <p>Rémunération :
-                <input type="text" id="remuneration" placeholder="ex: $3000">
-                </p>
-                <input type='submit' id="createOffer" value= "Create !" data-userID="{{user.id}}">
+                <input type='submit' id="createOffer" value= "Next Step !" data-userID="{{user.id}}">
             </fieldset>
         </form>
+        {% endif %}
     </section>
 
 <script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>

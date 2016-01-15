@@ -1,18 +1,32 @@
 $( document ).ready(function() {
+    
+    $('#offerStepTwo').submit(function(event, offerStepOne){
+        event.preventDefault();
+        var wantedProfiles = ($("#wantedProfiles").val()).split(",");
+        var begin = $("#begin").val();
+        var end = $("#end").val();
+        var projectDate = { 'begin' : begin,
+                            'end' : end,
+                        }
 
-    $('#offerStepOne').submit(function(event, offerStepOne){
+
+
+    });
+
+
+    $('#offerStepOne').submit(function(event){
         event.preventDefault();
         var userId = $("#createOffer").attr("data-userID");
         var projectTitle = $("#projectTitle").val();
         var text = $("#text").val();
         var place = $("#place").val();
+        var activity = $("#activity").val();
         var entreprise = $("#entreprise").val();
         var begin = $("#begin").val();
         var end = $("#end").val();
         var phone = $("#phone").val();
         var mail = $("#mail").val();
         var name = $("#name").val();
-        var wantedProfiles = ($("#wantedProfiles").val()).split(",");
         var remuneration = $("#remuneration").val();
 
         var offerDate = {  'begin' : begin,
@@ -27,7 +41,7 @@ $( document ).ready(function() {
                 'url' : $(this).find("input").val(),
             })
         })
-        console.log(networking)
+
         $.ajax({
             type : 'POST',
             url : '/offer',
@@ -43,14 +57,15 @@ $( document ).ready(function() {
                     'name' : name,
                     'phone' : phone,
                     'mail' : mail,
-                    'wantedProfiles' : wantedProfiles,
+                    'activity' : activity,
+                    //'wantedProfiles' : wantedProfiles,
                     'remuneration' : remuneration,
                     }),
             error: function (data, ajaxContext) {
                 console.log(ajaxContext.responseText)
-            }
-        }).done(function(data, offerStepOne){
-            console.log("done !" + data);
+            },
+        }).done(function(data){
+            location.href = "/offer/"+data.offerId+"/step/2";
         });
     });
 

@@ -93,6 +93,7 @@ def newOffer():
     result = requests.post(config.serverRootUri + '/offer', data=request.data, headers=header)
     if result.status_code != 200:
         abort(result.status_code,  {'message': 'il y a eu une erreur lors de la soumission de votre formulaire.'})
+    logging.error(result.json())
     return jsonify(**result.json())
 
 @config.g_app.route('/offer/<offerID>', methods=['DELETE'])
@@ -107,8 +108,21 @@ def deleteOffer(offerID):
 def offerCreationForm():
     if 'google_token' in session:
         user = config.google.get('userinfo').data
-        return render_template("offerCreation.html", user=user)
-    return render_template("offerCreation.html")
+        return render_template("offerCreation.html", user=user) # toDo page erreur
+    return render_template("index.html")  # toDo page erreur
+
+@config.g_app.route('/offer/<offerId>/step/<step>', methods=['GET'])
+def offerCreationFormStep2(offerId, step):
+    if 'google_token' in session:
+        user = config.google.get('userinfo').data
+        result = requests.get(config.serverRootUri + '/offer/'+offerId)
+
+        if result.status_code != 200:
+            abort(result.status_code,  {'message': 'On dirait l\'offre '+offerId+' n\'existe plus...'})
+
+        return render_template("offerCreation.html", user=user, offer=result.json(), step=step)
+    return render_template("index.html") # toDo page erreur
+
 
 @config.g_app.route('/user')
 def userAccount():
