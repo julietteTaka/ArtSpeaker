@@ -24,6 +24,7 @@ ENV ARTSPEAKER_DEV=/opt/artspeaker_git
 ENV PATH=${PATH}:/opt/mongodb/bin
 
 COPY . ${ARTSPEAKER_DEV}
+RUN cd ${ARTSPEAKER_DEV}/client/ && npm install && npm install -g grunt-cli
 RUN mkdir /opt/logs
 
 RUN chmod 777 ${ARTSPEAKER_DEV}/start.sh
