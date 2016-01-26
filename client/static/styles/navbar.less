@@ -1,0 +1,35 @@
+.navbar {
+  padding : 0;
+  margin : 0;
+}
+
+.navbar-brand {
+  float: left;
+  padding: @navbar-padding-vertical/4 @navbar-padding-horizontal;
+  font-size: @font-size-large;
+  line-height: @line-height-computed;
+  height: @navbar-height;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+
+  @media (min-width: @grid-float-breakpoint) {
+    .navbar > .container &,
+    .navbar > .container-fluid & {
+      margin-left: -@navbar-padding-horizontal;
+    }
+  }
+}
+
+.navbar-right .btn {
+  margin-top : @navbar-margin-vertical;
+  margin-bottom : -@navbar-margin-vertical/2;
+}
+
+.navbar-right .form {
+  margin-top : @navbar-margin-vertical/2;
+  margin-bottom : -@navbar-margin-vertical/2;
+}
+

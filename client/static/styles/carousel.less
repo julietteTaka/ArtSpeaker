@@ -1,0 +1,19 @@
+#carousel-generic{
+	width : @global-width;
+	background-color: @body-bg;
+
+	// Pour tous les navigateurs ! :)
+	-moz-box-shadow: @shadow;
+    -webkit-box-shadow: @shadow;
+    -o-box-shadow: @shadow;
+    box-shadow: @shadow;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=NaN, Strength=10);
+}
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+	width: @global-width;
+	max-height : 600px;
+
+	display: @b ;
+	line-height: 1;
+}

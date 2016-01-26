@@ -1,0 +1,78 @@
+//////////////////
+/// NAVIGATION ///
+//////////////////
+
+nav {
+
+  //Pour tous les navigateurs ! :)
+	background: @navbg;
+
+  text-align : vertical;
+  font-family: @font-family;
+
+	margin-bottom: 0;
+	padding-left: 0;
+	&:extend(.clearfix all);
+
+        /* enable absolute positioning */
+    .inner-addon { 
+        position: relative; 
+    }
+
+    /* style icon */
+    .inner-addon .glyphicon {
+      position: absolute;
+      padding: 10px;
+      pointer-events: none;
+    }
+
+    /* align icon */
+    .left-addon .glyphicon  { left:  0px;}
+    .right-addon .glyphicon { right: 0px;}
+
+    /* add padding  */
+    .left-addon input  { padding-left:  30px; }
+    .right-addon input { padding-right: 30px; }
+    
+    > a {
+      display : @b;
+  		text-decoration: @n;
+  		list-style : @n;
+    	position: relative;
+
+    }
+
+    &.disabled > a {
+      color: @navbg;
+
+      &:hover,
+      &:focus {
+        color: @navbg-hover;
+        text-decoration: @n;
+      }
+    }
+
+  .open > a {
+    &,
+    &:hover,
+    &:focus {
+      background-color: @navbg-hover;
+      border-color: @link-color;
+    }
+  }
+}
+
+.col-md-2{
+  height : 44px;
+  text-align : center;
+    vertical-align: middle;
+    display: @b;
+  line-height: 3;
+
+    &:hover,
+      &:focus {
+        text-decoration: inherit;
+        list-style : inherit;
+      }
+}
+
