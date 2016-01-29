@@ -5,7 +5,7 @@ FROM ubuntu:latest
 RUN apt-get update
 
 # Download and Install
-RUN apt-get install -y vim wget python-setuptools python-pip libpython2.7 python-flask
+RUN apt-get install -y vim wget python-setuptools libpython2.7 python-flask nodejs-legacy python-pip npm
 RUN pip install pymongo python-oauth2 flask-oauthlib
 
 #Install last mongodb version to have text search feature
@@ -24,7 +24,8 @@ ENV ARTSPEAKER_DEV=/opt/artspeaker_git
 ENV PATH=${PATH}:/opt/mongodb/bin
 
 COPY . ${ARTSPEAKER_DEV}
-RUN mkdir /opt/logs
+RUN cd ${ARTSPEAKER_DEV}/client/ && npm install && npm install -g grunt-cli
+RUN mkdir /var/log/artspeaker
 
 RUN chmod 777 ${ARTSPEAKER_DEV}/start.sh
 ENTRYPOINT ["/opt/artspeaker_git/start.sh"]
