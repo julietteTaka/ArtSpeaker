@@ -24,6 +24,8 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
+@config.g_app.route('/login/google')
 def login():
     log = config.google.authorize(callback=url_for('authorized', _external=True))
     return log
