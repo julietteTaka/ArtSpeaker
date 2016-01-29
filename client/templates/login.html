@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+			{% block content %}
+			<div class="container">	
+				<div class="row">
+					<div class="col-lg-9 col-md-9"></div>
+		  			
+		  			<div class="col-lg-6 col-md-6 col-sm-24 col-xs-24">
+					<div class="content-box">
+		  					<div class="page-header">
+
+		  					{% block title %}
+  							<h1>Log In <small> with your favorite network</small></h1>
+								{% endblock %}
+
+
+							</div>
+
+		  						<button type="button" class="btn btn-facebook btn-md"> 
+		  							<span class="fa fa-facebook"></span> Continue with Facebook
+		  						</button> 
+							
+							
+		  						<button type="button" class="btn btn-googleplus btn-md"> 
+		  							<span class="fa fa-google-plus"> </span> Continue with Google
+		  						</button> 
+							
+
+		  					<div class="page-header">
+  							<h1>Log In <small> with your Username</small></h1>
+							</div>
+
+						<div class="input-group">
+						  <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
+						  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+						</div>
+						<br>
+						<div class="input-group">
+						  <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
+						  <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+						</div>
+						<br>
+						<button type="button" class="btn btn-default btn-md">Submit</button>
+						<br>
+						<br>
+						<a class="link-inverse" href="sign.html"> Join Us ! </a> 
+						<br>
+						<a class="link-inverse" href="#"> I forgot my password. </a> 
+					</div> 
+
+					<div class="col-lg-9 col-md-9"></div>
+		 			
+		 			</div>
+		 			</div>
+			</div>
+			{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    <h1>Create a very cool job offer !</h1>
+{% endblock %}
+
+{% block content %}
+
+{% if user %}
+  <script>
+  $(function() {
+    $( ".datepicker" ).datepicker();
+  });
+  </script>
+<style>
+input {
+    
+}
+</style>
+    <section>
+        <form id='offerStepTwo'>
+            <fieldset>
+                <p>Titre du projet :
+                <input style='width:800px;' type='text' id="projectTitle" placeholder="Title" /></p>
+
+                <p>Lieu d'activité :
+                <input style='width:800px;' type='text' id="place" placeholder="ex: Paris, 75" />
+                
+
+                <p>Domaine d'activité :
+                <input style='width:800px;' type='text' id="activity" placeholder="ex: Graphisme et Motion Design" />
+                </p>
+
+                <div id="networks">
+                    <p> Réseaux <span class="addField" style="cursor:pointer; color:green; font-size:20px; font-weight:bold;">+</span></p>
+                    
+                    <div>
+                        <select id="social" size="1">
+                            <option value="website" selected="selected">website</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Twitter">Twitter</option>
+                            <option value="Other">Custom link</option>
+                          </select>
+                        <input style='width:800px;' type='text' class="link" placeholder="www.monsite.com" />
+                    </div>
+                </div>
+
+                <p>Date de début du projet :
+                <input type="text" id="begin" class="datepicker">
+                </p>
+
+                <p>Date de fin du projet :
+                <input type="text" id="end" class="datepicker">
+                </p>
+
+                <p>Contact :
+                <input type="text" id="name" placeholder={{user.name}}>
+                <input type="text" id="phone" placeholder="numero de tél.">
+                <input type="text" id="mail" placeholder="addresse mail">
+                </p>
+
+                <p>Profils recherchés :
+                <input type="text" id="wantedProfiles" placeholder="separate,words,with,coma">
+                </p>                
+                <p>Rémunération :
+                <input type="text" id="remuneration" placeholder="ex: $3000">
+                </p>
+                <input type='submit' id="createOffer" value= "Next Step !" data-userID="{{user.id}}">
+            </fieldset>
+        </form>
+    </section>
+
+<script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
+
+{% else %}
+<p>you must be logged to see this page.</p>
+<a href="/"> back home </a>
+{% endif %}
+
+{% endblock %}
