@@ -4,27 +4,13 @@ module.exports = function(grunt) //à toujours écrire
   // Project configuration.
   grunt.initConfig(
   {
-    less : 
-    {
-      dev : 
-      {
-        files : 
-        {
-          '.tmp/styles/main.css' : 'static/styles/main.less'
-          //target, 
+    // Compiles Less to CSS
+    less: {
+      server: {
+        files: {
+          'static/styles/main.css' : 'static/styles/main.less'
         }
-      }
-    },
-
-    autoprefixer : 
-    {
-      dev : 
-      {
-        files : 
-        {
-          '.tmp/styles/main.css' : '.tmp/styles/main.css'
-        }
-      }
+      },
     },
 
     watch :{
@@ -34,22 +20,25 @@ module.exports = function(grunt) //à toujours écrire
         tasks : ['css']
       },
       livereload : {
-        files : ['.tmp/styles/main.css', 'static/index.html'],
+        files : ['static/styles/*.less'],
         options : {
           livereload : true
         }
       }
     },
 
+    autoprefixer: {
+      options: {
+        browsers: ['last 1 version']
+      },
+    },
+
     connect : {
       server : {
-        options : {
-          base : ['static', '.tmp'],
           livereload : true,
           open : true,
           hostname : 'localhost'
         }
-      }
     },
 
     clean : {
