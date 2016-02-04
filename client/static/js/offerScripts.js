@@ -8,9 +8,6 @@ $( document ).ready(function() {
         var projectDate = { 'begin' : begin,
                             'end' : end,
                         }
-
-
-
     });
 
 
