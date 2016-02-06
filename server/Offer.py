@@ -1,37 +1,28 @@
 class Offer(object):
-    def __init__(self, offerId, userId, title):
-        '''
-        define all datas in the offer table
+    def __init__(self, offerId, userId):
 
-        example for social [{
-            twitter[{   
-                icon:"/url.png",
-                url:"/url"
-            }]
-        }]
-
-        example for projectDate[{
-            "begin" : "01/02/2016",
-            "end": "01/08/2016",
-        }
-        '''
         # first step data
         self.userId = userId
         self.offerId = offerId
-        self.projectTitle = projectTitle
-        self.enterpriseLogo = None
+
+        self.projectTitle = ""
+        self.fieldActivity = None
         self.place = ""
+        self.enterpriseLogo = None
+        self.networking = []
+        self.projectDate = {}
+        self.contact = {}
+        self.isOpen = False
+        self.isComplete = False
+
+        # second step data
+        self.offerTitle = ""
+        self.offerDate = {}
+        self.wantedProfiles = ""
+        self.text = ""
+        self.tags = []
+
+        # not sure
         self.remuneration = None
         self.workType = ""
         self.artists = []
-        self.isOpen = False
-        self.website = ""
-        self.social = []
-        self.projectDate = []
-        self.offerDate = []
-        self.wantedProfiles = []
-        # last step data
-        self.text = ""
-        self.title = ""
-        self.tags = []
-        self.sector = []

@@ -15,7 +15,7 @@
                 {% set profileType=offer.wantedProfiles %}
 
             <li>
-                <h3>{{ offer.title }}</h3>
+                <h3>{{ offer.title }} - {{offer.userId}}</h3>
                 <p>
                     Type de profil : 
                     {% for profile in profileType %}
@@ -23,13 +23,22 @@
                     {% endfor %}
                 </p>
                 <p>Rémunération : {{ offer.remuneration }}</p>
+                <p>Date de début : {{ offer.begin }}</p>
+                <p>Date de fin : {{ offer.end }}</p>
+                <p>Lieu : {{ offer.place }}</p>
+                <p>Liens :
+                    {% for network in networking %}
+                    <a href={{ network }}>{{ network }}<a/><br/>
+                    {% endfor %}
+                </p>
+
             </li>
+
             <hr />
             {% endfor %}
         </ul>
-        {% else %}
-        <p>Sorry, no offer where found.</p>
         {% endif %}
+
     </div>
 
 
