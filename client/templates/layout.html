@@ -11,8 +11,12 @@
     <!-- scripts -->
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js'></script>
+    <script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js'></script>
 
+    
+    
     <!-- style sheets -->
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -38,7 +42,9 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+         {% if user %}
         <li><a href="#"><i class="glyphicon glyphicon-user"></i> My account</a></li>
+         {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -55,9 +61,9 @@
             <button type="submit" class="btn btn-default">Ok</button>
         </li>
         {% if user %}
-        <li><button type="button" class="btn btn-primary navbar-btn"><a href="/logout">Sign Out</a></button></li>
+        <li><a href="/logout">Sign Out</a></li>
         {% else %}
-        <li><button type="button" class="btn btn-primary navbar-btn"><a href="/login">Log in</a></button></li>
+        <li><a href="/login">Log in</a></li>
         {% endif %}
         </li>
       </ul>
@@ -65,23 +71,13 @@
           </div><!-- /.container-fluid -->
         </nav>
 
-<!--
-        {% block title %}{% endblock %}
 <section>
             {% if user %}
-                    <img style="width:100px;"src="{{user.picture}}" />
-                    <p>> {{user.name}}</p>
-                {% if user.gender %}
-                    {% set gender = user.gender %}
-                {% else %}
-                    {% set gender = "N/A" %}
-                {% endif %}
-                    <p>gender : {{gender}}</p>
+                    
                     <ul>
                         <li><a href='/user/{{ user.id }}/offers'>manage Offers</a></li>
                         <li><a href='/portfolio'>manage Portfolio</a></li>
                     </ul>
-                    <a href="/logout">Logout</a>
             {% else %}
                     <p>
                         <a class="signedIn" href="/login">Login</a>
@@ -89,7 +85,7 @@
                 </li>
             {% endif %}
 </section>
---> 
+
 
 
 <section>

@@ -17,23 +17,40 @@
             {% for offer in offers.offers %}
                 {% set profileType=offer.wantedProfiles %}
             <li>
-                <h3>{{ offer.title }}</h3>
-                <p>
-                    Type de profil : 
-                    {% for profile in profileType %}
-                    {{ profile }} | 
-                    {% endfor %}
-                </p>
-                <p>Rémunération : {{ offer.remuneration }}</p>
-                <p>Date de début : {{ offer.offerDate["begin"] }}</p>
-                <p>Date de fin : {{ offer.offerDate["end"] }}</p>
-                <p>Lieu : {{ offer.place }}</p>
+                <h3>{{ offer.projectTitle }}</h3>
+                <p>Domaine d'activité : {{ offer.fieldActivity }} </p>
+                <p>Lieu : {{ offer.place }} </p>
                 <p>Liens :<br/>
+                    <ul>
                     {% for network in offer.networking %}
-                    {{ network["network"] }} <a href={{ network }}> {{ network["url"] }}<a/><br/>
+                    <li>{{ network["network"] }} : <a href=http://{{ network["url"] }}> {{ network['url'] }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </p>
+                <p>Projet pour une durée du {{ offer.projectDate["begin"] }} au {{ offer.projectDate["end"] }}</p>
+                <p>Contact :  <br/><i class="fa fa-user"></i> {{ offer.contact["name"] }} <br/><i class="fa fa-phone"></i> {{ offer.contact["phone"] }}  <br/><i class="fa fa-envelope"></i> {{ offer.contact["mail"] }}</p>
+
+                <br/>
+                {% if offer.offerDate %}
+                <p>Offre visible du {{ offer.offerDate["begin"] }} au {{ offer.offerDate["end"] }}</p>
+                {% endif %}
+
+                {% if offer.profileType %}
+                <p>
+                    Type de profil : {{ offer.wantedProfiles }} 
+                </p>
+                {% endif %}
+
+                {% if offer.text %}
+                <p>Texte : {{ offer.text }} </p>
+                {% endif %}
+                {% if offer.tags %}
+                <p>tags : 
+                    {% for tag in offer.tags %}
+                    #{{ tag }},
                     {% endfor %}
                 </p>
-
+                {% endif %}
             </li>
 
             <button id="deleteOffer" data-offerId="{{ offer.offerId }}" value="Delete">Delete</button>
