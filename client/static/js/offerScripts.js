@@ -44,19 +44,21 @@ $( document ).ready(function() {
         var projectTitle = $("#projectTitle").val();
         var text = $("#text").val();
         var place = $("#place").val();
-        var activity = $("#activity").val();
-        var entreprise = $("#entreprise").val();
+        var fieldActivity = $("#fieldActivity").val();
         var begin = $("#begin").val();
         var end = $("#end").val();
         var phone = $("#phone").val();
         var mail = $("#mail").val();
         var name = $("#name").val();
-        var remuneration = $("#remuneration").val();
 
-        var offerDate = {  'begin' : begin,
+        var projectDate = {  'begin' : begin,
                             'end' : end,
                         }
 
+        var contact = { 'name' : name,
+                        'phone' : phone,
+                        'mail' : mail,
+                        }
         var networking = []
 
         $("#networks div").each(function(){
@@ -73,17 +75,11 @@ $( document ).ready(function() {
             data : JSON.stringify({
                     'userId' : userId,
                     'projectTitle' : projectTitle,
+                    'fieldActivity' : fieldActivity,
                     'place' : place,
-                    'text' : text,
-                    'entreprise' : entreprise,
                     'networking' : networking,
-                    'offerDate' : offerDate,
-                    'name' : name,
-                    'phone' : phone,
-                    'mail' : mail,
-                    'activity' : activity,
-                    //'wantedProfiles' : wantedProfiles,
-                    'remuneration' : remuneration,
+                    'projectDate' : projectDate,
+                    'contact' : contact,
                     }),
             error: function (data, ajaxContext) {
                 console.log(ajaxContext.responseText)
@@ -112,25 +108,19 @@ $( document ).ready(function() {
         location.href = '/offer/'+ offerId+'/step/2';
     });
 
+    var i = $('#networks div').size();
 
-
-
-    var i = $('#networks div').size() + 1;
-
-    $('.addField').click(function(event){
-        i = $('#networks div').size() + 1;
-        $('<div><select name="social" size="1"><option value="website" selected="selected">website</option><option value="Facebook">Facebook</option><option value="Twitter">Twitter</option><option value="Other">Custom link</option></select><input style="width:800px; type="text" class="link" placeholder="www.monsite.com" /> <span class="removeField" style="cursor:pointer;"> Remove </span></div>').appendTo("#networks")
+    $('.addField').click(function(event)
+    {
+        $('<div><select name="social" size="1"><option value="website" selected="selected">website</option><option value="Facebook">Facebook</option><option value="Twitter">Twitter</option><option value="Other">Custom link</option></select><input style="width:800px; type="text" class="link" placeholder="www.monsite.com" /><span class="removeField" style="cursor:pointer;" onclick=""> Remove </span></div>').appendTo("#networks");
         i++;
     });
 
-    /*FIXME
-
-    $(".removeField").click(function(event){
-        console.log("remove")
-        if( i > 2 ) {
-            $(this).parents('div').remove();
+    
+    $('#networks').on('click', '.removeField', function () {
+        if( i > 1 ) {
+            $(this).parent('div').remove();
             i--;
         }
     });
-    */
 });

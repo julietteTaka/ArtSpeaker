@@ -1,14 +1,5 @@
 {% extends "layout.html" %}
 
-{% block title %}
-        {% if step %}
-        <img src="http://lorempixel.com/900/200/abstract"></img>
-        {% else %}
-        <h1>Create a very cool job offer !</h1>
-        {% endif %}
-
-{% endblock %}
-
 {% block content %}
 
 {% if user %}
@@ -77,14 +68,14 @@ input {
                     </div>
                 </div>
 
-                <p>L'annonce sera visible du :
+                <p>Je cherche quelqu'un pour la durée :
                 <input type="text" id="begin" class="datepicker">
                 au :
                 <input type="text" id="end" class="datepicker">
                 </p>
 
                 <p>Contact :
-                <input type="text" id="name" placeholder={{user.name}}>
+                <input type="text" id="name" placeholder="yourName" value="{{user.name}}">
                 <input type="text" id="phone" placeholder="numero de tél.">
                 <input type="text" id="mail" placeholder="addresse mail">
                 </p>
@@ -94,8 +85,6 @@ input {
         </form>
         {% endif %}
     </section>
-
-<script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
 
 {% else %}
 <p>you must be logged to see this page.</p>
