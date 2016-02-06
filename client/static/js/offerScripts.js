@@ -1,13 +1,40 @@
 $( document ).ready(function() {
-    
-    $('#offerStepTwo').submit(function(event, offerStepOne){
+
+    $('#offerStepTwo').submit(function(event){
         event.preventDefault();
-        var wantedProfiles = ($("#wantedProfiles").val()).split(",");
+        var userId = $("#createOffer").attr("data-userID");
+        var offerId = $("#createOffer").attr("data-offerID");
+
+        var text = $("#text").val();
         var begin = $("#begin").val();
         var end = $("#end").val();
-        var projectDate = { 'begin' : begin,
+
+        var wantedProfiles = $("#wantedProfiles").val();
+        var tags = (($("#tags").val()).split("#")).shift();
+
+        var offerDate = {  'begin' : begin,
                             'end' : end,
                         }
+
+        $.ajax({
+            type : 'POST',
+            url : '/offer/'+offerId+'/step/2',
+            contentType: 'application/json; charset=utf-8',
+            data : JSON.stringify({
+                    'userId' : userId,
+                    'offerTitle' : offerTitle,
+                    'offerDate' : offerDate,
+                    'wantedProfiles' : wantedProfiles,
+                    'tags' : tags,
+                    'text' : text,
+                    'isComplete' : True,
+                    }),
+            error: function (data, ajaxContext) {
+                console.log(ajaxContext.responseText)
+            },
+        }).done(function(data){
+            location.href = "/user/"+userId+"/offers";
+        });
     });
 
 

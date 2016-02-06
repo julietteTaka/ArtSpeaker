@@ -15,69 +15,97 @@ def index():
 @config.g_app.route("/offer", methods=["POST"])
 def createOffer():
     '''
-    Create the offer with minimal requierement.
+    Create the offer
     '''
+
     offerId = str(ObjectId())
     userId = request.get_json().get("userId", None)
-    projectTitle = request.get_json().get("projectTitle", None)
-    enterpriseLogo = request.get_json().get('entrepriseLogo', None)
-    place = request.get_json().get('place', None)
-    networking = request.get_json().get('networking', None)
-    activity = request.get_json().get('activity', None)
-    worktype = request.get_json().get('worktype', None)
-    projectDate = request.get_json().get('projectDate', None)
-    offerDate = request.get_json().get('offerDate', None)
 
-    wantedProfiles = request.get_json().get('wantedProfiles', None)
-    remuneration = request.get_json().get('remuneration', None)
-
-    if  offerId == None or projectTitle == None or userId == None:
+    if  offerId == None or userId == None:
         logging.error("The offer ID, the user ID or the project title is undefined")
-        abort(make_response("The offer ID, the user ID or the project title is undefined", 500))
+        abort(make_response("The offer ID, the user ID is undefined", 500))
 
-    offer = Offer(offerId, userId, projectTitle)
-    if remuneration is not None :
-        offer.remuneration = remuneration
-    if wantedProfiles is not None :
-        offer.wantedProfiles = wantedProfiles
-    if worktype is not None :
-        offer.worktype = worktype
-    if activity is not None :
-        offer.activity = activity
-    if enterpriseLogo is not None :
-        offer.enterpriseLogo = enterpriseLogo
-    if projectDate is not None :
-        offer.projectDate = projectDate
-    if offerDate is not None :
-        offer.offerDate['begin'] = offerDate['begin']
-        offer.offerDate['end'] = offerDate['end']
+    offer = Offer(offerId, userId)
+
+    # minimal requierements
+
+    projectTitle = request.get_json().get("projectTitle", None)
+    fieldActivity = request.get_json().get('fieldActivity', None)
+    place = request.get_json().get('place', None)
+    enterpriseLogo = request.get_json().get('entrepriseLogo', None)
+    networking = request.get_json().get('networking', None)
+    projectDate = request.get_json().get('projectDate', None)
+    contact = request.get_json().get('contact', None)
+
+    # Data
+
+    if projectTitle is not None :
+        offer.projectTitle = projectTitle
+    if fieldActivity is not None :
+        offer.fieldActivity = fieldActivity
     if place is not None :
         offer.place = place
+    if enterpriseLogo is not None :
+        offer.enterpriseLogo = enterpriseLogo
     if networking is not None :
         offer.networking = networking
+    if projectDate is not None :
+        offer.projectDate['begin'] = projectDate['begin']
+        offer.projectDate['end'] = projectDate['end']
+    if contact is not None :
+        offer.contact['name'] = contact['name']
+        offer.contact['phone'] = contact['phone']
+        offer.contact['mail'] = contact['mail']
 
     config.offerTable.insert(offer.__dict__)
     requestResult = config.offerTable.find_one({"offerId": offerId})
     logging.error(requestResult)
     return mongodoc_jsonify(requestResult)
 
-@config.g_app.route("/offer/<offerId>/content")
-def offerContent(offerId):
+
+
+'''
+    worktype = request.get_json().get('worktype', None)
+    offerDate = request.get_json().get('offerDate', None)
+
     
+    remuneration = request.get_json().get('remuneration', None)
+
+    if remuneration is not None :
+        offer.remuneration = remuneration
+    if wantedProfiles is not None :
+        offer.wantedProfiles = wantedProfiles
+    if worktype is not None :
+        offer.worktype = worktype
+    if offerDate is not None :
+        offer.offerDate['begin'] = offerDate['begin']
+        offer.offerDate['end'] = offerDate['end']
+'''
+
+@config.g_app.route("/offer/<offerId>/step/<step>", methods=["POST"])
+def offerStepTwo(offerId, step):
+    logging.error("yay")
+    offerTitle = request.get_json().get('offerTitle', None)
+    offerDate = request.get_json().get('offerDate', None)
+    wantedProfiles = request.get_json().get('wantedProfiles', None)
     text = request.get_json().get('text', None)
-    title = request.get_json().get('title', None)
-    sector = request.get_json().get('sector', None)
     tags = request.get_json().get('tags', None)
 
     config.offerTable.update_one(
         {"offerId": offerId},
-        {"$set":{   "text": text, 
-                    "title":title,
-                    "sector":sector,
-                    "tags":tags}}
+        {"$set":{   "offerTitle":offerTitle,
+                    "offerDate" : offerDate,
+                    "wantedProfiles" : wantedProfiles,
+                    "text": text, 
+                    "tags":tags,
+                    "offerDate['begin']" : offerDate['begin'],
+                    "offerDate['end']" : offerDate['end'],
+                    }}
     )
 
-    return mongodoc_jsonify(requestResult)
+    updateResult = config.offerTable.find_one({"offerId": offerId})
+    logging.error(updateResult)
+    return mongodoc_jsonify(updateResult)
 
 @config.g_app.route("/offer", methods=["GET"])
 def getOffers():

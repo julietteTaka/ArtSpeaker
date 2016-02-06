@@ -23,64 +23,45 @@ input {
 }
 </style>
 
-<a href="/user/{{user.id}}/offers">Retourner aux offres </a>
-
     <section>
         {% if step %}
-
-<p> > user : {{ user.name }}</p>
 
         <form id='offerStepTwo'>
             <fieldset>
 
-
-            <p> > Secteur d'activité : </p>
-            <input style='width:800px;' type='text' id="activity" placeholder="graphisme"/>
+            <p> {{ offer.projectTitle }} </p>
+            <p>{{ offer.fieldActivity}}</p>
+            <p>Titre de l'offre :   <input type="text" id="offerTitle" placeholder="Recherche Graphiste"></p>
 
             <p>Offre disponible du
-                <input type="text" id="begin" class="datepicker" value="{{ offer.offerDate['begin'] }}">
-                au :
-                <input type="text" id="end" class="datepicker" value="{{ offer.offerDate['end']}}">.</p>
+                <input type="text" id="begin" class="datepicker">
+                au 
+                <input type="text" id="end" class="datepicker"></p>
 
-            <h3> {{ offer.title }} </h3>
+                <p>Mots clefs de l'annonce :
+                <input type="text" id="tags" placeholder="#tag #your #offer"> </p>
 
-                <p>Domaines d'activité recherchés :</p>
-                    <input style='width:800px;' type='text' id="activity" placeholder="graphisme" />
-
-                <p>Tags de l'annonce : </p>
-                    <input style='width:800px;' type='text' id="activity" placeholder="#illustration" />
-
-                <p>Profils recherchés :</p>
-                <input type="text" id="wantedProfiles" placeholder="separate,words,with,coma">
-
+                <p>Poste / domaine d'activités :
+                <input type="text" id="wantedProfiles" placeholder="Graphiste"> </p>
 
                 <p>Votre message :<br/>
                 <textarea style='width:800px; height:500px' type="text" id="text" placeholder="here is you announce"></textarea>
-                </p>  
-
-                <p>Rémunération :
-                <select id="devise" size="1">
-                    <option value="Dollards" >$</option>
-                    <option value="Euros" selected="selected">€</option>
-                    <option value="Livres">£</option>
-                </select>
-                <input type="text" id="remuneration" placeholder="ex: $3000">
-
                 </p>
-
-                <input type='submit' id="createOffer" value= "Submit !" data-userID="{{user.id}}">
+                <input type='submit' id="createOffer" value= "Submit !" data-userID="{{user.id}}" data-offerID="{{offer.offerId}}">
             </fieldset>
         </form>
 
         {% else %}
         <form id='offerStepOne'>
             <fieldset>
-                <p>Titre du projet :
+                <p>Titre de votre projet :
                 <input style='width:800px;' type='text' id="projectTitle" placeholder="Title" /></p>
 
-                <p>Lieu d'activité :
-                <input style='width:800px;' type='text' id="place" placeholder="ex: Paris, 75" />
+                <p>Domaine d'activité
+                <input style='width:800px;' type='text' id="fieldActivity" placeholder="ex: Illustration">
                 
+                <p>Lieu
+                <input style='width:800px;' type='text' id="place" placeholder="ex: Paris, 75015">
 
                 <div id="networks">
                     <p> Réseaux <span class="addField" style="cursor:pointer; color:green; font-size:20px; font-weight:bold;">+</span></p>
