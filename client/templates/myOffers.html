@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    <h1>My Offers</h1>
+{% endblock %}
+
+{% block content %}
+
+{% if user %}
+    <div>
+        <h2> <a href="/offer"> Create an Offer !</a></h2>
+
+        <h2> Offers ({{offers.offers|length }}) :</h2>
+        {% if offers.offers|length > 0 %}
+        <ul>
+            {% for offer in offers.offers %}
+                {% set profileType=offer.wantedProfiles %}
+            <li>
+                <h3>{{ offer.projectTitle }}</h3>
+                <p>Domaine d'activité : {{ offer.fieldActivity }} </p>
+                <p>Lieu : {{ offer.place }} </p>
+                <p>Liens :<br/>
+                    <ul>
+                    {% for network in offer.networking %}
+                    <li>{{ network["network"] }} : <a href=http://{{ network["url"] }}> {{ network['url'] }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </p>
+                <p>Projet pour une durée du {{ offer.projectDate["begin"] }} au {{ offer.projectDate["end"] }}</p>
+                <p>Contact :  <br/><i class="fa fa-user"></i> {{ offer.contact["name"] }} <br/><i class="fa fa-phone"></i> {{ offer.contact["phone"] }}  <br/><i class="fa fa-envelope"></i> {{ offer.contact["mail"] }}</p>
+
+                <br/>
+                {% if offer.offerDate %}
+                <p>Offre visible du {{ offer.offerDate["begin"] }} au {{ offer.offerDate["end"] }}</p>
+                {% endif %}
+
+                {% if offer.profileType %}
+                <p>
+                    Type de profil : {{ offer.wantedProfiles }} 
+                </p>
+                {% endif %}
+
+                {% if offer.text %}
+                <p>Texte : {{ offer.text }} </p>
+                {% endif %}
+                {% if offer.tags %}
+                <p>tags : 
+                    {% for tag in offer.tags %}
+                    #{{ tag }},
+                    {% endfor %}
+                </p>
+                {% endif %}
+            </li>
+
+            <button id="deleteOffer" data-offerId="{{ offer.offerId }}" value="Delete">Delete</button>
+            {% if offer.complete %}
+            <button id="editOffer" data-offerId="{{ offer.offerId }}" value="Delete">Edit</button>
+            {% else %}
+            <button id="completeOffer" data-offerId="{{ offer.offerId }}" value="Delete">Complete</button>
+            {% endif %}
+            <hr />
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+    </div>
+{% else %}
+<p> You must be logged to see this page ! </p>
+{% endif %}
+<script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
+
+{% endblock %}
+

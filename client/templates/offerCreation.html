@@ -1,9 +1,5 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    <h1>Create a very cool job offer !</h1>
-{% endblock %}
-
 {% block content %}
 
 {% if user %}
@@ -17,52 +13,79 @@ input {
     
 }
 </style>
+
     <section>
-        <form>
+        {% if step %}
+
+        <form id='offerStepTwo'>
             <fieldset>
-                <p>Titre du projet :
-                <input style='width:800px;' type='text' id="projectTitle" required placeholder="Title" /></p>
 
-                <p>Lieu d'activité :
-                <input style='width:800px;' type='text' id="text" required placeholder="Entreprise XYZ" />
+            <p> {{ offer.projectTitle }} </p>
+            <p>{{ offer.fieldActivity}}</p>
+            <p>Titre de l'offre :   <input type="text" id="offerTitle" placeholder="Recherche Graphiste"></p>
+
+            <p>Offre disponible du
+                <input type="text" id="begin" class="datepicker">
+                au 
+                <input type="text" id="end" class="datepicker"></p>
+
+                <p>Mots clefs de l'annonce :
+                <input type="text" id="tags" placeholder="#tag #your #offer"> </p>
+
+                <p>Poste / domaine d'activités :
+                <input type="text" id="wantedProfiles" placeholder="Graphiste"> </p>
+
+                <p>Votre message :<br/>
+                <textarea style='width:800px; height:500px' type="text" id="text" placeholder="here is you announce"></textarea>
+                </p>
+                <input type='submit' id="createOffer" value= "Submit !" data-userID="{{user.id}}" data-offerID="{{offer.offerId}}">
+            </fieldset>
+        </form>
+
+        {% else %}
+        <form id='offerStepOne'>
+            <fieldset>
+                <p>Titre de votre projet :
+                <input style='width:800px;' type='text' id="projectTitle" placeholder="Title" /></p>
+
+                <p>Domaine d'activité
+                <input style='width:800px;' type='text' id="fieldActivity" placeholder="ex: Illustration">
                 
+                <p>Lieu
+                <input style='width:800px;' type='text' id="place" placeholder="ex: Paris, 75015">
 
-                <p>Domaine d'activité :
-                <input style='width:800px;' type='text' id="entreprise" required placeholder="ex: Graphisme et Motion Design" />
-                </p>
+                <div id="networks">
+                    <p> Réseaux <span class="addField" style="cursor:pointer; color:green; font-size:20px; font-weight:bold;">+</span></p>
+                    
+                    <div>
+                        <select id="social" size="1">
+                            <option value="website" selected="selected">website</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Twitter">Twitter</option>
+                            <option value="Other">Custom link</option>
+                          </select>
+                        <input style='width:800px;' type='text' class="link" placeholder="www.monsite.com" />
+                    </div>
+                </div>
 
-                <p>Réseaux :
-                <select name="numeros" size="1">
-                    <option value="website" selected="selected">website</option>
-                    <option value="Facebook">Facebook</option>
-                    <option value="Twitter">Twitter</option>
-                  </select>
-                <input style='width:800px;' type='text' id="entreprise" required placeholder="www.monsite.com" />
-                </p>
-
-                <p>Date de début du projet :
-                <input type="text" class="datepicker">
-                </p>
-
-                <p>Date de fin du projet :
-                <input type="text" class="datepicker">
+                <p>Je cherche quelqu'un pour la durée :
+                <input type="text" id="begin" class="datepicker">
+                au :
+                <input type="text" id="end" class="datepicker">
                 </p>
 
                 <p>Contact :
-                <input type="text" placeholder={{user.name}}>
-                <input type="text" placeholder="numero de tél.">
-                <input type="text" placeholder="addresse mail">
+                <input type="text" id="name" placeholder="yourName" value="{{user.name}}">
+                <input type="text" id="phone" placeholder="numero de tél.">
+                <input type="text" id="mail" placeholder="addresse mail">
                 </p>
-                <p>Profiles recherchés :
-                <input type="text" placeholder="separate,words,with,coma">
-                </p>                
-                <p>Rémunération :
-                <input type="text" placeholder="ex: $3000">
-                </p>
-                <input type='submit' value = 'Create' attr-id="{{user.id}}">
+
+                <input type='submit' id="createOffer" value= "Next Step !" data-userID="{{user.id}}">
             </fieldset>
         </form>
+        {% endif %}
     </section>
+
 {% else %}
 <p>you must be logged to see this page.</p>
 <a href="/"> back home </a>
