@@ -27,7 +27,7 @@ $( document ).ready(function() {
                     'wantedProfiles' : wantedProfiles,
                     'tags' : tags,
                     'text' : text,
-                    'isComplete' : True,
+                    'isComplete' : "True",
                     }),
             error: function (data, ajaxContext) {
                 console.log(ajaxContext.responseText)
