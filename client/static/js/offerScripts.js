@@ -9,8 +9,9 @@ $( document ).ready(function() {
         var begin = $("#begin").val();
         var end = $("#end").val();
 
+        var offerTitle = $("#offerTitle").val();
+
         var wantedProfiles = $("#wantedProfiles").val();
-        var tags = (($("#tags").val()).split("#")).shift();
 
         var offerDate = {  'begin' : begin,
                             'end' : end,
@@ -25,7 +26,6 @@ $( document ).ready(function() {
                     'offerTitle' : offerTitle,
                     'offerDate' : offerDate,
                     'wantedProfiles' : wantedProfiles,
-                    'tags' : tags,
                     'text' : text,
                     'isComplete' : "True",
                     }),

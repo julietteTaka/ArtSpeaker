@@ -89,7 +89,6 @@ def offerStepTwo(offerId, step):
     offerDate = request.get_json().get('offerDate', None)
     wantedProfiles = request.get_json().get('wantedProfiles', None)
     text = request.get_json().get('text', None)
-    tags = request.get_json().get('tags', None)
 
     config.offerTable.update_one(
         {"offerId": offerId},
@@ -97,7 +96,6 @@ def offerStepTwo(offerId, step):
                     "offerDate" : offerDate,
                     "wantedProfiles" : wantedProfiles,
                     "text": text, 
-                    "tags":tags,
                     "offerDate['begin']" : offerDate['begin'],
                     "offerDate['end']" : offerDate['end'],
                     }}

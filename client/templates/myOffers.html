@@ -44,13 +44,6 @@
                 {% if offer.text %}
                 <p>Texte : {{ offer.text }} </p>
                 {% endif %}
-                {% if offer.tags %}
-                <p>tags : 
-                    {% for tag in offer.tags %}
-                    #{{ tag }},
-                    {% endfor %}
-                </p>
-                {% endif %}
             </li>
 
             <button id="deleteOffer" data-offerId="{{ offer.offerId }}" value="Delete">Delete</button>
