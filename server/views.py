@@ -62,26 +62,6 @@ def createOffer():
     logging.error(requestResult)
     return mongodoc_jsonify(requestResult)
 
-
-
-'''
-    worktype = request.get_json().get('worktype', None)
-    offerDate = request.get_json().get('offerDate', None)
-
-    
-    remuneration = request.get_json().get('remuneration', None)
-
-    if remuneration is not None :
-        offer.remuneration = remuneration
-    if wantedProfiles is not None :
-        offer.wantedProfiles = wantedProfiles
-    if worktype is not None :
-        offer.worktype = worktype
-    if offerDate is not None :
-        offer.offerDate['begin'] = offerDate['begin']
-        offer.offerDate['end'] = offerDate['end']
-'''
-
 @config.g_app.route("/offer/<offerId>/step/<step>", methods=["POST"])
 def offerStepTwo(offerId, step):
     logging.error("yay")

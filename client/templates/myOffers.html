@@ -17,7 +17,9 @@
             {% for offer in offers.offers %}
                 {% set profileType=offer.wantedProfiles %}
             <li>
+                {% if offer.projectTitle %}
                 <h3>{{ offer.projectTitle }}</h3>
+                {% endif %}
                 <p>Domaine d'activité : {{ offer.fieldActivity }} </p>
                 <p>Lieu : {{ offer.place }} </p>
                 <p>Liens :<br/>
@@ -35,7 +37,7 @@
                 <p>Offre visible du {{ offer.offerDate["begin"] }} au {{ offer.offerDate["end"] }}</p>
                 {% endif %}
 
-                {% if offer.profileType %}
+                {% if offer.wantedProfiles %}
                 <p>
                     Type de profil : {{ offer.wantedProfiles }} 
                 </p>
