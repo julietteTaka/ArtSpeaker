@@ -11,7 +11,7 @@ $( document ).ready(function() {
 
         var offerTitle = $("#offerTitle").val();
 
-        var wantedProfiles = $("#wantedProfiles").val();
+        var wantedProfile = $("#wantedProfiles").val();
 
         var offerDate = {  'begin' : begin,
                             'end' : end,
@@ -25,7 +25,7 @@ $( document ).ready(function() {
                     'userId' : userId,
                     'offerTitle' : offerTitle,
                     'offerDate' : offerDate,
-                    'wantedProfiles' : wantedProfiles,
+                    'wantedProfile' : wantedProfile,
                     'text' : text,
                     'isComplete' : "True",
                     }),

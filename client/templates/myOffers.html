@@ -15,7 +15,8 @@
         {% if offers.offers|length > 0 %}
         <ul>
             {% for offer in offers.offers %}
-                {% set profileType=offer.wantedProfiles %}
+                        Débug : {{ offer.offerId }}
+
             <li>
                 {% if offer.projectTitle %}
                 <h3>{{ offer.projectTitle }}</h3>

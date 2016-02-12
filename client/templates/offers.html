@@ -29,13 +29,17 @@
                 <p>Contact :  <br/><i class="fa fa-user"></i> {{ offer.contact["name"] }} <br/><i class="fa fa-phone"></i> {{ offer.contact["phone"] }}  <br/><i class="fa fa-envelope"></i> {{ offer.contact["mail"] }}</p>
 
                 <br/>
+                {% if offer.offerTitle %}
+                <h3>{{ offer.offerTitle }}</h3>
+                {% endif %}
+
                 {% if offer.offerDate %}
                 <p>Offre visible du {{ offer.offerDate["begin"] }} au {{ offer.offerDate["end"] }}</p>
                 {% endif %}
 
-                {% if offer.wantedProfiles %}
+                {% if offer.wantedProfile %}
                 <p>
-                    Type de profil : {{ offer.wantedProfiles }} 
+                    Type de profil : {{ offer.wantedProfile }} 
                 </p>
                 {% endif %}
 
