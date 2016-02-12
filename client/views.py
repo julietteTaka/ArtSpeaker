@@ -130,7 +130,7 @@ def completeOffer(offerId, step):
 def offerCreationForm():
     if 'google_token' in session:
         user = config.google.get('userinfo').data
-        return render_template("offerCreation.html", user=user) # toDo page erreur
+        return render_template("offerCreation.html", user=user, step="1") # toDo page erreur
     return render_template("index.html")  # toDo page erreur
 
 @config.g_app.route('/offer/<offerId>/step/<step>', methods=['GET'])
