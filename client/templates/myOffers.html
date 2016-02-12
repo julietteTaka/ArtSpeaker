@@ -34,6 +34,10 @@
                 <p>Contact :  <br/><i class="fa fa-user"></i> {{ offer.contact["name"] }} <br/><i class="fa fa-phone"></i> {{ offer.contact["phone"] }}  <br/><i class="fa fa-envelope"></i> {{ offer.contact["mail"] }}</p>
 
                 <br/>
+                {% if offer.offerTitle %}
+                <h3>{{ offer.offerTitle }}</h3>
+                {% endif %}
+
                 {% if offer.offerDate %}
                 <p>Offre visible du {{ offer.offerDate["begin"] }} au {{ offer.offerDate["end"] }}</p>
                 {% endif %}
@@ -50,11 +54,7 @@
             </li>
 
             <button id="deleteOffer" data-offerId="{{ offer.offerId }}" value="Delete">Delete</button>
-            {% if offer.complete %}
-            <button id="editOffer" data-offerId="{{ offer.offerId }}" value="Delete">Edit</button>
-            {% else %}
-            <button id="completeOffer" data-offerId="{{ offer.offerId }}" value="Delete">Complete</button>
-            {% endif %}
+            <button id="completeOffer" data-offerId="{{ offer.offerId }}" value="Edit">Edit</button>
             <hr />
             {% endfor %}
         </ul>

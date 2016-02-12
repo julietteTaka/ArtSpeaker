@@ -64,22 +64,45 @@ def createOffer():
 
 @config.g_app.route("/offer/<offerId>/step/<step>", methods=["POST"])
 def offerStepTwo(offerId, step):
-    logging.error("yay")
     offerTitle = request.get_json().get('offerTitle', None)
     offerDate = request.get_json().get('offerDate', None)
-    wantedProfiles = request.get_json().get('wantedProfiles', None)
+    wantedProfile = request.get_json().get('wantedProfile', None)
     text = request.get_json().get('text', None)
 
-    config.offerTable.update_one(
-        {"offerId": offerId},
-        {"$set":{   "offerTitle":offerTitle,
-                    "offerDate" : offerDate,
-                    "wantedProfiles" : wantedProfiles,
-                    "text": text, 
-                    "offerDate['begin']" : offerDate['begin'],
-                    "offerDate['end']" : offerDate['end'],
-                    }}
-    )
+    if step == 2:
+        config.offerTable.update_one(
+            {"offerId": offerId},
+            {"$set":{   "offerTitle":offerTitle,
+                        "offerDate" : offerDate,
+                        "wantedProfile" : wantedProfile,
+                        "text": text, 
+                        "offerDate['begin']" : offerDate['begin'],
+                        "offerDate['end']" : offerDate['end'],
+                        }}
+        )
+
+    if step == 1:
+        projectTitle = request.get_json().get("projectTitle", None)
+        fieldActivity = request.get_json().get('fieldActivity', None)
+        place = request.get_json().get('place', None)
+        enterpriseLogo = request.get_json().get('entrepriseLogo', None)
+        networking = request.get_json().get('networking', None)
+        projectDate = request.get_json().get('projectDate', None)
+        contact = request.get_json().get('contact', None)
+
+        config.offerTable.update_one(
+            {"offerId": offerId},
+            {"$set":{   "projectTitle":projectTitle,
+                        "fieldActivity" : fieldActivity,
+                        "place" : place,
+                        "enterpriseLogo": enterpriseLogo, 
+                        "projectDate['begin']" : projectDate['begin'],
+                        "projectDate['end']" : projectDate['end'],
+                        "contact[name]" : contact['name'],
+                        "contact[phone]" : contact['phone'],
+                        "contact[mail]" : contact['mail'],
+                        }}
+        )
 
     updateResult = config.offerTable.find_one({"offerId": offerId})
     logging.error(updateResult)
@@ -103,6 +126,7 @@ def deleteOffers(offerId):
 @config.g_app.route("/offer/<offerId>", methods=["GET"])
 def getOfferById(offerId):
     offer = config.offerTable.find_one({"offerId": offerId})
+    logging.error(offer)
     return mongodoc_jsonify(offer)
 
 def mongodoc_jsonify(*args, **kwargs):

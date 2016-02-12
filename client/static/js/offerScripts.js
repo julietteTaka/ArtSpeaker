@@ -105,7 +105,7 @@ $( document ).ready(function() {
     $('button#completeOffer').click(function(event){
         event.preventDefault();
         var offerId = $(this).attr("data-offerId")
-        location.href = '/offer/'+ offerId+'/step/2';
+        location.href = '/offer/'+ offerId+'/step/1';
     });
 
     var i = $('#networks div').size();
