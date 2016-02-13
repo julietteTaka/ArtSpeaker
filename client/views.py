@@ -54,9 +54,11 @@ def authorized():
 
 @config.g_app.route('/logout')
 def logout():
+    offers = requests.get(config.serverRootUri+"/offers/number/10/page/0")
+
     session.pop('google_token', None)
     redirectTarget = request.values.get('next') or request.referrer
-    return render_template("index.html")
+    return render_template("index.html", offers=offers.json())
 
 @config.google.tokengetter
 def get_google_oauth_token():
@@ -66,17 +68,18 @@ def get_google_oauth_token():
 
 @config.g_app.route('/')
 def index():
+    offers = requests.get(config.serverRootUri+"/offers/number/10/page/0")
     if 'google_token' in session:
         user = config.google.get('userinfo').data
-        return render_template("index.html", user=user)
-    return render_template("index.html")
+        return render_template("index.html", user=user, offers=offers.json())
+    return render_template("index.html", offers=offers.json())
 
 # --------- OFFERS  ---------
 
-@config.g_app.route('/offers', methods=['GET'])
-def allOffers():
-    offers = requests.get(config.serverRootUri+"/offer")
-
+@config.g_app.route("/offers/number/<number>", methods=["GET"])
+@config.g_app.route("/offers/number/<number>/page/<page>", methods=["GET"])
+def allOffers(number,page=0):
+    offers = requests.get(config.serverRootUri+"/offers/number/"+number+"/page/"+page)
     if 'google_token' in session:
         user = config.google.get('userinfo').data
         return render_template("offers.html", user=user, offers=offers.json())
@@ -94,11 +97,9 @@ def userOffers(userId):
 @config.g_app.route('/offer', methods=['POST'])
 def newOffer():
     header = {'content-type' : 'application/json'}
-    logging.error(request.data)
     result = requests.post(config.serverRootUri + '/offer', data=request.data, headers=header)
     if result.status_code != 200:
         abort(result.status_code,  {'message': 'il y a eu une erreur lors de la soumission de votre formulaire.'})
-    logging.error(result.json())
     return jsonify(**result.json())
 
 @config.g_app.route('/offer/<offerID>', methods=['DELETE'])
@@ -120,7 +121,6 @@ def getOfferById(offerID):
 @config.g_app.route('/offer/<offerId>/step/<step>', methods=['POST'])
 def completeOffer(offerId, step):
     header = {'content-type' : 'application/json'}
-    logging.error(request.data)
     result = requests.post(config.serverRootUri + '/offer/'+offerId+'/step/'+step, data=request.data, headers=header)
     if result.status_code != 200:
         abort(result.status_code,  {'message': 'il y a eu une erreur lors de la soumission de votre formulaire.'})
