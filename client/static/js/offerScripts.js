@@ -124,3 +124,24 @@ $( document ).ready(function() {
         }
     });
 });
+
+function pagination(){
+    console.log( $('#pagination').attr("data-page"));
+    var perPage = $('#pagination').attr("data-perPage");
+    var currentPage = $('#pagination').attr("data-page");
+    var totalPage = $('#pagination').attr("data-totalPages");
+    var content = "";
+
+    //all pages displayed :
+    for (i=1; i<totalPage; i++){
+        if(i == currentPage)
+            content+="<a href='/offers/number/"+perPage+"/page/"+i+"'> <strong> "+i+" </strong></a>"
+        else
+            content+="<a href='/offers/number/"+perPage+"/page/"+i+"'> "+i+" </a>"
+    }
+
+    //TODO : skip middle pages
+
+    //display pagination
+    $("#pagination").append(content);
+}

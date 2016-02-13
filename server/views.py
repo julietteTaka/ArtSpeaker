@@ -1,6 +1,7 @@
 import logging
 import config
 import json
+import math
 
 from bson import json_util, ObjectId
 from flask import jsonify, Response, request, abort, make_response
@@ -59,7 +60,6 @@ def createOffer():
 
     config.offerTable.insert(offer.__dict__)
     requestResult = config.offerTable.find_one({"offerId": offerId})
-    logging.error(requestResult)
     return mongodoc_jsonify(requestResult)
 
 @config.g_app.route("/offer/<offerId>/step/<step>", methods=["POST"])
@@ -105,13 +105,25 @@ def offerStepTwo(offerId, step):
         )
 
     updateResult = config.offerTable.find_one({"offerId": offerId})
-    logging.error(updateResult)
     return mongodoc_jsonify(updateResult)
 
-@config.g_app.route("/offer", methods=["GET"])
+@config.g_app.route("/offers", methods=["GET"])
 def getOffers():
     offers = config.offerTable.find()
     return mongodoc_jsonify({"offers":[ result for result in offers ]})
+
+@config.g_app.route("/offers/number/<number>/page/<page>", methods=["GET"])
+def getOfferGroup(number, page):
+    if number:
+        number = int(number)
+    if page:
+        page = int(page)
+
+    totalOffers = config.offerTable.count()
+    totalPages = int(math.ceil(totalOffers / number)+1)
+    offers = config.offerTable.find().limit(number).skip(page)
+
+    return mongodoc_jsonify({"offers":[ result for result in offers ], "totalOffers":totalOffers, "page":page, "totalPages":totalPages})
 
 @config.g_app.route("/user/<userId>/offer", methods=["GET"])
 def getOffersFromUser(userId):
@@ -126,7 +138,6 @@ def deleteOffers(offerId):
 @config.g_app.route("/offer/<offerId>", methods=["GET"])
 def getOfferById(offerId):
     offer = config.offerTable.find_one({"offerId": offerId})
-    logging.error(offer)
     return mongodoc_jsonify(offer)
 
 def mongodoc_jsonify(*args, **kwargs):
