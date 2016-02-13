@@ -13,40 +13,17 @@ input {
     
 }
 </style>
-
     <section>
-        {% if step %}
-
-        <form id='offerStepTwo'>
-            <fieldset>
-
-            <p> {{ offer.projectTitle }} </p>
-            <p>{{ offer.fieldActivity}}</p>
-            <p>Titre de l'offre :   <input type="text" id="offerTitle" placeholder="Recherche Graphiste"></p>
-
-            <p>Offre disponible du
-                <input type="text" id="begin" class="datepicker">
-                au 
-                <input type="text" id="end" class="datepicker"></p>
-
-                <p>Mots clefs de l'annonce :
-                <input type="text" id="tags" placeholder="#tag #your #offer"> </p>
-
-                <p>Poste / domaine d'activités :
-                <input type="text" id="wantedProfiles" placeholder="Graphiste"> </p>
-
-                <p>Votre message :<br/>
-                <textarea style='width:800px; height:500px' type="text" id="text" placeholder="here is you announce"></textarea>
-                </p>
-                <input type='submit' id="createOffer" value= "Submit !" data-userID="{{user.id}}" data-offerID="{{offer.offerId}}">
-            </fieldset>
-        </form>
-
-        {% else %}
+        {% if step == "1" %}
         <form id='offerStepOne'>
             <fieldset>
                 <p>Titre de votre projet :
-                <input style='width:800px;' type='text' id="projectTitle" placeholder="Title" /></p>
+                {% set val = "" %}
+                {% if offer is defined %}
+                    {% set val = offer.projectTitle %}
+                {% endif %}
+                <input style='width:800px;' type='text' id="projectTitle" placeholder="Title" value= "{{ val }}" />
+                </p>
 
                 <p>Domaine d'activité
                 <input style='width:800px;' type='text' id="fieldActivity" placeholder="ex: Illustration">
@@ -81,6 +58,31 @@ input {
                 </p>
 
                 <input type='submit' id="createOffer" value= "Next Step !" data-userID="{{user.id}}">
+            </fieldset>
+        </form>
+
+        {% elif step == "2" %}
+
+        <form id='offerStepTwo'>
+            <fieldset>
+
+            <p> {{ offer.projectTitle }} </p>
+            <p>{{ offer.fieldActivity}}</p>
+            <p>Titre de l'offre :
+                <input type="text" id="offerTitle" placeholder="Recherche Graphiste"></p>
+
+            <p>Offre disponible du
+                <input type="text" id="begin" class="datepicker">
+                au 
+                <input type="text" id="end" class="datepicker"></p>
+
+                <p>Domaine d'activité recherché:
+                <input type="text" id="wantedProfile" placeholder="Graphiste"> </p>
+
+                <p>Votre message :<br/>
+                <textarea style='width:800px; height:500px' type="text" id="text" placeholder="here is you announce"></textarea>
+                </p>
+                <input type='submit' id="createOffer" value= "Submit !" data-userID="{{user.id}}" data-offerID="{{offer.offerId}}">
             </fieldset>
         </form>
         {% endif %}

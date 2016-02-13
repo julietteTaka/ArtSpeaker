@@ -15,9 +15,12 @@
         {% if offers.offers|length > 0 %}
         <ul>
             {% for offer in offers.offers %}
-                {% set profileType=offer.wantedProfiles %}
+                        Débug : {{ offer.offerId }}
+
             <li>
+                {% if offer.projectTitle %}
                 <h3>{{ offer.projectTitle }}</h3>
+                {% endif %}
                 <p>Domaine d'activité : {{ offer.fieldActivity }} </p>
                 <p>Lieu : {{ offer.place }} </p>
                 <p>Liens :<br/>
@@ -31,11 +34,15 @@
                 <p>Contact :  <br/><i class="fa fa-user"></i> {{ offer.contact["name"] }} <br/><i class="fa fa-phone"></i> {{ offer.contact["phone"] }}  <br/><i class="fa fa-envelope"></i> {{ offer.contact["mail"] }}</p>
 
                 <br/>
+                {% if offer.offerTitle %}
+                <h3>{{ offer.offerTitle }}</h3>
+                {% endif %}
+
                 {% if offer.offerDate %}
                 <p>Offre visible du {{ offer.offerDate["begin"] }} au {{ offer.offerDate["end"] }}</p>
                 {% endif %}
 
-                {% if offer.profileType %}
+                {% if offer.wantedProfiles %}
                 <p>
                     Type de profil : {{ offer.wantedProfiles }} 
                 </p>
@@ -44,21 +51,10 @@
                 {% if offer.text %}
                 <p>Texte : {{ offer.text }} </p>
                 {% endif %}
-                {% if offer.tags %}
-                <p>tags : 
-                    {% for tag in offer.tags %}
-                    #{{ tag }},
-                    {% endfor %}
-                </p>
-                {% endif %}
             </li>
 
             <button id="deleteOffer" data-offerId="{{ offer.offerId }}" value="Delete">Delete</button>
-            {% if offer.complete %}
-            <button id="editOffer" data-offerId="{{ offer.offerId }}" value="Delete">Edit</button>
-            {% else %}
-            <button id="completeOffer" data-offerId="{{ offer.offerId }}" value="Delete">Complete</button>
-            {% endif %}
+            <button id="completeOffer" data-offerId="{{ offer.offerId }}" value="Edit">Edit</button>
             <hr />
             {% endfor %}
         </ul>
