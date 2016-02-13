@@ -9,8 +9,9 @@ $( document ).ready(function() {
         var begin = $("#begin").val();
         var end = $("#end").val();
 
-        var wantedProfiles = $("#wantedProfiles").val();
-        var tags = (($("#tags").val()).split("#")).shift();
+        var offerTitle = $("#offerTitle").val();
+
+        var wantedProfile = $("#wantedProfiles").val();
 
         var offerDate = {  'begin' : begin,
                             'end' : end,
@@ -24,10 +25,9 @@ $( document ).ready(function() {
                     'userId' : userId,
                     'offerTitle' : offerTitle,
                     'offerDate' : offerDate,
-                    'wantedProfiles' : wantedProfiles,
-                    'tags' : tags,
+                    'wantedProfile' : wantedProfile,
                     'text' : text,
-                    'isComplete' : True,
+                    'isComplete' : "True",
                     }),
             error: function (data, ajaxContext) {
                 console.log(ajaxContext.responseText)
@@ -105,7 +105,7 @@ $( document ).ready(function() {
     $('button#completeOffer').click(function(event){
         event.preventDefault();
         var offerId = $(this).attr("data-offerId")
-        location.href = '/offer/'+ offerId+'/step/2';
+        location.href = '/offer/'+ offerId+'/step/1';
     });
 
     var i = $('#networks div').size();

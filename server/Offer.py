@@ -20,7 +20,6 @@ class Offer(object):
         self.offerDate = {}
         self.wantedProfiles = ""
         self.text = ""
-        self.tags = []
 
         # not sure
         self.remuneration = None

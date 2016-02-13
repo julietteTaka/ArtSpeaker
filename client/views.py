@@ -108,6 +108,15 @@ def deleteOffer(offerID):
         abort(result.status_code,  {'message': 'il y a eu une erreur lors la suppression de l\'offre.'})
     return jsonify(**result.json())
 
+@config.g_app.route('/offer/<offerID>', methods=['GET'])
+def getOfferById(offerID):
+    result = requests.get(config.serverRootUri + '/offer/' + offerID)
+    if result.status_code != 200:
+        abort(result.status_code,  {'message': 'can\'t retrieve offer '+offerID})
+    if result is None:
+        return render_template("index.html") # toDo page erreur
+    return jsonify(**result.json())
+
 @config.g_app.route('/offer/<offerId>/step/<step>', methods=['POST'])
 def completeOffer(offerId, step):
     header = {'content-type' : 'application/json'}
@@ -121,7 +130,7 @@ def completeOffer(offerId, step):
 def offerCreationForm():
     if 'google_token' in session:
         user = config.google.get('userinfo').data
-        return render_template("offerCreation.html", user=user) # toDo page erreur
+        return render_template("offerCreation.html", user=user, step="1") # toDo page erreur
     return render_template("index.html")  # toDo page erreur
 
 @config.g_app.route('/offer/<offerId>/step/<step>', methods=['GET'])
