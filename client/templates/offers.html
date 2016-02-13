@@ -12,7 +12,7 @@
         {% if offers.offers|length > 0 %}
         <ul>
             {% for offer in offers.offers %}
-            <li>
+            <li style="border:1px solid black; list-style-type:none; margin : 5px; padding:5px;">
                 {% if offer.projectTitle %}
                 <h3>{{ offer.projectTitle }}</h3>
                 {% endif %}
@@ -21,20 +21,30 @@
                 <p>Liens :<br/>
                     <ul>
                     {% for network in offer.networking %}
-                    <li>{{ network["network"] }} : <a href=http://{{ network["url"] }}> {{ network['url'] }}</a></li>
+                        <li>{{ network["network"] }} :
+                            <a href=http://{{ network["url"] }}> {{ network['url'] }}</a>
+                        </li>
                     {% endfor %}
                     </ul>
                 </p>
-                <p>Projet pour une durée du {{ offer.projectDate["begin"] }} au {{ offer.projectDate["end"] }}</p>
-                <p>Contact :  <br/><i class="fa fa-user"></i> {{ offer.contact["name"] }} <br/><i class="fa fa-phone"></i> {{ offer.contact["phone"] }}  <br/><i class="fa fa-envelope"></i> {{ offer.contact["mail"] }}</p>
+                <p>
+                    Projet pour une durée du {{ offer.projectDate["begin"] }} au {{ offer.projectDate["end"] }}
+                </p>
+                <p>
+                    Contact :<br/>
+                    <i class="fa fa-user"></i> {{ offer.contact["name"] }}<br/>
+                    <i class="fa fa-phone"></i> {{ offer.contact["phone"] }}<br/>
+                    <i class="fa fa-envelope"></i> {{ offer.contact["mail"] }}
+                </p>
 
-                <br/>
                 {% if offer.offerTitle %}
                 <h3>{{ offer.offerTitle }}</h3>
                 {% endif %}
 
                 {% if offer.offerDate %}
-                <p>Offre visible du {{ offer.offerDate["begin"] }} au {{ offer.offerDate["end"] }}</p>
+                <p>
+                    Offre visible du {{ offer.offerDate["begin"] }} au {{ offer.offerDate["end"] }}
+                </p>
                 {% endif %}
 
                 {% if offer.wantedProfile %}
@@ -48,14 +58,16 @@
                 {% endif %}
 
             </li>
-
-            <hr />
             {% endfor %}
         </ul>
         {% endif %}
 
     </div>
-
+<section id="pagination" data-page="{{ offers.page }}" data-totalPages="{{ offers.totalPages }}" data-perPage="{{ offers.offers|length }}">
+    <script>
+        pagination();
+    </script>
+</section>
 
 {% endblock %}
 

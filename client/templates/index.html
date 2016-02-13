@@ -6,15 +6,26 @@
 
 {% block content %}
 
-    <div>
-        <h2> In this page :</h2>
-        <ul>
-            <li>the last offers</li>
-            <li>the last portfolios</li>
-            <li>the last completed project</li>
-            <li>some people that are happy because of our amazing website</li>
-        </ul>
-    </div>
+<section id ="lastOffers">
+<h2> Latest Offers ({{offers.offers|length }}) : </h2>
+    <ul>
+            {% for offer in offers.offers %}
+                        
 
+            <li style="border:1px solid black; list-style-type:none; width : 300px; height : 220px; float : left; margin : 5px; padding:5px;">
+                Débug : {{ offer.offerId }}
+                <h3>{{ offer.projectTitle }}</h3>
+                <p>Domaine d'activité : {{ offer.fieldActivity }} </p>
+                <p>Lieu : {{ offer.place }} </p>
+                <h3>{{ offer.offerTitle }}</h3>
+                <p>
+                    Type de profil : {{ offer.wantedProfiles }} 
+                </p>
+            </li>
+
+            {% endfor %}
+        </ul>
+
+</section>
 
 {% endblock %}
