@@ -46,8 +46,6 @@ def createOffer():
         offer.fieldActivity = fieldActivity
     if place is not None :
         offer.place = place
-    if enterpriseLogo is not None :
-        offer.enterpriseLogo = enterpriseLogo
     if networking is not None :
         offer.networking = networking
     if projectDate is not None :
@@ -62,7 +60,7 @@ def createOffer():
     requestResult = config.offerTable.find_one({"offerId": offerId})
     return mongodoc_jsonify(requestResult)
 
-@config.g_app.route("/offer/<offerId>/step/<step>", methods=["POST"])
+@config.g_app.route("/offer/<offerId>/step/<int:step>", methods=["POST"])
 def offerStepTwo(offerId, step):
     offerTitle = request.get_json().get('offerTitle', None)
     offerDate = request.get_json().get('offerDate', None)

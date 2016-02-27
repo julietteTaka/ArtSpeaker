@@ -8,8 +8,7 @@ class Offer(object):
         self.projectTitle = ""
         self.fieldActivity = None
         self.place = ""
-        self.enterpriseLogo = None
-        self.networking = []
+        self.networking = {}
         self.projectDate = {}
         self.contact = {}
         self.isOpen = False
@@ -20,6 +19,9 @@ class Offer(object):
         self.offerDate = {}
         self.wantedProfiles = ""
         self.text = ""
+        self.enterpriseLogo = None
+        self.projectVisuel = None
+
 
         # not sure
         self.remuneration = None
