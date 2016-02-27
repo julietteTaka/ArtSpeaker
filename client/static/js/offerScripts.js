@@ -5,7 +5,7 @@ $( document ).ready(function() {
         var userId = $("#createOffer").attr("data-userID");
         var offerId = $("#createOffer").attr("data-offerID");
 
-        var text = $("#text").val();
+        var text = $("#offerText").val();
         var begin = $("#begin").val();
         var end = $("#end").val();
 
@@ -66,11 +66,17 @@ $( document ).ready(function() {
                 'network' : $(this).find("select option:selected").val(),
                 'url' : $(this).find("input").val(),
             })
-        })
+        });
+
+        var custom_url = "/offer";
+        if($("#createOffer").attr("data-edit") == "True"){
+            var offerId = $("#createOffer").attr("data-offerId");
+            custom_url = "/offer/"+offerId+"/step/1";
+        }
 
         $.ajax({
             type : 'POST',
-            url : '/offer',
+            url : custom_url,
             contentType: 'application/json; charset=utf-8',
             data : JSON.stringify({
                     'userId' : userId,
