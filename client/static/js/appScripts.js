@@ -1,5 +1,6 @@
 $( document ).ready(function() {
 
+/* ------------ OFFERS ---------- */
     $('#offerStepTwo').submit(function(event){
         event.preventDefault();
         var userId = $("#createOffer").attr("data-userID");
@@ -108,11 +109,64 @@ $( document ).ready(function() {
         location.href = '/offer/'+ offerId+'/step/1';
     });
 
+/* ------------ PORTFOLIO ---------- */
+$('#portfolioCreation').submit(function(event){
+        event.preventDefault();
+        var userId = $("#createPortfolio").attr("data-userID");
+        var pseudo = $("#pseudo").val();
+        var place = $("#place").val();
+        var fieldActivity = $("#fieldActivity").val();
+        var begin = $("#begin").val();
+        var end = $("#end").val();
+        var phone = $("#phone").val();
+        var mail = $("#mail").val();
+        var name = $("#name").val();
+
+        var availability = {  'begin' : begin,
+                            'end' : end,
+                        }
+
+        var contact = { 'name' : name,
+                        'phone' : phone,
+                        'mail' : mail,
+                        }
+        var networking = []
+
+        $("#networks div").each(function(){
+            networking.push({
+                'network' : $(this).find("select option:selected").val(),
+                'url' : $(this).find("input").val(),
+            })
+        })
+
+        $.ajax({
+            type : 'POST',
+            url : '/portfolio',
+            contentType: 'application/json; charset=utf-8',
+            data : JSON.stringify({
+                    'userId' : userId,
+                    'pseudo' : pseudo,
+                    'fieldActivity' : fieldActivity,
+                    'place' : place,
+                    'networking' : networking,
+                    'availability' : availability,
+                    'contact' : contact,
+                    }),
+            error: function (data, ajaxContext) {
+                console.log(ajaxContext.responseText)
+            },
+        }).done(function(data){
+            location.href = "/portfolio/"+userId;
+        });
+    });
+
+/* ------------ FORMS ---------- */
+
     var i = $('#networks div').size();
 
     $('.addField').click(function(event)
     {
-        $('<div><select name="social" size="1"><option value="website" selected="selected">website</option><option value="Facebook">Facebook</option><option value="Twitter">Twitter</option><option value="Other">Custom link</option></select><input style="width:800px; type="text" class="link" placeholder="www.monsite.com" /><span class="removeField" style="cursor:pointer;" onclick=""> Remove </span></div>').appendTo("#networks");
+        $('<div><select name="social" size="1"><option value="website" selected="selected">website</option><option value="Facebook">Facebook</option><option value="Twitter">Twitter</option><option value="Other">Custom link</option></select><input type="text" class="link" placeholder="www.monsite.com" /><span class="removeField" onclick=""> Remove </span></div>').appendTo("#networks");
         i++;
     });
 
@@ -125,6 +179,7 @@ $( document ).ready(function() {
     });
 });
 
+/* ------------ PAGINATION ---------- */
 function pagination(){
     console.log( $('#pagination').attr("data-page"));
     var perPage = $('#pagination').attr("data-perPage");
