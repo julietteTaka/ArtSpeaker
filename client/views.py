@@ -74,7 +74,7 @@ def index():
         return render_template("index.html", user=user, offers=offers.json())
     return render_template("index.html", offers=offers.json())
 
-# --------- OFFERS  ---------
+# --------- OFFER  ---------
 
 @config.g_app.route("/offers/number/<number>", methods=["GET"])
 @config.g_app.route("/offers/number/<number>/page/<page>", methods=["GET"])
@@ -145,6 +145,28 @@ def offerCreationFormStep2(offerId, step):
         return render_template("offerCreation.html", user=user, offer=result.json(), step=step)
     return render_template("index.html") # toDo page erreur
 
+
+# --------- PORTFOLIO  ---------
+@config.g_app.route('/portfolio', methods=['GET'])
+def portfolioCreationForm():
+    if 'google_token' in session:
+        user = config.google.get('userinfo').data
+        return render_template("portfolioCreation.html", user=user) # toDo page erreur
+    return render_template("index.html")  # toDo page erreur
+
+@config.g_app.route('/portfolio/<userId>', methods=['GET'])
+def displayPortfolioFrom(userId):
+    if 'google_token' in session:
+        user = config.google.get('userinfo').data
+        return render_template("portfolio.html", user=user)
+    return render_template("portfolio.html")
+
+@config.g_app.route('/user/<userId>/portfolio', methods=['GET'])
+def editPortfolio(userId):
+    if 'google_token' in session:
+        user = config.google.get('userinfo').data
+        return render_template("portfolioEdition.html", user=user) # toDo page erreur
+    return render_template("index.html")  # toDo page erreur
 
 @config.g_app.route('/user')
 def userAccount():
