@@ -7,11 +7,13 @@ from bson import json_util, ObjectId
 from flask import jsonify, Response, request, abort, make_response
 
 from Offer import Offer
+from Portfolio import Portfolio
 
 @config.g_app.route("/")
 def index():
     return "Artspeaker job offer and portfolio services."
 
+# --------- OFFER  ---------
 
 @config.g_app.route("/offer", methods=["POST"])
 def createOffer():
@@ -139,6 +141,71 @@ def deleteOffers(offerId):
 def getOfferById(offerId):
     offer = config.offerTable.find_one({"offerId": offerId})
     return mongodoc_jsonify(offer)
+
+
+# --------- PORTFOLIO  ---------
+
+@config.g_app.route("/portfolio", methods=["POST"])
+def createPortfolio():
+    '''
+    Create the portfolio
+    '''
+
+    portfolioId = str(ObjectId())
+    userId = request.get_json().get("userId", None)
+
+    if  portfolioId == None or userId == None:
+        logging.error("The portfolio ID or the user ID is undefined")
+        abort(make_response("The portfolio ID, the user ID is undefined", 500))
+
+    portfolio = Portfolio(portfolioId, userId)
+    logging.error(portfolio)
+    # minimal requierements
+
+    pseudo = request.get_json().get("projectTitle", None)
+    fieldActivity = request.get_json().get('fieldActivity', None)
+    place = request.get_json().get('place', None)
+    networking = request.get_json().get('networking', None)
+    availability = request.get_json().get('availability', None)
+    contact = request.get_json().get('contact', None)
+
+    # Data
+
+    if pseudo is not None :
+        portfolio.pseudo = pseudo
+    if fieldActivity is not None :
+        portfolio.fieldActivity = fieldActivity
+    if place is not None :
+        portfolio.place = place
+    if networking is not None :
+        portfolio.networking = networking
+    if availability is not None :
+        portfolio.availability['begin'] = availability['begin']
+        portfolio.availability['end'] = availability['end']
+    if contact is not None :
+        portfolio.contact['name'] = contact['name']
+        portfolio.contact['phone'] = contact['phone']
+        portfolio.contact['mail'] = contact['mail']
+
+    config.portfolioTable.insert(portfolio.__dict__)
+    requestResult = config.portfolioTable.find_one({"portfolioId": portfolioId})
+    logging.error(requestResult)
+    return mongodoc_jsonify(requestResult)
+
+@config.g_app.route("/portfolio/<portfolioId>", methods=["GET"])
+def getPortfolioById(portfolioId):
+    portfolio = config.portfolioTable.find_one({"portfolioId": portfolioId})
+    return mongodoc_jsonify(portfolio)
+
+@config.g_app.route("/user/<userId>/portfolio", methods=["GET"])
+def getPortfolioByUserId(userId):
+    portfolio = config.portfolioTable.find_one({"userId": userId})
+    return mongodoc_jsonify(portfolio)
+
+@config.g_app.route("/portfolio/<oportfolioId>", methods=["DELETE"])
+def deletePortfolio(portfolioId):
+    deletedPortfolio = config.portfolioTable.remove({"portfolioId": portfolioId})
+    return mongodoc_jsonify(deletedPortfolio)
 
 def mongodoc_jsonify(*args, **kwargs):
     return Response(json.dumps(args[0], default=json_util.default), mimetype='application/json')

@@ -1,7 +1,7 @@
 class Portfolio(object):
-    def __init__(self, userId):
+    def __init__(self, portfolioId, userId):
         self.userId = userId
-
+        self.portfolioId = portfolioId
         # first step
         self.pseudo = ""
         self.place = ""
@@ -11,9 +11,6 @@ class Portfolio(object):
         self.availability = {}
 
         # second step
-        self.pageTitle
         self.contact = {}
         self.galery = []
         self.tags = []
-        self.networking = []
-

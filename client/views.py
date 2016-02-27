@@ -71,6 +71,7 @@ def index():
     offers = requests.get(config.serverRootUri+"/offers/number/10/page/0")
     if 'google_token' in session:
         user = config.google.get('userinfo').data
+
         return render_template("index.html", user=user, offers=offers.json())
     return render_template("index.html", offers=offers.json())
 
@@ -151,15 +152,21 @@ def offerCreationFormStep2(offerId, step):
 def portfolioCreationForm():
     if 'google_token' in session:
         user = config.google.get('userinfo').data
-        return render_template("portfolioCreation.html", user=user) # toDo page erreur
+        portfolio = requests.get(config.serverRootUri+"/user/"+user['id']+"/portfolio")
+        if portfolio is not None:
+            return render_template("myPortfolio.html", user=user, portfolio=portfolio.json())
+        else:
+            return render_template("portfolioCreation.html", user=user)
     return render_template("index.html")  # toDo page erreur
 
-@config.g_app.route('/portfolio/<userId>', methods=['GET'])
-def displayPortfolioFrom(userId):
+@config.g_app.route('/portfolio/<portfolioId>', methods=['GET'])
+def displayPortfolioFrom(portfolioId):
+    portfolio = requests.get(config.serverRootUri + '/portfolio/'+portfolioId)
+    logging.error(portfolio.json())
     if 'google_token' in session:
         user = config.google.get('userinfo').data
-        return render_template("portfolio.html", user=user)
-    return render_template("portfolio.html")
+        return render_template("myPortfolio.html", user=user, portoflio=portfolio.json())
+    return render_template("myPortfolio.html", portoflio=portfolio.json())
 
 @config.g_app.route('/user/<userId>/portfolio', methods=['GET'])
 def editPortfolio(userId):
@@ -167,6 +174,21 @@ def editPortfolio(userId):
         user = config.google.get('userinfo').data
         return render_template("portfolioEdition.html", user=user) # toDo page erreur
     return render_template("index.html")  # toDo page erreur
+
+@config.g_app.route('/portfolio', methods=['POST'])
+def newPortfolio():
+    header = {'content-type' : 'application/json'}
+    result = requests.post(config.serverRootUri + '/portfolio', data=request.data, headers=header)
+    if result.status_code != 200:
+        abort(result.status_code,  {'message': 'il y a eu une erreur lors de la soumission de votre formulaire.'})
+    return jsonify(**result.json())
+
+@config.g_app.route('/portfolio/<portfolioId>', methods=['DELETE'])
+def deletePortfolio(portfolioID):
+    result = requests.delete(config.serverRootUri + '/portfolio/' + portfolioID)
+    if result.status_code != 200:
+        abort(result.status_code,  {'message': 'il y a eu une erreur lors la suppression du portfolio.'})
+    return jsonify(**result.json())
 
 @config.g_app.route('/user')
 def userAccount():
