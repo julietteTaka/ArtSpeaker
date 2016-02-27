@@ -16,4 +16,6 @@ class Portfolio(object):
         self.galery = []
         self.tags = []
         self.networking = []
+        self.artistLogo = None
+        self.portfolioVisuel = None
 
