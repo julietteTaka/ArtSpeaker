@@ -156,7 +156,7 @@ $('#portfolioCreation').submit(function(event){
                 console.log(ajaxContext.responseText)
             },
         }).done(function(data){
-            location.href = "/portfolio/"+userId;
+            location.href = "/user/"+userId+"/portfolio";
         });
     });
 
@@ -168,7 +168,7 @@ $('#portfolioCreation').submit(function(event){
                 type : 'DELETE',
                 url : '/portfolio/'+ portfolioId,
                 success: function(){
-                    location.href = "/portfolio/"
+                    location.href = "/user/"+userId+"/portfolio"
                 }
             });
         }
@@ -198,7 +198,6 @@ $('#portfolioCreation').submit(function(event){
             $('#availability #end').addClass('input-disabled');
             $('#availability #begin').attr('readonly', true);
             $('#availability #begin').addClass('input-disabled');
-            console.log($('#availability #end'))
         }else
         {
             $('#availability #end').attr('readonly', false);

@@ -148,8 +148,8 @@ def offerCreationFormStep2(offerId, step):
 
 
 # --------- PORTFOLIO  ---------
-@config.g_app.route('/portfolio', methods=['GET'])
-def portfolioCreationForm():
+@config.g_app.route('/user/<userId>/portfolio', methods=['GET'])
+def editPortfolio(userId):
     if 'google_token' in session:
         user = config.google.get('userinfo').data
         logging.error(user)
@@ -169,13 +169,6 @@ def displayPortfolioFrom(portfolioId):
         user = config.google.get('userinfo').data
         return render_template("myPortfolio.html", user=user, portoflio=portfolio.json())
     return render_template("myPortfolio.html", portoflio=portfolio.json())
-
-@config.g_app.route('/user/<userId>/portfolio', methods=['GET'])
-def editPortfolio(userId):
-    if 'google_token' in session:
-        user = config.google.get('userinfo').data
-        return render_template("portfolioEdition.html", user=user) # toDo page erreur
-    return render_template("index.html")  # toDo page erreur
 
 @config.g_app.route('/portfolio', methods=['POST'])
 def newPortfolio():
