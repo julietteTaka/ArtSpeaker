@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+
+
+
+{% block content %}
+
+{% if user %}
+
+{% block title %}
+    <h1>{{ portfolio.pseudo }}</h1>
+{% endblock %}
+    <div>
+        Débug : {{ portfolio.portfolioId }}
+portfolio data : {{ portfolio }}
+            <li>
+                <p>Domaine d'activité : {{ portfolio.fieldActivity }} </p>
+                <p>Lieu : {{ portfolio.place }} </p>
+                <p>Liens :<br/>
+                    <ul>
+                    {% for network in portfolio.networking %}
+                    <li>{{ network["network"] }} : <a href=http://{{ network["url"] }}> {{ network['url'] }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </p>
+                {% if portfolio.availability is defined %}
+                <p>Je suis dispo du {{ portfolio.availability["begin"] }} au {{ portfolio.availability["end"] }}</p>
+                {% endif %}
+                {% if portfolio.contact is defined %}
+                <p>Contact :  <br/><i class="fa fa-user"></i> {{ portfolio.contact["name"] }} <br/><i class="fa fa-phone"></i> {{ portfolio.contact["phone"] }}  <br/><i class="fa fa-envelope"></i> {{ portfolio.contact["mail"] }}</p>
+                {% endif %}
+            </li>
+
+            <button id="deleteportfolio" data-portfolioId="{{ portfolio.portfolioId }}" value="Delete">Delete my portfolio :( </button>
+    </div>
+{% else %}
+<p> You can see this portfolio as a simple user </p>
+{% endif %}
+<script src="{{ url_for('static', filename='js/portfolioScripts.js') }}"></script>
+
+{% endblock %}
+
