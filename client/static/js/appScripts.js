@@ -160,6 +160,20 @@ $('#portfolioCreation').submit(function(event){
         });
     });
 
+    $('button#deletePortfolio').click(function(event){
+        event.preventDefault();
+        if (confirm('Are you sure you want to delete your beautiful portfolio ?')) {
+            var portfolioId = $(this).attr("data-portfolioId")
+            $.ajax({
+                type : 'DELETE',
+                url : '/portfolio/'+ portfolioId,
+                success: function(){
+                    location.href = "/portfolio/"
+                }
+            });
+        }
+    })
+
 /* ------------ FORMS ---------- */
 
     var i = $('#networks div').size();
