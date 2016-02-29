@@ -202,7 +202,7 @@ def getPortfolioByUserId(userId):
     portfolio = config.portfolioTable.find_one({"userId": userId})
     return mongodoc_jsonify(portfolio)
 
-@config.g_app.route("/portfolio/<oportfolioId>", methods=["DELETE"])
+@config.g_app.route("/portfolio/<portfolioId>", methods=["DELETE"])
 def deletePortfolio(portfolioId):
     deletedPortfolio = config.portfolioTable.remove({"portfolioId": portfolioId})
     return mongodoc_jsonify(deletedPortfolio)

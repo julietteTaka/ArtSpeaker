@@ -152,8 +152,10 @@ def offerCreationFormStep2(offerId, step):
 def portfolioCreationForm():
     if 'google_token' in session:
         user = config.google.get('userinfo').data
+        logging.error(user)
         portfolio = requests.get(config.serverRootUri+"/user/"+user['id']+"/portfolio")
-        if portfolio is not None:
+        logging.error(portfolio.json())
+        if portfolio.json() is not None:
             return render_template("myPortfolio.html", user=user, portfolio=portfolio.json())
         else:
             return render_template("portfolioCreation.html", user=user)
@@ -184,8 +186,8 @@ def newPortfolio():
     return jsonify(**result.json())
 
 @config.g_app.route('/portfolio/<portfolioId>', methods=['DELETE'])
-def deletePortfolio(portfolioID):
-    result = requests.delete(config.serverRootUri + '/portfolio/' + portfolioID)
+def deletePortfolio(portfolioId):
+    result = requests.delete(config.serverRootUri + '/portfolio/' + portfolioId)
     if result.status_code != 200:
         abort(result.status_code,  {'message': 'il y a eu une erreur lors la suppression du portfolio.'})
     return jsonify(**result.json())
