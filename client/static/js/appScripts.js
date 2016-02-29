@@ -191,7 +191,27 @@ $('#portfolioCreation').submit(function(event){
             i--;
         }
     });
+
+    $('#checkbox_always').change(function() {
+        if(this.checked) {
+            $('#availability #end').attr('readonly', true);
+            $('#availability #end').addClass('input-disabled');
+            $('#availability #begin').attr('readonly', true);
+            $('#availability #begin').addClass('input-disabled');
+            console.log($('#availability #end'))
+        }else
+        {
+            $('#availability #end').attr('readonly', false);
+            $('#availability #end').addClass('input-enabled');
+            $('#availability #begin').attr('readonly', false);
+            $('#availability #begin').addClass('input-enabled');
+        }
+    });
+
 });
+
+
+
 
 /* ------------ PAGINATION ---------- */
 function pagination(){
