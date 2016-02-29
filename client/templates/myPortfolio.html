@@ -6,7 +6,7 @@
 {% block content %}
 
 {% if user %}
-
+{% if portfolio %}
 {% block title %}
     <h1>{{ portfolio.pseudo }}</h1>
 {% endblock %}
@@ -33,6 +33,10 @@ portfolio data : {{ portfolio }}
 
             <button id="deleteportfolio" data-portfolioId="{{ portfolio.portfolioId }}" value="Delete">Delete my portfolio :( </button>
     </div>
+    {% else %}
+    <p> On dirait que le portfolio que vous recherchez n'est plus disponible... </p>
+    {% endif %}
+
 {% else %}
 <p> You can see this portfolio as a simple user </p>
 {% endif %}
