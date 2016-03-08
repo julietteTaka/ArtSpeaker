@@ -19,8 +19,10 @@ input {
             <fieldset>
                 <p>Titre de votre projet :
                 {% set val = "" %}
+                {% set offerId = "" %}
                 {% if offer is defined %}
                     {% set val = offer.projectTitle %}
+                    {% set offerId = offer.offerId %}
                 {% endif %}
                 <input style='width:800px;' type='text' id="projectTitle" placeholder="Title" value= "{{ val }}" />
                 </p>
@@ -57,7 +59,7 @@ input {
                 <input type="text" id="mail" placeholder="addresse mail">
                 </p>
 
-                <input type='submit' id="createOffer" value= "Next Step !" data-userID="{{user.id}}">
+                <input type='submit' id="createOffer" value= "Next Step !" data-userID="{{user.id}}" data-edit="{{edit}}" data-offerID={{offerId}}>
             </fieldset>
         </form>
 
@@ -80,9 +82,9 @@ input {
                 <input type="text" id="wantedProfile" placeholder="Graphiste"> </p>
 
                 <p>Votre message :<br/>
-                <textarea style='width:800px; height:500px' type="text" id="text" placeholder="here is you announce"></textarea>
+                <textarea style='width:800px; height:500px' id="offerText" placeholder="here is you announce"></textarea>
                 </p>
-                <input type='submit' id="createOffer" value= "Submit !" data-userID="{{user.id}}" data-offerID="{{offer.offerId}}">
+                <input type='submit' id="createOffer" value= "Submit !" data-userID="{{user.id}}" data-edit="{{edit}}" data-offerID="{{offer.offerId}}">
             </fieldset>
         </form>
         {% endif %}

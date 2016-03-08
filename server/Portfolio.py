@@ -6,16 +6,17 @@ class Portfolio(object):
         self.pseudo = ""
         self.place = ""
         self.fieldOfActivity = None
-        self.networking = []
         self.profilePicture = None
         self.availability = {}
-        self.coverPicture = {
-            'id':'',
-            'path':'',
-            'mimetype':''
-        }
 
         # second step
         self.contact = {}
         self.galery = []
         self.tags = []
+        self.networking = []
+        self.artistLogo = None
+        self.coverPicture = {
+            'id':'',
+            'path':'',
+            'mimetype':''
+        }

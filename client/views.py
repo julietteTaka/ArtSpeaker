@@ -145,7 +145,7 @@ def offerCreationFormStep2(offerId, step):
         if result.status_code != 200:
             abort(result.status_code,  {'message': 'On dirait l\'offre '+offerId+' n\'existe plus...'})
 
-        return render_template("offerCreation.html", user=user, offer=result.json(), step=step)
+        return render_template("offerCreation.html", user=user, offer=result.json(), step=step, edit=True)
     return render_template("index.html") # toDo page erreur
 
 
