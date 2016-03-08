@@ -15,7 +15,7 @@
         {% if offers.offers|length > 0 %}
         <ul>
             {% for offer in offers.offers %}
-                        Débug : {{ offer.offerId }}
+                        Débug : {{ offer }}
 
             <li>
                 {% if offer.projectTitle %}
@@ -64,7 +64,6 @@
 {% else %}
 <p> You must be logged to see this page ! </p>
 {% endif %}
-<script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
 
 {% endblock %}
 

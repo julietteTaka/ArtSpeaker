@@ -77,8 +77,7 @@ def offerStepTwo(offerId, step):
                         "offerDate" : offerDate,
                         "wantedProfile" : wantedProfile,
                         "text": text, 
-                        "offerDate[begin]" : offerDate['begin'],
-                        "offerDate[end]" : offerDate['end'],
+                        "offerDate" : {"begin" : offerDate['begin'], "end" : offerDate['end']},
                         }}
         )
 
@@ -97,11 +96,8 @@ def offerStepTwo(offerId, step):
                         "fieldActivity" : fieldActivity,
                         "place" : place,
                         "enterpriseLogo": enterpriseLogo, 
-                        "projectDate[begin]" : projectDate['begin'],
-                        "projectDate[end]" : projectDate['end'],
-                        "contact[name]" : contact['name'],
-                        "contact[phone]" : contact['phone'],
-                        "contact[mail]" : contact['mail'],
+                        "projectDate" : {"begin" : projectDate['begin'], "end" : projectDate['end']},
+                        "contact" : {"name" : contact['name'], "phone" : contact['phone'], "mail" : contact['mail']},
                         }}
         )
 
