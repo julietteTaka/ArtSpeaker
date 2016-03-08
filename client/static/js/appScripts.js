@@ -113,17 +113,21 @@ $( document ).ready(function() {
 $('#portfolioCreation').submit(function(event){
         event.preventDefault();
         var userId = $("#createPortfolio").attr("data-userID");
-        var pseudo = $("#pseudo").val();
+        var pseudo = $("#pseudonyme").val();
         var place = $("#place").val();
         var fieldActivity = $("#fieldActivity").val();
         var begin = $("#begin").val();
         var end = $("#end").val();
+
+        // TODO ALWAYS
+
         var phone = $("#phone").val();
         var mail = $("#mail").val();
         var name = $("#name").val();
 
         var availability = {  'begin' : begin,
                             'end' : end,
+                            // 'always': always, TODO
                         }
 
         var contact = { 'name' : name,
@@ -160,10 +164,10 @@ $('#portfolioCreation').submit(function(event){
         });
     });
 
-    $('button#deletePortfolio').click(function(event){
+    $("#deletePortfolioTrigger").click(function(event){
         event.preventDefault();
-        if (confirm('Are you sure you want to delete your beautiful portfolio ?')) {
-            var portfolioId = $(this).attr("data-portfolioId")
+            var userId = $("#deletePortfolio").attr("data-userId")
+            var portfolioId = $("#deletePortfolio").attr("data-portfolioId")
             $.ajax({
                 type : 'DELETE',
                 url : '/portfolio/'+ portfolioId,
@@ -171,7 +175,6 @@ $('#portfolioCreation').submit(function(event){
                     location.href = "/user/"+userId+"/portfolio"
                 }
             });
-        }
     })
 
 /* ------------ FORMS ---------- */

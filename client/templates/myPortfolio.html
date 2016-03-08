@@ -69,8 +69,29 @@
                 {% endif %}
             </li>
 
-            <button id="deleteportfolio" data-portfolioId="{{ portfolio.portfolioId }}" value="Delete">Delete my portfolio :( </button>
+            <button id="deleteportfolio" data-toggle="modal" data-target="#deletePortfolio" value="Delete">Delete my portfolio :( </button>
     </div>
+
+<div id="deletePortfolio" class="modal fade" role="dialog" data-userId="{{ user.id }}" data-portfolioId="{{ portfolio.portfolioId }}">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete your portfolio</h4>
+              </div>
+              <div class="modal-body">
+                <p> Are you sure that you want to delete your beautiful portfolio ? </p>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="deletePortfolioTrigger">Yes, I'm sure</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No, keep it safe.</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
     {% else %}
     <p> On dirait que le portfolio que vous recherchez n'est plus disponible... </p>
     {% endif %}
