@@ -159,8 +159,17 @@ def createPortfolio():
         logging.error("The portfolio ID or the user ID is undefined")
         abort(make_response("The portfolio ID, the user ID is undefined", 500))
 
+    portfolioPath = os.path.join(config.portfoliosDir, str(portfolioId))
+    imagesPath = os.path.join(portfolioPath, str("images"))
+    try:
+        if not os.path.exists(portfolioPath):
+            os.makedirs(portfolioPath)
+            os.makedirs(imagesPath)
+    except OSError:
+        logging.error("can't create "+portfolioPath+" or "+imagesPath)
+        pass
+
     portfolio = Portfolio(portfolioId, userId)
-    logging.error(portfolio)
     # minimal requierements
 
     pseudo = request.get_json().get("projectTitle", None)
