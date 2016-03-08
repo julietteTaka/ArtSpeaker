@@ -9,6 +9,11 @@ class Portfolio(object):
         self.networking = []
         self.profilePicture = None
         self.availability = {}
+        self.coverPicture = {
+            'id':'',
+            'path':'',
+            'mimetype':''
+        }
 
         # second step
         self.contact = {}

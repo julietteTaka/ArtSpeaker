@@ -2,6 +2,7 @@ import logging
 import config
 import json
 import math
+import shutil, os
 
 from bson import json_util, ObjectId
 from flask import jsonify, Response, request, abort, make_response
@@ -204,8 +205,71 @@ def getPortfolioByUserId(userId):
 
 @config.g_app.route("/portfolio/<portfolioId>", methods=["DELETE"])
 def deletePortfolio(portfolioId):
+    portfolioPath = os.path.join(config.portfoliosDir, str(portfolioId))
+
+    try:
+        shutil.rmtree(portfolioPath)
+    except OSError:
+        logging.error("Can't remove file "+portfolioPath)
+        pass
+    
     deletedPortfolio = config.portfolioTable.remove({"portfolioId": portfolioId})
     return mongodoc_jsonify(deletedPortfolio)
+
+@config.g_app.route('/portfolio/<portfolioId>/cover', methods=['POST'])
+def addCoverPicture(portfolioId):
+    '''
+    Upload a cover picture in the database and delete the old one
+    '''
+
+    portfolioPath = os.path.join(config.portfoliosDir, str(portfolioId))
+    
+    coverToBeReplaced = config.portfolioTable.find_one({ "portfolioId" : portfolioId}, {"coverPicture":1})
+    
+    if(coverToBeReplaced['coverPicture']['path']):
+        os.remove(coverToBeReplaced['coverPicture']['path'])
+
+    imgId = str(ObjectId())
+
+    file = request.files['file']
+    mimetype = request.files['file'].content_type
+    imgPath = os.path.join(portfolioPath+"/images", str(imgId)+"."+mimetype.split('/')[1])
+
+    fileName = str(imgId)+"."+mimetype.split('/')[1]
+    file.save(imgPath)
+
+    img = request.data
+    config.portfolioTable.update_one(
+            {"portfolioId": portfolioId},
+            {"$set":{   "coverPicture.id" : str(imgId),
+                        "coverPicture.mimetype" : mimetype,
+                        "coverPicture.path" : imgPath,
+                        }}
+        )
+
+    coverPicture = config.portfolioTable.find_one({ "coverPicture.id" : str(imgId)})
+    return mongodoc_jsonify(coverPicture)
+
+
+@config.g_app.route('/portfolio/<portfolioId>/resource/<resourceId>/data', methods=['GET'])
+def getResourceData(portfolioId, resourceId):
+    '''
+     Returns the resource.
+    '''
+
+    resourceData = config.portfolioTable.find_one({ "portfolioId" : portfolioId}, {"coverPicture":1})
+    mimetype = resourceData['coverPicture']['mimetype']
+    if not resourceData:
+        abort(404)
+
+    portfolioPath = os.path.join(config.portfoliosDir, str(portfolioId))
+    filePath = os.path.join (portfolioPath+"/images", resourceId+"."+mimetype.split('/')[1])
+
+    if not os.path.isfile(filePath):
+        abort(404)
+
+    resource = open(filePath)
+    return Response(resource.read(), mimetype=mimetype)
 
 def mongodoc_jsonify(*args, **kwargs):
     return Response(json.dumps(args[0], default=json_util.default), mimetype='application/json')
