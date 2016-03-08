@@ -154,9 +154,7 @@ def offerCreationFormStep2(offerId, step):
 def editPortfolio(userId):
     if 'google_token' in session:
         user = config.google.get('userinfo').data
-        logging.error(user)
         portfolio = requests.get(config.serverRootUri+"/user/"+user['id']+"/portfolio")
-        logging.error(portfolio.json())
         if portfolio.json() is not None:
             return render_template("myPortfolio.html", user=user, portfolio=portfolio.json())
         else:
@@ -166,7 +164,6 @@ def editPortfolio(userId):
 @config.g_app.route('/portfolio/<portfolioId>', methods=['GET'])
 def displayPortfolioFrom(portfolioId):
     portfolio = requests.get(config.serverRootUri + '/portfolio/'+portfolioId)
-    logging.error(portfolio.json())
     if 'google_token' in session:
         user = config.google.get('userinfo').data
         return render_template("myPortfolio.html", user=user, portoflio=portfolio.json())

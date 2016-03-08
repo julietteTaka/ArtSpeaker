@@ -79,8 +79,8 @@ def offerStepTwo(offerId, step):
                         "offerDate" : offerDate,
                         "wantedProfile" : wantedProfile,
                         "text": text, 
-                        "offerDate['begin']" : offerDate['begin'],
-                        "offerDate['end']" : offerDate['end'],
+                        "offerDate[begin]" : offerDate['begin'],
+                        "offerDate[end]" : offerDate['end'],
                         }}
         )
 
@@ -99,8 +99,8 @@ def offerStepTwo(offerId, step):
                         "fieldActivity" : fieldActivity,
                         "place" : place,
                         "enterpriseLogo": enterpriseLogo, 
-                        "projectDate['begin']" : projectDate['begin'],
-                        "projectDate['end']" : projectDate['end'],
+                        "projectDate[begin]" : projectDate['begin'],
+                        "projectDate[end]" : projectDate['end'],
                         "contact[name]" : contact['name'],
                         "contact[phone]" : contact['phone'],
                         "contact[mail]" : contact['mail'],
@@ -199,7 +199,6 @@ def createPortfolio():
 
     config.portfolioTable.insert(portfolio.__dict__)
     requestResult = config.portfolioTable.find_one({"portfolioId": portfolioId})
-    logging.error(requestResult)
     return mongodoc_jsonify(requestResult)
 
 @config.g_app.route("/portfolio/<portfolioId>", methods=["GET"])
