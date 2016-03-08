@@ -9,6 +9,10 @@ config =  ConfigParser.ConfigParser()
 config.read(os.path.join(APP_ROOT, 'server.cfg'))
 
 serverPort = config.getint('APP_SERVER', 'port')
+portfoliosDir = config.get('APP_SERVER', 'portfoliosDirectory')
+if not os.path.exists(portfoliosDir):
+    os.makedirs(portfoliosDir)
+    
 client = pymongo.MongoClient(config.get('MONGODB', 'hostname'), config.getint('MONGODB', 'port'))
 db = client.__getattr__(config.get('MONGODB', 'dbName'))
 portfolioTable = db.__getattr__(config.get('MONGODB', 'portfolioTable'))

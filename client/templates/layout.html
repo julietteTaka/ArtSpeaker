@@ -12,7 +12,7 @@
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js'></script>
-    <script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/appScripts.js') }}"></script>
     <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js'></script>
 
     
@@ -76,7 +76,7 @@
                     
                     <ul>
                         <li><a href='/user/{{ user.id }}/offers'>manage Offers</a></li>
-                        <li><a href='/portfolio'>manage Portfolio</a></li>
+                        <li><a href='/user/{{ user.id }}/portfolio'>manage Portfolio</a></li>
                     </ul>
             {% else %}
                     <p>

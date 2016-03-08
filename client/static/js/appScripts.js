@@ -1,5 +1,6 @@
 $( document ).ready(function() {
 
+/* ------------ OFFERS ---------- */
     $('#offerStepTwo').submit(function(event){
         event.preventDefault();
         var userId = $("#createOffer").attr("data-userID");
@@ -114,11 +115,81 @@ $( document ).ready(function() {
         location.href = '/offer/'+ offerId+'/step/1';
     });
 
+/* ------------ PORTFOLIO ---------- */
+$('#portfolioCreation').submit(function(event){
+        event.preventDefault();
+        var userId = $("#createPortfolio").attr("data-userID");
+        var pseudo = $("#pseudonyme").val();
+        var place = $("#place").val();
+        var fieldActivity = $("#fieldActivity").val();
+        var begin = $("#begin").val();
+        var end = $("#end").val();
+
+        // TODO ALWAYS
+
+        var phone = $("#phone").val();
+        var mail = $("#mail").val();
+        var name = $("#name").val();
+
+        var availability = {  'begin' : begin,
+                            'end' : end,
+                            // 'always': always, TODO
+                        }
+
+        var contact = { 'name' : name,
+                        'phone' : phone,
+                        'mail' : mail,
+                        }
+        var networking = []
+
+        $("#networks div").each(function(){
+            networking.push({
+                'network' : $(this).find("select option:selected").val(),
+                'url' : $(this).find("input").val(),
+            })
+        })
+
+        $.ajax({
+            type : 'POST',
+            url : '/portfolio',
+            contentType: 'application/json; charset=utf-8',
+            data : JSON.stringify({
+                    'userId' : userId,
+                    'pseudo' : pseudo,
+                    'fieldActivity' : fieldActivity,
+                    'place' : place,
+                    'networking' : networking,
+                    'availability' : availability,
+                    'contact' : contact,
+                    }),
+            error: function (data, ajaxContext) {
+                console.log(ajaxContext.responseText)
+            },
+        }).done(function(data){
+            location.href = "/user/"+userId+"/portfolio";
+        });
+    });
+
+    $("#deletePortfolioTrigger").click(function(event){
+        event.preventDefault();
+            var userId = $("#deletePortfolio").attr("data-userId")
+            var portfolioId = $("#deletePortfolio").attr("data-portfolioId")
+            $.ajax({
+                type : 'DELETE',
+                url : '/portfolio/'+ portfolioId,
+                success: function(){
+                    location.href = "/user/"+userId+"/portfolio"
+                }
+            });
+    })
+
+/* ------------ FORMS ---------- */
+
     var i = $('#networks div').size();
 
     $('.addField').click(function(event)
     {
-        $('<div><select name="social" size="1"><option value="website" selected="selected">website</option><option value="Facebook">Facebook</option><option value="Twitter">Twitter</option><option value="Other">Custom link</option></select><input style="width:800px; type="text" class="link" placeholder="www.monsite.com" /><span class="removeField" style="cursor:pointer;" onclick=""> Remove </span></div>').appendTo("#networks");
+        $('<div><select name="social" size="1"><option value="website" selected="selected">website</option><option value="Facebook">Facebook</option><option value="Twitter">Twitter</option><option value="Other">Custom link</option></select><input type="text" class="link" placeholder="www.monsite.com" /><span class="removeField" onclick=""> Remove </span></div>').appendTo("#networks");
         i++;
     });
 
@@ -129,8 +200,61 @@ $( document ).ready(function() {
             i--;
         }
     });
+
+    $('#checkbox_always').change(function() {
+        if(this.checked) {
+            $('#availability #end').attr('readonly', true);
+            $('#availability #end').addClass('input-disabled');
+            $('#availability #begin').attr('readonly', true);
+            $('#availability #begin').addClass('input-disabled');
+        }else
+        {
+            $('#availability #end').attr('readonly', false);
+            $('#availability #end').addClass('input-enabled');
+            $('#availability #begin').attr('readonly', false);
+            $('#availability #begin').addClass('input-enabled');
+        }
+    });
+
+    /* ---------------UPLOAD --------------*/
+
+//Cover picture
+
+        $("#uploadtrigger").click(function(event){
+            event.preventDefault();
+
+            var form_data = new FormData($('#addCoverPictureForm')[0]);
+
+            var portfolioId = $("#addCoverPicture").attr("attr-portfolioId");
+            var userId = $("#addCoverPicture").attr("attr-userId");
+
+            url = "/user/"+userId+"/portfolio/"+portfolioId+"/cover";
+            $.ajax({
+                    type : 'POST',
+                    url : url,
+                    data:form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data){
+                        $("#cover").attr('class', 'customCover');
+                        location.reload();
+                    },
+                    error:function(data){
+                        console.log(data);
+                    }
+                }).done(function(){
+                    $("#addCoverPictureModal").hide();
+                    $('.modal-backdrop').remove();
+                })
+        });
+
 });
 
+
+
+
+/* ------------ PAGINATION ---------- */
 function pagination(){
     console.log( $('#pagination').attr("data-page"));
     var perPage = $('#pagination').attr("data-perPage");
