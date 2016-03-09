@@ -41,10 +41,14 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="/"><i class="glyphicon glyphicon-home"></i> Home <span class="sr-only">(current)</span></a></li>
+
          {% if user %}
         <li><a href="#"><i class="glyphicon glyphicon-user"></i> My account</a></li>
+        <li><a href='/user/{{ user.id }}/offers'><i class="glyphicon glyphicon-pencil"></i> Manage Offers</a></li>
+        <li><a href='/portfolio'><i class="glyphicon glyphicon-pencil"></i> Manage Portfolio</a></li>
          {% endif %}
+
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -61,8 +65,9 @@
             <button type="submit" class="btn btn-default">Ok</button>
         </li>
         {% if user %}
-        <li><a href="/logout">Sign Out</a></li>
+        <li><a href="/logout">Log Out</a></li>
         {% else %}
+        <li><a href="/userAccount">Sign in</a></li>
         <li><a href="/login">Log in</a></li>
         {% endif %}
         </li>
@@ -71,23 +76,8 @@
           </div><!-- /.container-fluid -->
         </nav>
 
-<section>
-            {% if user %}
-                    
-                    <ul>
-                        <li><a href='/user/{{ user.id }}/offers'>manage Offers</a></li>
-                        <li><a href='/portfolio'>manage Portfolio</a></li>
-                    </ul>
-            {% else %}
-                    <p>
-                        <a class="signedIn" href="/login">Login</a>
-                    </p>
-                </li>
-            {% endif %}
-</section>
 
-
-
+    {% block title %}{% endblock %}
 <section>
     {% block content %}{% endblock %}
 </section>

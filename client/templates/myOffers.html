@@ -6,65 +6,74 @@
 {% endblock %}
 
 {% block content %}
+            <div class="container"> 
+                <div class="row">
 
-{% if user %}
-    <div>
-        <h2> <a href="/offer"> Create an Offer !</a></h2>
+                    <div class="content-box">
+                        {% if user %}
+                            <div>
+                                <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/offer'"> 
+                                    Create an Offer !
+                                </button> 
 
-        <h2> Offers ({{offers.offers|length }}) :</h2>
-        {% if offers.offers|length > 0 %}
-        <ul>
-            {% for offer in offers.offers %}
-                        Débug : {{ offer.offerId }}
+                                <h2> Offers ({{offers.offers|length }}) :</h2>
 
-            <li>
-                {% if offer.projectTitle %}
-                <h3>{{ offer.projectTitle }}</h3>
-                {% endif %}
-                <p>Domaine d'activité : {{ offer.fieldActivity }} </p>
-                <p>Lieu : {{ offer.place }} </p>
-                <p>Liens :<br/>
-                    <ul>
-                    {% for network in offer.networking %}
-                    <li>{{ network["network"] }} : <a href=http://{{ network["url"] }}> {{ network['url'] }}</a></li>
-                    {% endfor %}
-                    </ul>
-                </p>
-                <p>Projet pour une durée du {{ offer.projectDate["begin"] }} au {{ offer.projectDate["end"] }}</p>
-                <p>Contact :  <br/><i class="fa fa-user"></i> {{ offer.contact["name"] }} <br/><i class="fa fa-phone"></i> {{ offer.contact["phone"] }}  <br/><i class="fa fa-envelope"></i> {{ offer.contact["mail"] }}</p>
+                                {% if offers.offers|length > 0 %}
+                                <ul>
+                                    {% for offer in offers.offers %}
+                                                Débug : {{ offer.offerId }}
 
-                <br/>
-                {% if offer.offerTitle %}
-                <h3>{{ offer.offerTitle }}</h3>
-                {% endif %}
+                                    <li>
+                                        {% if offer.projectTitle %}
+                                        <h3>{{ offer.projectTitle }}</h3>
+                                        {% endif %}
+                                        <p>Domaine d'activité : {{ offer.fieldActivity }} </p>
+                                        <p>Lieu : {{ offer.place }} </p>
+                                        <p>Liens :<br/>
+                                            <ul>
+                                            {% for network in offer.networking %}
+                                            <li>{{ network["network"] }} : <a href=http://{{ network["url"] }}> {{ network['url'] }}</a></li>
+                                            {% endfor %}
+                                            </ul>
+                                        </p>
+                                        <p>Projet pour une durée du {{ offer.projectDate["begin"] }} au {{ offer.projectDate["end"] }}</p>
+                                        <p>Contact :  <br/><i class="fa fa-user"></i> {{ offer.contact["name"] }} <br/><i class="fa fa-phone"></i> {{ offer.contact["phone"] }}  <br/><i class="fa fa-envelope"></i> {{ offer.contact["mail"] }}</p>
 
-                {% if offer.offerDate %}
-                <p>Offre visible du {{ offer.offerDate["begin"] }} au {{ offer.offerDate["end"] }}</p>
-                {% endif %}
+                                        <br/>
+                                        {% if offer.offerTitle %}
+                                        <h3>{{ offer.offerTitle }}</h3>
+                                        {% endif %}
 
-                {% if offer.wantedProfiles %}
-                <p>
-                    Type de profil : {{ offer.wantedProfiles }} 
-                </p>
-                {% endif %}
+                                        {% if offer.offerDate %}
+                                        <p>Offre visible du {{ offer.offerDate["begin"] }} au {{ offer.offerDate["end"] }}</p>
+                                        {% endif %}
 
-                {% if offer.text %}
-                <p>Texte : {{ offer.text }} </p>
-                {% endif %}
-            </li>
+                                        {% if offer.wantedProfiles %}
+                                        <p>
+                                            Type de profil : {{ offer.wantedProfiles }} 
+                                        </p>
+                                        {% endif %}
 
-            <button id="deleteOffer" data-offerId="{{ offer.offerId }}" value="Delete">Delete</button>
-            <button id="completeOffer" data-offerId="{{ offer.offerId }}" value="Edit">Edit</button>
-            <hr />
-            {% endfor %}
-        </ul>
-        {% endif %}
+                                        {% if offer.text %}
+                                        <p>Texte : {{ offer.text }} </p>
+                                        {% endif %}
+                                    </li>
 
-    </div>
-{% else %}
-<p> You must be logged to see this page ! </p>
-{% endif %}
-<script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
+                                    <button id="deleteOffer" data-offerId="{{ offer.offerId }}" value="Delete">Delete</button>
+                                    <button id="completeOffer" data-offerId="{{ offer.offerId }}" value="Edit">Edit</button>
+                                    <hr />
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+
+                            </div>
+                        {% else %}
+                        <p> You must be logged to see this page ! </p>
+                        {% endif %}
+                        <script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
+                    </div>
+                </div>
+            </div>
 
 {% endblock %}
 
