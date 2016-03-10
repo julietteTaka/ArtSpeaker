@@ -252,6 +252,36 @@ def addCoverPicture(portfolioId):
     coverPicture = config.portfolioTable.find_one({ "coverPicture.id" : str(imgId)})
     return mongodoc_jsonify(coverPicture)
 
+@config.g_app.route('/portfolio/<portfolioId>/galleryImage', methods=['POST'])
+def addImageToGallery(portfolioId):
+    '''
+    Upload an image into the gallery
+    '''
+
+    portfolioPath = os.path.join(config.portfoliosDir, str(portfolioId))
+    imgId = str(ObjectId())
+
+    file = request.files['file']
+    mimetype = request.files['file'].content_type
+    imgPath = os.path.join(portfolioPath+"/images", str(imgId)+"."+mimetype.split('/')[1])
+
+    fileName = str(imgId)+"."+mimetype.split('/')[1]
+    file.save(imgPath)
+
+    img = request.data
+
+
+    config.portfolioTable.update_one(
+            {"portfolioId": portfolioId},
+            {"$set":{   "coverPicture.id" : str(imgId),
+                        "coverPicture.mimetype" : mimetype,
+                        "coverPicture.path" : imgPath,
+                        }}
+        )
+
+    newImage = config.portfolioTable.find_one({ "gallery" : str(imgId)})
+    return mongodoc_jsonify(coverPicture)
+
 
 @config.g_app.route('/portfolio/<portfolioId>/resource/<resourceId>/data', methods=['GET'])
 def getResourceData(portfolioId, resourceId):

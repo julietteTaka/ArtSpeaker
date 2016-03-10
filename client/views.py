@@ -195,6 +195,16 @@ def addCoverPicture(userId, portfolioId):
 
     return jsonify(**req.json())
 
+@config.g_app.route("/user/<userId>/portfolio/<portfolioId>/galleryImage", methods=['POST'])
+def addImageToGallery(userId, portfolioId):
+    filename = request.files['file'].filename
+    file = request.files['file']
+    file.save("/tmp/" + filename)
+    mimetype = request.files['file'].content_type
+    multiple_files = [('file', (filename, open("/tmp/" + filename, 'rb'), mimetype))]
+    req = requests.post(config.serverRootUri + "/portfolio/"+portfolioId+"/galleryImage", files=multiple_files)
+    return jsonify(**req.json())
+
 @config.g_app.route("/portfolio/<portfolioId>/resource/<resourceId>", methods=['get'])
 def getResource(portfolioId, resourceId):
     req = requests.get(config.serverRootUri + "/portfolio/"+portfolioId+"/resource/" + str(resourceId) + "/data")

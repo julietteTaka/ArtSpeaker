@@ -249,6 +249,33 @@ $('#portfolioCreation').submit(function(event){
                 })
         });
 
+        $("#uploadImageGalleryTrigger").click(function(event){
+            event.preventDefault();
+
+            var form_data = new FormData($('#addGalleryImageForm')[0]);
+            var portfolioId = $("#addImageGalery").attr("attr-portfolioId");
+            var userId = $("#addImageGalery").attr("attr-userId");
+
+            url = "/user/"+userId+"/portfolio/"+portfolioId+"/galleryImage";
+            $.ajax({
+                    type : 'POST',
+                    url : url,
+                    data:form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data){
+                        location.reload();
+                    },
+                    error:function(data){
+                        console.log(data);
+                    }
+                }).done(function(){
+                    $("#addCoverPictureModal").hide();
+                    $('.modal-backdrop').remove();
+                })
+        });
+
 });
 
 
