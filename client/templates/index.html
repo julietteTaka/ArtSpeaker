@@ -6,26 +6,71 @@
 
 {% block content %}
 
-<section id ="lastOffers">
-<h2> Latest Offers ({{offers.offers|length }}) : </h2>
-    <ul>
-            {% for offer in offers.offers %}
-                        
 
-            <li style="border:1px solid black; list-style-type:none; width : 300px; height : 220px; float : left; margin : 5px; padding:5px;">
-                Débug : {{ offer.offerId }}
-                <h3>{{ offer.projectTitle }}</h3>
-                <p>Domaine d'activité : {{ offer.fieldActivity }} </p>
-                <p>Lieu : {{ offer.place }} </p>
-                <h3>{{ offer.offerTitle }}</h3>
-                <p>
-                    Type de profil : {{ offer.wantedProfiles }} 
-                </p>
-            </li>
+            <div class="container"> 
+                <div class="row">
+                    <div class="col-lg-6 col-md-6"></div>
+                    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                    <div class="content-box">
 
-            {% endfor %}
-        </ul>
+                    <section id ="lastOffers">
+                    <h2> Latest Offers ({{offers.offers|length }}) : </h2>
+                        <ul>
+                                {% for offer in offers.offers %}
+                                            
 
-</section>
+                                <li style="border:1px solid black; list-style-type:none; width : 550px; height : 220px; float : left; margin : 5px; padding:5px;">
+                                    Débug : {{ offer.offerId }}
+                                    <p>Rémunération : {{ offer.remuneration }}</p> 
+                                    <h3>{{ offer.projectTitle }}</h3>
+                                    <p>Domaine d'activité : {{ offer.fieldActivity }} </p>
+                                    <p>Lieu : {{ offer.place }} </p>
+                                    <h3>{{ offer.offerTitle }}</h3>
+                                    <p>
+                                        Type de profil : {{ offer.wantedProfiles }} 
+                                    </p>
+                                </li>
+
+                                {% endfor %}
+                            </ul>
+
+                    </section>
+
+                    </div>  
+
+                    </div>
+
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                    <div class="content-box">
+
+                    <section id ="lastPortfolio">
+                    <h2> Latest Portfolios ({{offers.offers|length }}) : </h2>
+                        <ul>
+                                {% for offer in offers.offers %}
+                                            
+
+                                <li style="border:1px solid black; list-style-type:none; width : 300px; height : 220px; float : left; margin : 5px; padding:5px;">
+                                    Débug : {{ offer.offerId }}
+                                    <h3>{{ offer.projectTitle }}</h3>
+
+                                    <p>
+                                        Type de profil : {{ offer.wantedProfiles }} 
+                                    </p>
+                                </li>
+
+                                {% endfor %}
+                            </ul>
+
+                    </section>
+
+                    </div>  
+                    </div>
+
+
+
+                    <div class="col-lg-6 col-md-6"></div>
+                </div>
+            </div>
+   
 
 {% endblock %}
