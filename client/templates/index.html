@@ -1,9 +1,5 @@
 {% extends "layout.html" %}
 
-{% block title %}
-
-{% endblock %}
-
 {% block content %}
 
     <!-- Half Page Image Background Carousel Header -->
@@ -19,23 +15,27 @@
         <div class="carousel-inner">
             <div class="item active">
                 <!-- Set the first background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide One');"></div>
+                <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist01.jpg') }})"></div>
                 <div class="carousel-caption">
-                    <h2>Caption 1</h2>
+                        <h4>Social network between announcers and artists.</h4>
+                        And be part of a lot of projects are developed everyday.
+                        <br><br>
+                        <button type="button" class="btn btn-primary btn-md">View the offers</button>
+                        <br>
                 </div>
             </div>
             <div class="item">
                 <!-- Set the second background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Two');"></div>
+                <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist01.jpg') }})"></div>
                 <div class="carousel-caption">
-                    <h2>Caption 2</h2>
+                    <h4>Caption 2</h4>
                 </div>
             </div>
             <div class="item">
                 <!-- Set the third background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Three');"></div>
+                <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist01.jpg') }})"></div>
                 <div class="carousel-caption">
-                    <h2>Caption 3</h2>
+                    <h4>Caption 3</h4>
                 </div>
             </div>
         </div>
@@ -49,66 +49,57 @@
         </a>
 
     </header>
-
+       
             <div class="container"> 
                 <div class="row">
                     <div class="col-lg-6 col-md-6"></div>
-                    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                    <div class="content-box">
-
+                    
+            <div class="col-lg-7 col-md-7">
+                 <div class="content-box">
                     <section id ="lastOffers">
                     <h2> Latest Offers ({{offers.offers|length }}) : </h2>
                         <ul>
-                                {% for offer in offers.offers %}
-                                            
-
-                                <li style="border:1px solid black; list-style-type:none; width : 550px; height : 220px; float : left; margin : 5px; padding:5px;">
-                                    Débug : {{ offer.offerId }}
-                                    <p>Rémunération : {{ offer.remuneration }}</p> 
-                                    <h3>{{ offer.projectTitle }}</h3>
-                                    <p>Domaine d'activité : {{ offer.fieldActivity }} </p>
-                                    <p>Lieu : {{ offer.place }} </p>
-                                    <h3>{{ offer.offerTitle }}</h3>
-                                    <p>
-                                        Type de profil : {{ offer.wantedProfiles }} 
-                                    </p>
-                                </li>
-
-                                {% endfor %}
+                            {% for offer in offers.offers %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4><i class="fa fa-fw fa-check"></i>{{ offer.projectTitle }}</h4>
+                                </div>
+                                <div class="fill-offer" style="background-image:url({{ url_for('static', filename='img/artist01.jpg') }})"></div>
+                                <div class="fill-text">
+                                        <h4>Social network between announcers and artists.</h4>
+                                        <br><br>
+                                </div>
+                                <div class="panel-footer">
+                                    <h5><i class="fa fa-fw fa-check"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</h5>
+                                </div>
+                            </div>
+                            {% endfor %}
                             </ul>
-
                     </section>
+                </div>
+            </div>
 
-                    </div>  
-
-                    </div>
-
-                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                    <div class="content-box">
-
-                    <section id ="lastPortfolio">
-                    <h2> Latest Portfolios ({{offers.offers|length }}) : </h2>
+            <div class="col-lg-5 col-md-5">
+                 <div class="content-box">
+                    <section id ="lastOffers">
+                    <h2> Latest Portfolios ({{portfolios.portfolios|length }}) : </h2>
                         <ul>
-                                {% for offer in offers.offers %}
-                                            
-
-                                <li style="border:1px solid black; list-style-type:none; width : 300px; height : 220px; float : left; margin : 5px; padding:5px;">
-                                    Débug : {{ offer.offerId }}
-                                    <h3>{{ offer.projectTitle }}</h3>
-
-                                    <p>
-                                        Type de profil : {{ offer.wantedProfiles }} 
-                                    </p>
-                                </li>
-
-                                {% endfor %}
+                            {% for portfolio in portfolios.portfolios %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4><i class="fa fa-fw fa-check"></i>{{ portfolio.projectTitle }}</h4>
+                                </div>
+                                <div class="fill-offer" style="background-image:url({{ url_for('static', filename='img/artist01.jpg') }})"></div>
+                                <div class="fill-text">
+                                        <h4>Social network between announcers and artists.</h4>
+                                        <br><br>
+                                </div>
+                            </div>
+                            {% endfor %}
                             </ul>
-
                     </section>
-
-                    </div>  
-                    </div>
-
+                </div>
+            </div>
 
 
                     <div class="col-lg-6 col-md-6"></div>

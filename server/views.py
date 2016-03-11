@@ -205,6 +205,19 @@ def getPortfolioByUserId(userId):
     portfolio = config.portfolioTable.find_one({"userId": userId})
     return mongodoc_jsonify(portfolio)
 
+@config.g_app.route("/portfolios/number/<number>/page/<page>", methods=["GET"])
+def getPortfolioGroup(number, page):
+    if number:
+        number = int(number)
+    if page:
+        page = int(page)
+
+    totalPortfolios = config.portfolioTable.count()
+    totalPages = int(math.ceil(totalPortfolios / number)+1)
+    portfolios = config.portfolioTable.find().limit(number).skip(page)
+
+    return mongodoc_jsonify({"portfolios":[ result for result in portfolios ], "totalPortfolios":totalPortfolios, "page":page, "totalPages":totalPages})
+
 @config.g_app.route("/portfolio/<portfolioId>", methods=["DELETE"])
 def deletePortfolio(portfolioId):
     portfolioPath = os.path.join(config.portfoliosDir, str(portfolioId))
