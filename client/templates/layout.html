@@ -22,7 +22,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/half-slider.css') }}">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-business.css') }}">
 </head>
 
 <body>
@@ -43,15 +43,17 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/"><i class="glyphicon glyphicon-home"></i> Home <span class="sr-only">(current)</span></a></li>
+        <li><a href="/offers/number/10"><i class="glyphicon glyphicon-search"></i> Offers <span class="sr-only"></span></a></li>
+        <li><a href="#"><i class="glyphicon glyphicon-search"></i> Portfolios <span class="sr-only"></span></a></li>
 
          {% if user %}
-        <li><a href="#"><i class="glyphicon glyphicon-user"></i> My account</a></li>
         <li><a href='/user/{{ user.id }}/offers'><i class="glyphicon glyphicon-pencil"></i> Manage Offers</a></li>
         <li><a href='/user/{{ user.id }}/portfolio'><i class="glyphicon glyphicon-pencil"></i> Manage Portfolio</a></li>
          {% endif %}
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
+<!--
         <li>
             <form class="navbar-form navbar-right" role="search">
                 <div class="form">
@@ -65,10 +67,10 @@
         <li>
             <button type="submit" class="btn btn-default">Ok</button>
         </li>
+-->
         {% if user %}
         <li><a href="/logout">Log Out</a></li>
         {% else %}
-        <li><a href="/userAccount">Sign in</a></li>
         <li><a href="/login">Log in</a></li>
         {% endif %}
         </li>
