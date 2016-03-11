@@ -252,17 +252,60 @@ def addCoverPicture(portfolioId):
     coverPicture = config.portfolioTable.find_one({ "coverPicture.id" : str(imgId)})
     return mongodoc_jsonify(coverPicture)
 
+@config.g_app.route('/portfolio/<portfolioId>/galleryImage', methods=['POST'])
+def addImageToGallery(portfolioId):
+    '''
+    Upload an image into the gallery
+    '''
 
-@config.g_app.route('/portfolio/<portfolioId>/resource/<resourceId>/data', methods=['GET'])
-def getResourceData(portfolioId, resourceId):
+    portfolioPath = os.path.join(config.portfoliosDir, str(portfolioId))
+    imgId = str(ObjectId())
+
+    file = request.files['file']
+    mimetype = request.files['file'].content_type
+    imgPath = os.path.join(portfolioPath+"/images", str(imgId)+"."+mimetype.split('/')[1])
+
+    fileName = str(imgId)+"."+mimetype.split('/')[1]
+    file.save(imgPath)
+
+    logging.error("name "+fileName)
+    dbImg = {'image' :[{
+                'id' : str(imgId),
+                'mimetype' : mimetype,
+                'path' : imgPath,
+                }]
+    }
+
+    
+    config.portfolioTable.update_one(
+            {"portfolioId": portfolioId},
+            {"$push":{"galery" : dbImg }}
+        )
+
+    resourceData = config.portfolioTable.find_one({ "galery.image.id":str(imgId)}, {"_id":0, "galery": {"$elemMatch":{"image.id":str(imgId)}}})
+
+    return mongodoc_jsonify(resourceData)
+
+
+@config.g_app.route('/portfolio/<portfolioId>/resource/<resourceId>/data/<dataType>', methods=['GET'])
+def getResourceData(portfolioId, resourceId, dataType):
     '''
      Returns the resource.
     '''
 
-    resourceData = config.portfolioTable.find_one({ "portfolioId" : portfolioId}, {"coverPicture":1})
-    mimetype = resourceData['coverPicture']['mimetype']
+    resourceData = None
+    mimetype = None
+
+    if dataType == "coverPicture":
+        resourceData = config.portfolioTable.find_one({ "portfolioId" : portfolioId}, {"coverPicture":1})
+        mimetype = resourceData['coverPicture']['mimetype']
+    else:
+        resourceData = config.portfolioTable.find_one({ "galery.image.id":resourceId}, {"_id":0, "galery": {"$elemMatch":{"image.id":resourceId}}})
+        mimetype = resourceData['galery'][0]['image'][0]['mimetype']
+
     if not resourceData:
         abort(404)
+
 
     portfolioPath = os.path.join(config.portfoliosDir, str(portfolioId))
     filePath = os.path.join (portfolioPath+"/images", resourceId+"."+mimetype.split('/')[1])
