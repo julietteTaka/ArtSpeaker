@@ -473,6 +473,7 @@ th {
   select {
     background: #fff !important;
   }
+
   .navbar {
     display: none;
   }
@@ -2706,7 +2707,7 @@ input[type="submit"] {
   border-color: #138860; /*darken(#07a871, 2%)*/
   border-radius : 4px;
   text-decoration : none;
-  border : solid 1px;
+  border : solid;
 }
 input[type="search"] {
   -webkit-appearance: none;
@@ -4080,7 +4081,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar {
   position: relative;
   min-height: 50px;
-  margin-bottom: 20px;
   border: 1px solid transparent;
 }
 @media (min-width: 768px) {
@@ -4112,7 +4112,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .navbar-collapse.collapse {
     display: block !important;
-    height: auto !important;
+    height: 50px;
     padding-bottom: 0;
     overflow: visible !important;
   }
@@ -4137,7 +4137,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .container{
-
+  margin-top : 30px;
 }
 
 .container > .navbar-header,
@@ -4191,7 +4191,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand {
   float: left;
-  padding: 15px 15px;
   font-size: 18px;
   line-height: 20px;
   height: 50px;

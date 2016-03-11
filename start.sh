@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Starting mongodb"
-/opt/mongodb/bin/mongod --dbpath /opt/mongo-data > /var/log/artspeaker/mongo.log 2>&1 &
+/opt/mongodb/bin/mongod --smallfiles --dbpath /opt/mongo-data > /var/log/artspeaker/mongo.log 2>&1 &
 
 echo "Starting Server"
 python ${ARTSPEAKER_DEV}/server/views.py > /var/log/artspeaker/server.log 2>&1 &
