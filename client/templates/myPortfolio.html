@@ -15,7 +15,7 @@
       {% set coverPath="" ~ url_for('static', filename='img/basic_cover.png') %}
 
       {% if portfolio.coverPicture.id %}
-        {% set coverPath="/portfolio/" ~ portfolio.portfolioId ~ "/resource/" ~ portfolio.coverPicture.id %}
+        {% set coverPath="/portfolio/" ~ portfolio.portfolioId ~ "/resource/" ~ portfolio.coverPicture.id ~ "/data/coverPicture" %}
         {% set coverClass="customCover" %}
       {% endif %}
 
@@ -71,12 +71,15 @@
         </div>
 
         <section id="gallery" style="border:1px solid gray; float:left;">
-          <div id="uploadGalleryImage" style="border:1px solid green; float:left; padding:5px; margin:5px; text-align:center; cursor:pointer;" data-toggle="modal" data-target="#addImageGalleryModal">
+          <div id="uploadGalleryImage" style="width:200px; height:200px; border:1px solid green; float:left; padding:5px; margin:5px; text-align:center; cursor:pointer;" data-toggle="modal" data-target="#addImageGalleryModal">
             <p>Add your Art ! </p>
             <i class="fa fa-plus-square fa-5x"></i>
           </div>
-          {% for image in portfolio.gallery %}
-          <div class="galleryImage" style="float:left; padding:5px; margin:5px;">
+          {% for image in portfolio.galery %}
+                  {% set imagePath="/portfolio/" ~ portfolio.portfolioId ~ "/resource/" ~ image.image[0]['id'] ~ "/data/image" %}
+
+          <div class="galleryImage" style="width:200px; height:200px; float:left; padding:5px; margin:5px; border:1px solid green;">
+              <img src="{{ imagePath }}" />
             <img/>
           </div>
           {% endfor %}

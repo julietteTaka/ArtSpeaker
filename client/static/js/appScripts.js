@@ -252,11 +252,12 @@ $('#portfolioCreation').submit(function(event){
         $("#uploadImageGalleryTrigger").click(function(event){
             event.preventDefault();
 
-            var form_data = new FormData($('#addGalleryImageForm')[0]);
+            var form_data = new FormData($('#addImageGaleryForm')[0]);
             var portfolioId = $("#addImageGalery").attr("attr-portfolioId");
             var userId = $("#addImageGalery").attr("attr-userId");
 
             url = "/user/"+userId+"/portfolio/"+portfolioId+"/galleryImage";
+            console.log(url);
             $.ajax({
                     type : 'POST',
                     url : url,
