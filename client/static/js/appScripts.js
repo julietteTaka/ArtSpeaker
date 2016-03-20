@@ -183,6 +183,28 @@ $('#portfolioCreation').submit(function(event){
             });
     })
 
+
+//lightbox Galery
+    var $lightbox = $('#lightbox');
+    
+    $('[data-target="#lightbox"]').on('click', function(event) {
+        var $img = $(this).find('img'), 
+            src = $img.attr('src'),
+            alt = $img.attr('alt'),
+            css = {
+                'maxWidth': $(window).width() * 0.8,
+                'maxHeight': $(window).height() * 0.8
+            };
+        $lightbox.find('img').attr('src', src);
+        $lightbox.find('img').attr('alt', alt);
+        $lightbox.find('img').css(css);
+    });
+    
+    $lightbox.on('shown.bs.modal', function (e) {
+        var $img = $lightbox.find('img');
+        $lightbox.find('.modal-dialog').css({'width': $img.width()});
+    });
+
 /* ------------ FORMS ---------- */
 
     var i = $('#networks div').size();

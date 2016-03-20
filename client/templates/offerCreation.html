@@ -3,17 +3,8 @@
 {% block content %}
 
 {% if user %}
-  <script>
-  $(function() {
-    $( ".datepicker" ).datepicker();
-  });
-  </script>
 
-<style>
-input {
-    
-}
-</style>
+
     <section>
         <div class="container"> 
             <div class="row">
@@ -24,7 +15,7 @@ input {
                         <fieldset>
 
                             <div class="page-header">
-                                <h1>Step 1 <small> - Main information</small></h1>
+                                <h1>Main information <small> - Step 1/2</small></h1>
                             </div>
 
                             <h4>Project name</h4>
@@ -71,11 +62,23 @@ input {
                             </div>
                             <div class="small"><small>Organize your social medias links and your references for being more interesting.</small></div>
 
-                            <h4> A project from </h4> 
+                            
+                            <br />
                             <p>
-                            <input class="form-control" type="text" id="begin" class="datepicker">
-                            to
-                            <input class="form-control" type="text" id="end" class="datepicker">
+                            <h4> A project from </h4> 
+                            <div class="input-group" style="width : 300px; float:left"> 
+                                <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input class="form-control" type="text" id="begin" placeholder="jj/mm/aa"/>
+                            </div>
+                              <h4 style="float:left; margin-right:20px; margin-left:20px">to</h4>
+                            <div class="input-group" style="width : 300px;"> 
+                                <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input class="form-control" type="text" id="end" placeholder="jj/mm/aa"/>
+                            </div>
+                            
+                            <div class="small" >
+                                <small style="float:left; clear:both;">Indicates the period inwhich your offer will be displayed.</small>
+                            </div>
                             </p>
                             
                             <br>
@@ -101,7 +104,7 @@ input {
                         <fieldset>
 
                             <div class="page-header">
-                                <h1>Step 2 <small> - Writing of your offer </small></h1>
+                                <h1>Write down you offer <small> - Step 2/2</small></h1>
                             </div>
 
                         <p> {{ offer.projectTitle }} </p>
@@ -116,16 +119,24 @@ input {
                             <div class="small"><small>Write a short and smart title for your offer.</small></div>
                         </p>
                             <br>
-                        <p>
-                        <h4>Available from</h4>
-                            <div class="input-group"> 
-                                <input class="form-control" type="text" id="begin" class="datepicker">
-                              to
-                                <input class="form-control" type="text" id="end" class="datepicker"></p>
+                        
+                            <h4>Displayed from</h4>
+
+                            <div class="input-group" style="width : 300px; float:left"> 
+                                <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input class="form-control" type="text" id="begin" placeholder="jj/mm/aa"/>
                             </div>
-                            <div class="small"><small>Indicates the period inwhich you will be available.</small></div> 
-                        </p>
-                             <br>                       
+                              <h4 style="float:left; margin-right:20px; margin-left:20px">to</h4>
+                            <div class="input-group" style="width : 300px;"> 
+                                <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input class="form-control" type="text" id="end" placeholder="jj/mm/aa"/>
+                            </div>
+                            
+                            <div class="small" >
+                                <small style="float:left; clear:both;">Indicates the period inwhich your offer will be displayed.</small>
+                            </div>
+
+                             <br><br>                       
                         <p>
                         <h4>Wanted profile</h4>
                             <div class="input-group"> 
@@ -140,7 +151,7 @@ input {
                             <div class="input-group"> 
                             <textarea style='width : 400px; height : 300px; max-width:800px; max-height:300px' type="text" id="text" placeholder="Text me"></textarea>
                             <br>
-                            <input type='submit' id="createOffer" value= "Submit !" data-userID="{{user.id}}" data-offerID="{{offer.offerId}}">
+                            <input type='submit' style="padding : 10px;" id="createOffer" value= "Submit !" data-userID="{{user.id}}" data-offerID="{{offer.offerId}}">
                             </div>
                         </p>
 
@@ -151,6 +162,11 @@ input {
             </div>
         </div>
     </section>
+  <script>
+  $(function() {
+    $('.datepicker').datepicker();
+  });
+  </script>
 
 {% else %}
 <p>you must be logged to see this page.</p>
