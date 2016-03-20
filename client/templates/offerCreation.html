@@ -1,0 +1,160 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% if user %}
+  <script>
+  $(function() {
+    $( ".datepicker" ).datepicker();
+  });
+  </script>
+
+<style>
+input {
+    
+}
+</style>
+    <section>
+        <div class="container"> 
+            <div class="row">
+                <div class="content-box">
+
+                    {% if step == "1" %}
+                    <form id='offerStepOne'>
+                        <fieldset>
+
+                            <div class="page-header">
+                                <h1>Step 1 <small> - Main information</small></h1>
+                            </div>
+
+                            <h4>Project name</h4>
+                            {% set val = "" %}
+                            {% if offer is defined %}
+                                {% set val = offer.projectTitle %}
+                            {% endif %}
+                            <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-pencil"></i></span>
+                                      <input type="text" class="form-control" id="projectTitle" placeholder="Title" aria-describedby="basic-addon1" value = "{{ val }}" />
+                            </div>
+                            <div class="small"><small>Enter the name of your project.</small></div>
+                            <br>
+
+                            <h4>Field of activity</h4>
+                            <div class="input-group"> 
+                                      <span class="input-group-addon" id="basic-addon2"><i class="glyphicon glyphicon-pencil"></i></span>
+                                      <input type="text" class="form-control" id="fieldActivity" placeholder="ex: Painting" aria-describedby="basic-addon2" />
+                            </div>
+                            <div class="small"><small>The field of your project must have a clear name.</small></div>
+                            <br>
+
+                            <h4>Location</h4>
+                            <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-globe"></i></span>
+                                      <input type="text" class="form-control" id="place" placeholder="ex : Paris" aria-describedby="basic-addon3"/>
+                            </div>
+                            <div class="small"><small>Indicate your location is important for your future partners.</small></div>
+                            <br>
+
+                            <div id="networks">
+                                <h4> Social networks</h4> 
+                                <span class="addField" style="cursor:pointer; color:green; font-size:20px; font-weight:bold;">+</span></p>
+                                
+                                <div>
+                                    <select id="social" size="1">
+                                        <option value="website" selected="selected">website</option>
+                                        <option value="Facebook">Facebook</option>
+                                        <option value="Twitter">Twitter</option>
+                                        <option value="Other">Custom link</option>
+                                    </select>
+                                    <input type='text' class="link" placeholder="www.mywebsite.com" />
+                                </div>
+                            </div>
+                            <div class="small"><small>Organize your social medias links and your references for being more interesting.</small></div>
+
+                            <h4> A project from </h4> 
+                            <p>
+                            <input class="form-control" type="text" id="begin" class="datepicker">
+                            to
+                            <input class="form-control" type="text" id="end" class="datepicker">
+                            </p>
+                            
+                            <br>
+
+                            <p>
+                            <h4> Contact</h4> 
+                            <input class="top-form-control" type="text" id="name" placeholder="Name" value="{{user.name}}">
+                            <input class="middle-form-control" type="text" id="phone" placeholder="Phone number">
+                            <input class="bottom-form-control" type="text" id="mail" placeholder="Email">
+                            <div class="small"><small>These information are essential for being contacted properly.</small></div>
+                            </p>
+
+                            
+                            <input type='submit' id="createOffer" value= "Next Step !" data-userID="{{user.id}}" data-edit="{{edit}}" data-offerID={{offerId}}>
+                            
+
+                        </fieldset>
+                    </form>
+
+                    {% elif step == "2" %}
+
+                    <form id='offerStepTwo'>
+                        <fieldset>
+
+                            <div class="page-header">
+                                <h1>Step 2 <small> - Writing of your offer </small></h1>
+                            </div>
+
+                        <p> {{ offer.projectTitle }} </p>
+                        <p>{{ offer.fieldActivity}}</p>
+
+                        <p>
+                        <h4>Name of the offer</h4>
+                            <div class="input-group"> 
+                                      <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-pencil"></i></span>
+                                      <input type="text" class="form-control" id="offerTitle" placeholder="ex: ArtS. wants a talented painter" aria-describedby="basic-addon7" />
+                            </div>
+                            <div class="small"><small>Write a short and smart title for your offer.</small></div>
+                        </p>
+                            <br>
+                        <p>
+                        <h4>Available from</h4>
+                            <div class="input-group"> 
+                                <input class="form-control" type="text" id="begin" class="datepicker">
+                              to
+                                <input class="form-control" type="text" id="end" class="datepicker"></p>
+                            </div>
+                            <div class="small"><small>Indicates the period inwhich you will be available.</small></div> 
+                        </p>
+                             <br>                       
+                        <p>
+                        <h4>Wanted profile</h4>
+                            <div class="input-group"> 
+                                      <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-pencil"></i></span>
+                                      <input type="text" class="form-control" id="wantedProfiles" placeholder="ex: Painter" aria-describedby="basic-addon7" />
+                            </div>
+                            <div class="small"><small>Write down the talend that you need for you project.</small></div>
+                        </p>
+                            <br>
+                        <p>
+                        <h4>Your message</h4>
+                            <div class="input-group"> 
+                            <textarea style='width : 400px; height : 300px; max-width:800px; max-height:300px' type="text" id="text" placeholder="Text me"></textarea>
+                            <br>
+                            <input type='submit' id="createOffer" value= "Submit !" data-userID="{{user.id}}" data-offerID="{{offer.offerId}}">
+                            </div>
+                        </p>
+
+                        </fieldset>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% else %}
+<p>you must be logged to see this page.</p>
+<a href="/"> back home </a>
+{% endif %}
+
+{% endblock %}
