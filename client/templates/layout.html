@@ -5,6 +5,7 @@
     <meta name="description" content="Job offer for artists">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="SHORTCUT ICON" href="{{ url_for('static', filename='img/icon.jpg') }}">
 
     <title>ArtSpeaker</title>
 
@@ -28,7 +29,7 @@
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-inverse " role="navigation">
+    <nav class="navbar navbar-inverse  clear-top" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -43,33 +44,23 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/"><i class="glyphicon glyphicon-home"></i> Home <span class="sr-only">(current)</span></a></li>
-        <li><a href="/offers/number/10"><i class="glyphicon glyphicon-search"></i> Offers <span class="sr-only"></span></a></li>
-        <li><a href="#"><i class="glyphicon glyphicon-search"></i> Portfolios <span class="sr-only"></span></a></li>
+        <li {% if request.path == '/' %}class="active"{% endif %}><a href="/"><i class="glyphicon glyphicon-home"></i> Home <span class="sr-only">(current)</span></a></li>
+        <li {% if request.path == '/offers/number/10' %}class="active"{% endif %}> <a href="/offers/number/10"><i class="glyphicon glyphicon-search"></i> Offers <span class="sr-only"></span></a></li>
+        <li {% if request.path == '/portfolios/number/10' %}class="active"{% endif %}> <a href="#"><i class="glyphicon glyphicon-search"></i> Portfolios <span class="sr-only"></span></a></li>
 
          {% if user %}
-        <li><a href='/user/{{ user.id }}/offers'><i class="glyphicon glyphicon-pencil"></i> Manage Offers</a></li>
-        <li><a href='/user/{{ user.id }}/portfolio'><i class="glyphicon glyphicon-pencil"></i> Manage Portfolio</a></li>
+         
+        {% set currentOfferPath = "/user/" ~ user.id ~ "/offers" %}
+        {% set currentPortfolioPath = "/user/" ~ user.id ~ "/portfolio" %}
+
+        <li {% if request.path == currentOfferPath %}class="active"{% endif %}> <a href='/user/{{ user.id }}/offers'><i class="glyphicon glyphicon-pencil"></i> Manage Offers</a></li>
+        <li {% if request.path == currentPortfolioPath %}class="active"{% endif %}> <a href='/user/{{ user.id }}/portfolio'><i class="glyphicon glyphicon-pencil"></i> Manage Portfolio</a></li>
          {% endif %}
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
-<!--
-        <li>
-            <form class="navbar-form navbar-right" role="search">
-                <div class="form">
-                    <div class="inner-addon left-addon">
-                        <i class="glyphicon glyphicon-search"></i>
-                        <input type="search" class="form-control" placeholder="Search"></code>
-                    </div>
-                 </div>
-            </form>
-        </li>
-        <li>
-            <button type="submit" class="btn btn-default">Ok</button>
-        </li>
--->
-        {% if user %}
+
+        {% if user is defined %}
         <li><a href="/logout">Log Out</a></li>
         {% else %}
         <li><a href="/login">Log in</a></li>
@@ -81,11 +72,11 @@
     </nav>
 
     {% block title %}{% endblock %}
-<section>
+<section  class="clear-top content">
     {% block content %}{% endblock %}
 </section>
 
-    <nav class="navbar navbar-inverse " role="navigation">
+    <nav class="navbar navbar-fixed-bottom" id="footer" role="navigation">
         <div class="container-fluid">
             <div class="footer-component">
                     <br>

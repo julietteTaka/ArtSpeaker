@@ -21,6 +21,11 @@
 a{
   text-decoration : none;
 }
+
+html, body {
+  height: 100%;
+}
+
 .fill-offer {
     width: 100%;
     height: 200px;
@@ -1205,6 +1210,7 @@ body {
   color: #222;
   background-color: #eeeeee;
   margin : 0px;
+  height: 100%;
 }
 input,
 button,
@@ -4627,6 +4633,24 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   background-color: #191919;
   border-color: #080808;
 }
+
+.navbar-fixed-bottom{
+  background-color: #191919;
+  border-color: #080808;
+}
+
+#footer{
+  position: relative;
+  margin-top: -140px;
+  clear:both;
+  padding-top:20px;
+  z-index: -10;
+}
+
+.content{
+   padding-bottom:150px;
+}
+
 .navbar-inverse .navbar-brand {
   color: #777777;
 }
