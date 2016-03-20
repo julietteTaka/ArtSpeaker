@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    <h1>My Offers</h1>
+{% endblock %}
+
+{% block content %}
+
+    <div class="title-box">
+        <img src="{{ url_for('static', filename='img/new_project.png') }}"  alt="ArtSpeaker"><br>
+        <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/offer'"> 
+            Create an Offer !
+        </button> 
+    </div>
+
+    <div class="sp-container"> 
+        <div class="row">                    
+            <div class="col-lg-24 col-md-24">
+                 <div class="content-box">
+                    <section id ="lastOffers">
+                        <h2> Latest Offers ({{offers.offers|length }}) : </h2>
+                        <ul>
+                            {% for offer in offers.offers %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h4>
+                                    <hr>
+                                    <table>
+                                      <tr>
+                                        {% if offer.wantedProfile %}
+                                            <th><h6> <div class="wanted-text">WANTED</div><b>{{ offer.wantedProfile }}</b></h6></th>
+                                        {% endif %}
+                                        {% if offer.projectDate %}
+                                            <th><h6> <div class="period-text">PERIOD</div> from <b>{{ offer.projectDate["begin"] }}</b> to <b>{{ offer.projectDate["end"] }}</b></h6></th>
+                                        {% endif %}
+                                        {% if offer.place %}
+                                        <th><h6> <div class="place-text">LOCATION</div> in <b>{{ offer.place }}</b></h6></th>
+                                        {% endif %}
+                                        {% if offer.contact %} 
+                                        <th><h6> <div class="contact-text">CONTACT</div>                            
+                                                <i class="glyphicon glyphicon-user"></i> <b>{{ offer.contact["name"] }}</b>
+                                                {% if user %}
+                                                <br>
+                                                <i class="glyphicon glyphicon-earphone"></i> <b>{{ offer.contact["mail"] }}</b>
+                                                <br>
+                                                <i class="glyphicon glyphicon-send"></i> <b>{{ offer.contact["phone"] }}</b>
+                                                 {% endif %}
+                                        </h6></th>
+                                        {% endif %}
+                                        {% for network in offer.networking %}
+                                        <th><h6> <div class="networking-text">NETWORKING</div>                            
+                                                <i class="glyphicon glyphicon-user"></i> <b>{{ network["network"] }} :<a href=http://{{ network["url"] }}> {{ network['url'] }}</b>
+                                        </h6></th>
+                                        {% endfor %}
+                                      </tr>
+                                    </table>
+                                </div>
+                                <div class="fill-offer" style="background-image:url({{ url_for('static', filename='img/offer01.jpg') }})"></div>
+                                <div class="fill-offer-text">
+                                    <div class="fill-bottom">
+                                            {% if user %}
+                                            <i class="glyphicon glyphicon-thumbs-up"></i> Like
+                                            {% endif %}
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <table>
+                                      <tr>
+                                        <th><h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.offerTitle }}</h4></th>
+                                        <!--<th><h6> <div class="period-text">AVAILABLE</div> // available from <b>{{ offer.offerDate["begin"] }}</b> to <b>{{ offer.offerDate["end"] }}</b></h6></th>-->
+                                      </tr>
+                                    </table>
+                                    <hr>
+                                    <h5>{{ offer.text }}</h5>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            </ul>
+                    </section>
+                    <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/offer'"> 
+                                    Create an Offer !
+                                </button> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
+
+{% endblock %}
+

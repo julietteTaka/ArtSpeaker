@@ -1,0 +1,141 @@
+{% extends "layout.html" %}
+
+
+
+
+{% block content %}
+
+{% if user %}
+{% if portfolio %}
+{% block title %}
+    <h1>{{ portfolio.pseudo }}</h1>
+{% endblock %}
+    <div>
+      {% set coverClass="basicCover" %}
+      {% set coverPath="" ~ url_for('static', filename='img/basic_cover.png') %}
+
+      {% if portfolio.coverPicture.id %}
+        {% set coverPath="/portfolio/" ~ portfolio.portfolioId ~ "/resource/" ~ portfolio.coverPicture.id ~ "/data/coverPicture" %}
+        {% set coverClass="customCover" %}
+      {% endif %}
+
+        <div class={{ coverClass }} id="cover" style="width :900px; height:200px; display:block; margin:auto; border:1px solid green; overflow:hidden">
+            <span style="cursor:pointer; position:absolute; display:inline; background-color:rgba(255, 255, 255, 0.3)" data-toggle="modal" data-target="#addCoverPictureModal">change picture cover</span>
+            <img src="{{ coverPath }}" alt="" class="img-responsive" />
+        </div>
+
+        <!-- Modal -->
+        <div id="addCoverPictureModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Choose your best picture</h4>
+              </div>
+              <div class="modal-body">
+                <form id="addCoverPictureForm" enctype="multipart/form-data">
+                    <input type="file" name="file" id="addCoverPicture" attr-userId="{{user.id}}" attr-portfolioId="{{portfolio.portfolioId}}" style="margin-top:6px">
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="uploadtrigger">Upload</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        Débug : {{ portfolio.portfolioId }}
+        portfolio data : {{ portfolio }}
+
+        <div style="border:1px solid gray; width :300px; float:left;">
+            <p>Domaine d'activité : {{ portfolio.fieldActivity }} </p>
+            <p>Lieu : {{ portfolio.place }} </p>
+            <p>Liens :<br/>
+                <ul>
+                {% for network in portfolio.networking %}
+                <li>{{ network["network"] }} : <a href=http://{{ network["url"] }}> {{ network['url'] }}</a></li>
+                {% endfor %}
+                </ul>
+            </p>
+            {% if portfolio.availability is defined %}
+            <p>Je suis dispo du {{ portfolio.availability["begin"] }} au {{ portfolio.availability["end"] }}</p>
+            {% endif %}
+            {% if portfolio.contact is defined %}
+            <p>Contact :  <br/><i class="fa fa-user"></i> {{ portfolio.contact["name"] }} <br/><i class="fa fa-phone"></i> {{ portfolio.contact["phone"] }}  <br/><i class="fa fa-envelope"></i> {{ portfolio.contact["mail"] }}</p>
+            {% endif %}
+            <button id="deleteportfolio" data-toggle="modal" data-target="#deletePortfolio" value="Delete">Delete my portfolio :( </button>
+            
+        </div>
+
+        <section id="gallery" style="border:1px solid gray; float:left;">
+          <div id="uploadGalleryImage" style="width:200px; height:200px; border:1px solid green; float:left; padding:5px; margin:5px; text-align:center; cursor:pointer;" data-toggle="modal" data-target="#addImageGalleryModal">
+            <p>Add your Art ! </p>
+            <i class="fa fa-plus-square fa-5x"></i>
+          </div>
+          {% for image in portfolio.galery %}
+                  {% set imagePath="/portfolio/" ~ portfolio.portfolioId ~ "/resource/" ~ image.image[0]['id'] ~ "/data/image" %}
+
+          <div class="galleryImage" style="width:200px; height:200px; float:left; padding:5px; margin:5px; border:1px solid green;">
+              <img src="{{ imagePath }}" />
+            <img/>
+          </div>
+          {% endfor %}
+
+        </section>
+
+        <!-- Modal -->
+        <div id="addImageGalleryModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Choose your best picture</h4>
+              </div>
+              <div class="modal-body">
+                <form id="addImageGaleryForm" enctype="multipart/form-data">
+                    <input type="file" name="file" id="addImageGalery" attr-userId="{{user.id}}" attr-portfolioId="{{portfolio.portfolioId}}" style="margin-top:6px">
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="uploadImageGalleryTrigger">Upload</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="deletePortfolio" class="modal fade" role="dialog" data-userId="{{ user.id }}" data-portfolioId="{{ portfolio.portfolioId }}">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete your portfolio</h4>
+              </div>
+              <div class="modal-body">
+                <p> Are you sure that you want to delete your beautiful portfolio ? </p>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="deletePortfolioTrigger">Yes, I'm sure</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No, keep it safe.</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+    {% else %}
+    <p> On dirait que le portfolio que vous recherchez n'est plus disponible... </p>
+    {% endif %}
+
+{% else %}
+<p> You can see this portfolio as a simple user </p>
+{% endif %}
+{% endblock %}
+

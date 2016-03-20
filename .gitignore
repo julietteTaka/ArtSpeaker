@@ -1,0 +1,7 @@
+# used in front to generate js and css files
+node_modules
+
+# auto generated css files
+
+*.pyc
+*.conf
