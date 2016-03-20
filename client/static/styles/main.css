@@ -68,27 +68,22 @@ a{
     color : #eee;
 }
 .wanted-text{
-  color : #7c2d5e;
   font-size :9px;
   text-align: top;
 }
 .period-text{
-  color : #07a871;
   font-size :9px;
   text-align: top;
 }
 .place-text{
-  color : #744785;
   font-size :9px;
   text-align: top;
 }
 .contact-text{
-  color : #220099;
   font-size :9px;
   text-align: top;
 }
 .networking-text{
-  color : #990022;
   font-size :9px;
   text-align: top;
 }
@@ -4004,6 +3999,21 @@ width: 240px;
 text-align: left;
 vertical-align: top;
 }
+
+.footer-component-column .social li{
+  margin-top:5px;
+  height : 30px;
+  width : 30px;
+  list-style: none;
+  text-align: left;
+
+}
+
+.footer-component-column ul{
+  padding:0;
+  margin:0;
+}
+
 .nav {
   margin-bottom: 0;
   padding-left: 0;
@@ -5425,6 +5435,11 @@ a.list-group-item-danger.active:focus {
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
 }
+
+.panel-heading h6 >div{
+  color:gray;
+}
+
 .panel-heading > img{
   width : 100%;
   height : auto;
