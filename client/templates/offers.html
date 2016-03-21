@@ -14,11 +14,9 @@
 
 
     <div class="sp-container"> 
-        <div class="row">                    
-            <div class="col-lg-24 col-md-24">
-                 <div class="content-box">
+            <div class="col-md-10">
+                 <div class="content-box col-md-12">
                     <section id ="lastOffers">
-                        <h2> Latest Offers ({{offers.offers|length }}) : </h2>
                         <ul>
                             {% for offer in offers.offers %}
                             <div class="panel panel-default">
@@ -78,7 +76,6 @@
                             </ul>
                     </section>
                 </div>
-            </div>
         </div>
     </div>
 

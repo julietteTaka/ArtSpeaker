@@ -58,7 +58,7 @@
 
               <ul>
               {% for network in portfolio.networking %}
-              <li> {{ network["network"] }} : <a href=http://{{ network["url"] }}> {{ network['url'] }}</a></li>
+              <li> {{ network["network"] }} : <a href={{ network["url"] }}> {{ network['url'] }}</a></li>
               {% endfor %}
               </ul>
           

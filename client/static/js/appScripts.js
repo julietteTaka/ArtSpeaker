@@ -183,7 +183,6 @@ $('#portfolioCreation').submit(function(event){
             });
     })
 
-
 //lightbox Galery
     var $lightbox = $('#lightbox');
     

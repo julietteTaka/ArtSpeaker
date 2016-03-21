@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% if portfolio %}
+
+      
+      {% set coverClass="basicCover" %}
+      {% set coverPath="" ~ url_for('static', filename='img/basic_cover.png') %}
+
+      {% if portfolio.coverPicture.id %}
+        {% set coverPath="/portfolio/" ~ portfolio.portfolioId ~ "/resource/" ~ portfolio.coverPicture.id ~ "/data/coverPicture" %}
+        {% set coverClass="customCover" %}
+      {% endif %}
+<div>
+        <div class={{ coverClass }} id="cover" >
+            <img src="{{ coverPath }}" alt="" class="img-responsive" />
+        </div>
+        
+        <div id="userInfo" class="">
+        <div class="content-box col-sm-2">
+            <h4><i class="fa fa-briefcase"></i>
+              {{ portfolio.fieldActivity }}</h4>
+
+            <h4><i class="fa fa-map-marker"></i> 
+            {{ portfolio.place }}</h4>
+
+            <h4> <i class="fa fa-link"></i>  Social Network</h4>
+
+              <ul>
+              {% for network in portfolio.networking %}
+              <li> {{ network["network"] }} : <a href={{ network["url"] }}> {{ network['url'] }}</a></li>
+              {% endfor %}
+              </ul>
+          
+            {% if portfolio.availability is defined %}
+            <h4> <i class="fa fa-calendar"></i> Availabilities</h4>
+              <ul>
+              <li><span style="width:50px; display:inline-block">from</span> {{ portfolio.availability["begin"] }}</li>
+              <li><span style="width:50px; display:inline-block">to</span> {{ portfolio.availability["end"] }}</li>
+            </ul>
+
+            {% endif %}
+            {% if portfolio.contact is defined %}
+            <h4><i class="fa fa-user"></i> Contact</h4>
+              <ul>
+              <li>{{ portfolio.contact["name"] }} </li>
+              <li>{{ portfolio.contact["phone"] }} </li>
+              <li>{{ portfolio.contact["mail"] }} </li>
+              </ul>
+            {% endif %}
+
+            <br/>
+            <br/>
+        </div>
+    </div>
+
+        
+        <div id="gallery" class="">
+            <div class="content-box col-sm-9">
+              
+              {% for image in portfolio.galery %}
+                      {% set imagePath="/portfolio/" ~ portfolio.portfolioId ~ "/resource/" ~ image.image[0]['id'] ~ "/data/image" %}
+
+              <div class="col-sm-2 galleryImage" >
+                  <a href="#" class="thumbnail" data-toggle="modal" data-target="#lightbox"> 
+                      <img src="{{ imagePath }}" class="img-responsive">
+                  </a>
+              </div>
+
+              {% endfor %} 
+            </div>
+
+
+
+          <div id="lightbox" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header" style="height:30px;">
+                    <button type="button" class="close" data-dismiss="modal"> x </button>
+                  </div>
+
+                    <div class="modal-body">
+                        <img src="" alt="" />
+                    </div>
+                </div>
+        </div>
+
+
+        </div>
+</div>
+
+
+    {% else %}
+    <p> On dirait que le portfolio que vous recherchez n'est plus disponible... </p>
+    {% endif %}
+
+<script>
+  $(".title-box").css("display", "none");
+</script>
+
+{% endblock %}
+

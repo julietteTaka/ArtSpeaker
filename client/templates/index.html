@@ -59,11 +59,8 @@
     </header>
 
        
-            <div class="container"> 
-                <div class="row">
-                    
-            <div class="col-lg-7 col-md-7">
-                 <div class="content-box">
+            <div class="container col-md-12 latestHome"> 
+                 <div class="content-box col-md-5">
                     <section id ="lastOffers">
                     <h2> Latest Offers ({{offers.offers|length }}) : </h2>
                         <ul>
@@ -117,15 +114,14 @@
                         </ul>
                     </section>
                 </div>
-            </div>
 
-            <div class="col-lg-5 col-md-5">
-                 <div class="content-box">
+                 <div class="content-box col-md-5">
                     <section id ="lastPortfolios">
                     <h2> Latest Portfolios ({{portfolios.portfolios|length }}) : </h2>
-                        <ul>
                             {% for portfolio in portfolios.portfolios %}
-                            <div class="panel panel-default">
+
+                            <div class="panel panel-default portfolioClick" onclick=window.location.href="/portfolio/{{ portfolio.portfolioId }}" >
+
                                 <div class="panel-heading">
                                     <h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ portfolio.pseudo }}</h4>
                                     <hr>
@@ -136,28 +132,27 @@
                                         <th><h6> <div class="contact-text">CONTACT</div> with <b>{{ portfolio.contact["name"] }}</b> </h6></th>
                                       </tr>
                                     </table>
-                                </div>
-                                <div class="fill-portfolio" style="background-image:url({{ url_for('static', filename='img/offer01.jpg') }})"></div>
-                                <div class="fill-portfolio-text">
-                                        <div class="fill-bottom"> 
-                                            <div class="fill-bottom"> 
+                                                                    <div class="fill-portfolio-text">
                                             <i class="glyphicon glyphicon-map-marker"></i>  {{ portfolio.place }} 
                                             <br>
-                                            <div class="fill-size">
-                                                <i class="glyphicon glyphicon-arrow-up"></i> {{ portfolio.fieldActivity }} 
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <br>
+                                            <i class="glyphicon glyphicon-arrow-up"></i> {{ portfolio.fieldActivity }} 
+                                </div>
+
+
+                                  {% if portfolio.coverPicture.id %}
+                                    {% set coverPath="/portfolio/" ~ portfolio.portfolioId ~ "/resource/" ~ portfolio.coverPicture.id ~ "/data/coverPicture" %}
+                                    {% set coverClass="customCover" %}
+                                  {% endif %}
+
+
+                                </div>
+                                <div class="fill-portfolio">
+                                    <img src="{{ coverPath }}" alt="" class="img-responsive" />
                                 </div>
                             </div>
                             {% endfor %}
-                            </ul>
+
                     </section>                   
-                </div>
-            </div>
-
-
                 </div>
             </div>
    
