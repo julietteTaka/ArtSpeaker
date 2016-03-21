@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+
+
+{% block title %}
+        <img src="{{ url_for('static', filename='img/new_project.png') }}"  alt="ArtSpeaker">
+        <h2> Discover with us all our offers </h2>
+        <h4> and like the creators you love </h4>
+{% endblock %}
+
+
+{% block content %}
+        
+
+
+    <div class="sp-container"> 
+            <div class="">
+                 <div class="col-md-12">
+                    <section id ="lastOffers">
+                        <ul>
+                            {% for offer in offers.offers %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    {% if user %}
+                                        <div style="float : right;" class="heart"><i class="fa fa-heart"></i></div>
+                                    {% endif %}
+                                    <h2><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h2>
+                                    <hr>
+                                    <table>
+                                      <tr>
+                                        {% if offer.wantedProfile %}
+                                            <th><h6> <div class="wanted-text">WANTED</div><b>{{ offer.wantedProfile }}</b></h6></th>
+                                        {% endif %}
+                                        {% if offer.projectDate %}
+                                            <th><h6> <div class="period-text">PERIOD</div> from <b>{{ offer.projectDate["begin"] }}</b><br/> to <b>{{ offer.projectDate["end"] }}</b></h6></th>
+                                        {% endif %}
+                                        {% if offer.place %}
+                                        <th><h6> <div class="place-text">LOCATION</div> in <b>{{ offer.place }}</b></h6></th>
+                                        {% endif %}
+                                        {% if offer.contact %} 
+                                        <th><h6> <div class="contact-text">CONTACT</div>                            
+                                                <i class="glyphicon glyphicon-user"></i> <b>{{ offer.contact["name"] }}</b>
+                                                {% if user %}
+                                                <br>
+                                                <i class="glyphicon glyphicon-earphone"></i> <b>{{ offer.contact["mail"] }}</b>
+                                                <br>
+                                                <i class="glyphicon glyphicon-send"></i> <b>{{ offer.contact["phone"] }}</b>
+                                                 {% endif %}
+                                        </h6></th>
+                                        {% endif %}
+                                        {% for network in offer.networking %}
+                                        <th><h6> <div class="networking-text">NETWORKING</div>                            
+                                                <i class="glyphicon glyphicon-user"></i> <b>{{ network["network"] }} :<a href=http://{{ network["url"] }}> {{ network['url'] }}</b>
+                                        </h6></th>
+                                        {% endfor %}
+                                      </tr>
+                                    </table>
+                                </div>
+                                <div class="fill-offer" style="background-image:url({{ url_for('static', filename='img/offer01.jpg') }})"></div>
+                                <div class="fill-offer-text">
+                                    <div class="fill-bottom">
+                                            {% if user %}
+                                            <i class="glyphicon glyphicon-thumbs-up"></i> Like
+                                            {% endif %}
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <table>
+                                      <tr>
+                                        <th><h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.offerTitle }}</h4></th>
+                                        <!--<th><h6> <div class="period-text">AVAILABLE</div> // available from <b>{{ offer.offerDate["begin"] }}</b> to <b>{{ offer.offerDate["end"] }}</b></h6></th>-->
+                                      </tr>
+                                    </table>
+                                    <hr>
+                                    <h5>{{ offer.text }}</h5>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            </ul>
+                    </section>
+                </div>
+        </div>
+    </div>
+
+<section id="pagination" data-page="{{ offers.page }}" data-totalPages="{{ offers.totalPages }}" data-perPage="{{ offers.offers|length }}">
+    <script>
+        pagination();
+    </script>
+</section>
+
+{% endblock %}
+
