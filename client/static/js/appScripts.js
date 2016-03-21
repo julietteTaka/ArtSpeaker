@@ -115,6 +115,14 @@ $( document ).ready(function() {
         location.href = '/offer/'+ offerId+'/step/1';
     });
 
+    $(".heart").click(function(event){
+        var heart = $(this).find("i");
+        if (heart.css('color') == "rgb(1, 1, 1)"){
+            heart.css("color", "red");
+        }else
+            heart.css("color", "#010101");
+     });
+
 /* ------------ PORTFOLIO ---------- */
 $('#portfolioCreation').submit(function(event){
         event.preventDefault();

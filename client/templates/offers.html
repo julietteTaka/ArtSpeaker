@@ -14,14 +14,17 @@
 
 
     <div class="sp-container"> 
-            <div class="col-md-10">
-                 <div class="content-box col-md-12">
+            <div class="">
+                 <div class="col-md-12">
                     <section id ="lastOffers">
                         <ul>
                             {% for offer in offers.offers %}
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h4>
+                                    {% if user %}
+                                        <div style="float : right;" class="heart"><i class="fa fa-heart"></i></div>
+                                    {% endif %}
+                                    <h2><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h2>
                                     <hr>
                                     <table>
                                       <tr>
@@ -29,7 +32,7 @@
                                             <th><h6> <div class="wanted-text">WANTED</div><b>{{ offer.wantedProfile }}</b></h6></th>
                                         {% endif %}
                                         {% if offer.projectDate %}
-                                            <th><h6> <div class="period-text">PERIOD</div> from <b>{{ offer.projectDate["begin"] }}</b> to <b>{{ offer.projectDate["end"] }}</b></h6></th>
+                                            <th><h6> <div class="period-text">PERIOD</div> from <b>{{ offer.projectDate["begin"] }}</b><br/> to <b>{{ offer.projectDate["end"] }}</b></h6></th>
                                         {% endif %}
                                         {% if offer.place %}
                                         <th><h6> <div class="place-text">LOCATION</div> in <b>{{ offer.place }}</b></h6></th>

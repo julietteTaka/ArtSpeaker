@@ -154,6 +154,16 @@ def offerCreationFormStep2(offerId, step):
 
 
 # --------- PORTFOLIO  ---------
+
+@config.g_app.route("/portfolios/number/<int:number>", methods=["GET"])
+@config.g_app.route("/portfolios/number/<int:number>/page/<int:page>", methods=["GET"])
+def allPortfolios(number,page=0):
+    portfolios = requests.get(config.serverRootUri+"/portfolios/number/"+str(number)+"/page/"+str(page))
+    if 'google_token' in session:
+        user = config.google.get('userinfo').data
+        return render_template("portfolios.html", user=user, portfolios=portfolios.json())
+    return render_template("portfolios.html", portfolios=portfolios.json())
+
 @config.g_app.route('/user/<userId>/portfolio', methods=['GET'])
 def editPortfolio(userId):
     if 'google_token' in session:
@@ -168,10 +178,11 @@ def editPortfolio(userId):
 @config.g_app.route('/portfolio/<portfolioId>', methods=['GET'])
 def displayPortfolioFrom(portfolioId):
     portfolio = requests.get(config.serverRootUri + '/portfolio/'+portfolioId)
+    logging.error(portfolio.json())
     if 'google_token' in session:
         user = config.google.get('userinfo').data
-        return render_template("myPortfolio.html", user=user, portoflio=portfolio.json())
-    return render_template("myPortfolio.html", portoflio=portfolio.json())
+        return render_template("portfolio.html", user=user, portfolio=portfolio.json())
+    return render_template("portfolio.html", portfolio=portfolio.json())
 
 @config.g_app.route('/portfolio', methods=['POST'])
 def newPortfolio():

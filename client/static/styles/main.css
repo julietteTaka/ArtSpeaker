@@ -4259,7 +4259,6 @@ vertical-align: top;
 }
 .container{
   margin-top : 30px;
-  margin-left : 30px;
   margin-bottom : 60px;
 }
 
@@ -6527,6 +6526,11 @@ float:left;
 
 #userInfo{
 
+}
+
+.heart i{
+  cursor:pointer;
+  color : #010101;
 }
 
 .portfolioClick{

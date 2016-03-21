@@ -2,6 +2,7 @@
 
 
 {% block title %}
+
     <h1>Create your Portfolio</h1>
 {% endblock %}
 
@@ -11,7 +12,7 @@
 
     <section>
         <div class="container"> 
-            <div class="row">
+            <div class="">
                 <div class="content-box">
 
         <form id='portfolioCreation'>
@@ -49,9 +50,9 @@
                 </div>
                 <div class="small"><small>Organize your social medias links and your references for being more interesting.</small></div>
                 <br />
-                <p>
+                <p id="availability">
                     <h4> Availabilities</h4> 
-                    <div class="input-group" style="width : 300px; float:left"> 
+                    <div class="input-group" style="width : 300px; float:left" > 
                         <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
                         <input class="form-control" type="text" id="begin" placeholder="jj/mm/aa"/>
                     </div>
@@ -60,6 +61,8 @@
                         <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
                         <input class="form-control" type="text" id="end" placeholder="jj/mm/aa"/>
                     </div>
+
+                     <input type="checkbox" id="checkbox_always" value="Toujours"> Toujours 
                     
                     <div class="small" >
                         <small style="float:left; clear:both;">Indicates your availabilities</small>
@@ -75,7 +78,7 @@
                                             <div class="small"><small>These information are essential for being contacted properly.</small></div>
             </p>
 
-                <input type='submit' id="createPortfolio" value= "Create my portfolio !" data-userID="{{user.id}}">
+                <input style="padding : 10px;" type='submit' id="createPortfolio" value= "Create my portfolio !" data-userID="{{user.id}}">
             </fieldset>
 
             
