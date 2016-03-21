@@ -3,17 +3,8 @@
 {% block content %}
 
 {% if user %}
-  <script>
-  $(function() {
-    $( ".datepicker" ).datepicker();
-  });
-  </script>
 
-<style>
-input {
-    
-}
-</style>
+
     <section>
         <div class="container"> 
             <div class="row">
@@ -24,7 +15,7 @@ input {
                         <fieldset>
 
                             <div class="page-header">
-                                <h1>Step 1 <small> - Main information</small></h1>
+                                <h1>Main information <small> - Step 1/2</small></h1>
                             </div>
 
                             <h4>Project name</h4>
@@ -34,7 +25,11 @@ input {
                             {% endif %}
                             <div class="input-group">
                                       <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-pencil"></i></span>
-                                      <input type="text" class="form-control" id="projectTitle" placeholder="Title" aria-describedby="basic-addon1" value = "{{ val }}" />
+                                      <input type="text" class="form-control" id="projectTitle" placeholder="Title"
+                                        {% if offer and offer.projectTitle is defined %}
+                                            value={{ offer.projectTitle }}
+                                        {% endif %}
+                                        aria-describedby="basic-addon1" value = "{{ val }}" />
                             </div>
                             <div class="small"><small>Enter the name of your project.</small></div>
                             <br>
@@ -42,7 +37,12 @@ input {
                             <h4>Field of activity</h4>
                             <div class="input-group"> 
                                       <span class="input-group-addon" id="basic-addon2"><i class="glyphicon glyphicon-pencil"></i></span>
-                                      <input type="text" class="form-control" id="fieldActivity" placeholder="ex: Painting" aria-describedby="basic-addon2" />
+                                      <input type="text" class="form-control" id="fieldActivity" placeholder="painting"
+                                        {% if offer and offer.fieldActivity is defined %}
+                                            value="{{ offer.fieldActivity }}"
+                                        {% endif %}
+
+                                      aria-describedby="basic-addon2" />
                             </div>
                             <div class="small"><small>The field of your project must have a clear name.</small></div>
                             <br>
@@ -50,7 +50,12 @@ input {
                             <h4>Location</h4>
                             <div class="input-group">
                                       <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-globe"></i></span>
-                                      <input type="text" class="form-control" id="place" placeholder="ex : Paris" aria-describedby="basic-addon3"/>
+                                      <input type="text" class="form-control" id="place" placeholder="Paris"
+                                        {% if offer and offer.place is defined %}
+                                            value="{{ offer.place }}"
+                                        {% endif %}
+
+                                       aria-describedby="basic-addon3"/>
                             </div>
                             <div class="small"><small>Indicate your location is important for your future partners.</small></div>
                             <br>
@@ -66,30 +71,73 @@ input {
                                         <option value="Twitter">Twitter</option>
                                         <option value="Other">Custom link</option>
                                     </select>
-                                    <input type='text' class="link" placeholder="www.mywebsite.com" />
+                                    <input type='text' class="link" placeholder="htt://mysite.com"/>
                                 </div>
                             </div>
                             <div class="small"><small>Organize your social medias links and your references for being more interesting.</small></div>
 
-                            <h4> A project from </h4> 
+                            
+                            <br />
                             <p>
-                            <input class="form-control" type="text" id="begin" class="datepicker">
-                            to
-                            <input class="form-control" type="text" id="end" class="datepicker">
+                            <h4> A project from </h4> 
+                            <div class="input-group" style="width : 300px; float:left"> 
+                                <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input class="form-control" type="text" id="begin" placeholder="jj/mm/aa"
+{% if offer and offer.projectDate['begin'] is defined %}
+                                        value={{ offer.projectDate['begin'] }}
+                                    {% endif %}
+                                />
+
+                                    
+
+                            </div>
+                              <h4 style="float:left; margin-right:20px; margin-left:20px">to</h4>
+                            <div class="input-group" style="width : 300px;"> 
+                                <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input class="form-control" type="text" id="end" placeholder="jj/mm/aa"
+ {% if offer and offer.projectDate['end'] is defined %}
+                                        value={{ offer.projectDate['end'] }}
+                                    {% endif %}
+                                />
+
+                                   
+
+                            </div>
+                            
+                            <div class="small" >
+                                <small style="float:left; clear:both;">Indicates the period inwhich your offer will be displayed.</small>
+                            </div>
                             </p>
                             
                             <br>
 
                             <p>
                             <h4> Contact</h4> 
-                            <input class="top-form-control" type="text" id="name" placeholder="Name" value="{{user.name}}">
-                            <input class="middle-form-control" type="text" id="phone" placeholder="Phone number">
-                            <input class="bottom-form-control" type="text" id="mail" placeholder="Email">
+                            <input class="top-form-control" type="text" id="name" placeholder="Name"
+                            {% if offer and offer.contact['name'] is defined %}
+                                        value="{{ offer.contact['name'] }}"
+                                    {% endif %}
+                                    >
+                            <input class="middle-form-control" type="text" id="phone" placeholder="Phone number"
+                             {% if offer and offer.contact['phone'] is defined %}
+                                        value="{{ offer.contact['phone'] }}"
+                                    {% endif %}
+                                    />
+                            <input class="bottom-form-control" type="text" id="mail" placeholder="Email"
+                            {% if offer and offer.contact['mail'] is defined %}
+                                        value="{{ offer.contact['mail'] }}"
+                                    {% endif %}
+                                    />
                             <div class="small"><small>These information are essential for being contacted properly.</small></div>
                             </p>
 
+                            {% if offer is defined %}
+                               <input type='submit' id="createOffer" value= "Next Step !" data-userID="{{user.id}}" data-edit="{{edit}}" data-offerID={{offer.offerId}}>
+                            {% else %}
+                                <input type='submit' id="createOffer" value= "Next Step !" data-userID="{{user.id}}" data-edit="{{edit}}">
+                            {% endif %}
+
                             
-                            <input type='submit' id="createOffer" value= "Next Step !" data-userID="{{user.id}}" data-edit="{{edit}}" data-offerID={{offerId}}>
                             
 
                         </fieldset>
@@ -101,36 +149,62 @@ input {
                         <fieldset>
 
                             <div class="page-header">
-                                <h1>Step 2 <small> - Writing of your offer </small></h1>
+                                <h1>Write down you offer <small> - Step 2/2</small></h1>
                             </div>
 
-                        <p> {{ offer.projectTitle }} </p>
-                        <p>{{ offer.fieldActivity}}</p>
-
+                        <h2> {{ offer.projectTitle }} </h2>
+                        <h4> - {{ offer.fieldActivity}} - </h4>
+                        <br />
                         <p>
                         <h4>Name of the offer</h4>
                             <div class="input-group"> 
                                       <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-pencil"></i></span>
-                                      <input type="text" class="form-control" id="offerTitle" placeholder="ex: ArtS. wants a talented painter" aria-describedby="basic-addon7" />
+                                      <input type="text" class="form-control" id="offerTitle" placeholder="ex: ArtS. wants a talented painter" 
+
+                                    {% if offer and offer.offerTitle is defined %}
+                                        value="{{ offer.offerTitle }}"
+                                    {% endif %}
+
+                                      aria-describedby="basic-addon7" />
                             </div>
                             <div class="small"><small>Write a short and smart title for your offer.</small></div>
                         </p>
                             <br>
-                        <p>
-                        <h4>Available from</h4>
-                            <div class="input-group"> 
-                                <input class="form-control" type="text" id="begin" class="datepicker">
-                              to
-                                <input class="form-control" type="text" id="end" class="datepicker"></p>
+                        
+                            <h4>Displayed from</h4>
+
+                            <div class="input-group" style="width : 300px; float:left"> 
+                                <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input class="form-control" type="text" id="begin" placeholder="jj/mm/aa"
+                                {% if offer and offer.offerDate['begin'] is defined %}
+                                        value="{{ offer.offerDate['begin'] }}"
+                                {% endif %}
+                                />
                             </div>
-                            <div class="small"><small>Indicates the period inwhich you will be available.</small></div> 
-                        </p>
-                             <br>                       
+                              <h4 style="float:left; margin-right:20px; margin-left:20px">to</h4>
+                            <div class="input-group" style="width : 300px;"> 
+                                <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input class="form-control" type="text" id="end" placeholder="jj/mm/aa"
+{% if offer and offer.offerDate['end'] is defined %}
+                                        value="{{ offer.offerDate['end'] }}"
+                                {% endif %}
+                                />
+                            </div>
+                            
+                            <div class="small" >
+                                <small style="float:left; clear:both;">Indicates the period inwhich your offer will be displayed.</small>
+                            </div>
+
+                             <br><br>                       
                         <p>
                         <h4>Wanted profile</h4>
                             <div class="input-group"> 
                                       <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-pencil"></i></span>
-                                      <input type="text" class="form-control" id="wantedProfiles" placeholder="ex: Painter" aria-describedby="basic-addon7" />
+                                      <input type="text" class="form-control" id="wantedProfiles" placeholder="ex: Painter" aria-describedby="basic-addon7" 
+                                    {% if offer and offer.wantedProfiles is defined %}
+                                        value="{{ offer.wantedProfiles }}"
+                                    {% endif %}
+                                      />
                             </div>
                             <div class="small"><small>Write down the talend that you need for you project.</small></div>
                         </p>
@@ -138,9 +212,14 @@ input {
                         <p>
                         <h4>Your message</h4>
                             <div class="input-group"> 
-                            <textarea style='width : 400px; height : 300px; max-width:800px; max-height:300px' type="text" id="text" placeholder="Text me"></textarea>
+                            <textarea style='width : 400px; height : 300px; max-width:800px; max-height:300px' type="text" id="offerText" placeholder="Text me"
+                            {% if offer and offer.offerText is defined %}
+                                        value="{{ offer.offerText }}"
+                                    {% endif %}
+
+                            ></textarea>
                             <br>
-                            <input type='submit' id="createOffer" value= "Submit !" data-userID="{{user.id}}" data-offerID="{{offer.offerId}}">
+                            <input type='submit' style="padding : 10px;" id="createOffer" value= "Submit !" data-userID="{{user.id}}" data-offerID="{{offer.offerId}}">
                             </div>
                         </p>
 
@@ -151,6 +230,11 @@ input {
             </div>
         </div>
     </section>
+  <script>
+  $(function() {
+    $('.datepicker').datepicker();
+  });
+  </script>
 
 {% else %}
 <p>you must be logged to see this page.</p>

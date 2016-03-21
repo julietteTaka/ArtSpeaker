@@ -2,18 +2,19 @@
 
 
 {% block title %}
-    <h1>My Offers</h1>
+    <h1>Your offers</h1>
+    <img src="{{ url_for('static', filename='img/new_project.png') }}"  alt="ArtSpeaker"><br>
+    {% if offers.offers|length == 0 %}
+    <p>There is no offer yet...</p>
+    <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/offer'">Create your first Offer !</button>
+    {% else %}
+    <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/offer'">Create an other Offer !</button>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
 
-    <div class="title-box">
-        <img src="{{ url_for('static', filename='img/new_project.png') }}"  alt="ArtSpeaker"><br>
-        <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/offer'"> 
-            Create an Offer !
-        </button> 
-    </div>
-
+{% if offers.offers|length > 0 %}
     <div class="sp-container"> 
         <div class="row">                    
             <div class="col-lg-24 col-md-24">
@@ -74,17 +75,17 @@
                                     <hr>
                                     <h5>{{ offer.text }}</h5>
                                 </div>
+                                <button id="deleteOffer" type="button" class="btn btn-primary btn-md" data-offerId="{{ offer.offerId }}" value="Delete">Delete</button>
+                                <button id="completeOffer" type="button" class="btn btn-primary btn-md" data-offerId="{{ offer.offerId }}" value="Edit">Edit</button>
                             </div>
                             {% endfor %}
                             </ul>
                     </section>
-                    <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/offer'"> 
-                                    Create an Offer !
-                                </button> 
                 </div>
             </div>
         </div>
     </div>
+{% endif %}
 
     <script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
 

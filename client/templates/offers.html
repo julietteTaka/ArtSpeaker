@@ -1,29 +1,30 @@
 {% extends "layout.html" %}
 
 
+
 {% block title %}
+        <img src="{{ url_for('static', filename='img/new_project.png') }}"  alt="ArtSpeaker">
+        <h2> Discover with us all our offers </h2>
+        <h4> and like the creators you love </h4>
 {% endblock %}
+
 
 {% block content %}
         
 
-    <div class="title-box">
-        <img src="{{ url_for('static', filename='img/new_project.png') }}"  alt="ArtSpeaker">
-        <h2> Discover with us all our offers </h2>
-        <h4> and like the creators you love </h4>
-    </div>
 
     <div class="sp-container"> 
-        <div class="row">                    
-            <div class="col-lg-24 col-md-24">
-                 <div class="content-box">
+            <div class="">
+                 <div class="col-md-12">
                     <section id ="lastOffers">
-                        <h2> Latest Offers ({{offers.offers|length }}) : </h2>
                         <ul>
                             {% for offer in offers.offers %}
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h4>
+                                    {% if user %}
+                                        <div style="float : right;" class="heart"><i class="fa fa-heart"></i></div>
+                                    {% endif %}
+                                    <h2><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h2>
                                     <hr>
                                     <table>
                                       <tr>
@@ -31,7 +32,7 @@
                                             <th><h6> <div class="wanted-text">WANTED</div><b>{{ offer.wantedProfile }}</b></h6></th>
                                         {% endif %}
                                         {% if offer.projectDate %}
-                                            <th><h6> <div class="period-text">PERIOD</div> from <b>{{ offer.projectDate["begin"] }}</b> to <b>{{ offer.projectDate["end"] }}</b></h6></th>
+                                            <th><h6> <div class="period-text">PERIOD</div> from <b>{{ offer.projectDate["begin"] }}</b><br/> to <b>{{ offer.projectDate["end"] }}</b></h6></th>
                                         {% endif %}
                                         {% if offer.place %}
                                         <th><h6> <div class="place-text">LOCATION</div> in <b>{{ offer.place }}</b></h6></th>
@@ -78,7 +79,6 @@
                             </ul>
                     </section>
                 </div>
-            </div>
         </div>
     </div>
 

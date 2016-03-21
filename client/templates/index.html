@@ -18,7 +18,7 @@
                 <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist01.jpg') }})"></div>
                 <div class="carousel-caption">
                         <h3>Social network between announcers and artists.</h3>
-                        And be part of a lot of projects are developed everyday.
+                        Be part of a lot of projects that are developed everyday.
                         <br><br>
                         <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/login'">Join us !</button>
                         <br>
@@ -29,7 +29,7 @@
                 <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist02.jpg') }})"></div>
                 <div class="carousel-caption">
                         <h3>Social network between announcers and artists.</h3>
-                        And be part of a lot of projects are developed everyday.
+                        Be part of a lot of projects that are developed everyday.
                         <br><br>
                         <button type="button" class="btn btn-primary btn-md">View the offers</button>
                         <br>
@@ -40,7 +40,7 @@
                 <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist03.jpg') }})"></div>
                 <div class="carousel-caption">
                         <h3>Social network between announcers and artists.</h3>
-                        And be part of a lot of projects are developed everyday.
+                        Be part of a lot of projects that are developed everyday.
                         <br><br>
                         <button type="button" class="btn btn-primary btn-md">View the portfolios</button>
                         <br>
@@ -59,21 +59,18 @@
     </header>
 
        
-            <div class="container"> 
-                <div class="row">
-                    
-            <div class="col-lg-7 col-md-7">
-                 <div class="content-box">
+            <div class="container col-md-12 latestHome"> 
+                 <div class="content-box col-md-5">
                     <section id ="lastOffers">
-                    <h2> Latest Offers ({{offers.offers|length }}) : </h2>
+                    <h2> Offers </h2>
                         <ul>
                             {% for offer in offers.offers %}
                             <div class="panel panel-default">
                                 <div class="panel-heading">
+                                    <div style="float : right;" class="heartDisplay"><i class="fa fa-heart"></i> (0)</div>
                                     <table>
                                       <tr>
                                         <th><h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h4></th>
-                                        <th><h6> <div class="wanted-text">FIELD OF ACTIVITY</div><b>{{ offer.fieldActivity }}</b></h6></th>
                                       </tr>
                                     </table>
 
@@ -82,7 +79,6 @@
                                       <tr>
                                         <th><h6> <div class="wanted-text">WANTED</div><b>{{ offer.wantedProfile }}</b></h6></th>
                                         <th><h6> <div class="period-text">PERIOD</div> from <b>{{ offer.projectDate["begin"] }}</b> to <b>{{ offer.projectDate["end"] }}</b></h6></th>                                        
-                                        <th><h6> <div class="place-text">LOCATION</div> in <b>{{ offer.place }}</b></h6></th> 
                                         <th><h6> <div class="contact-text">CONTACT</div> with <b>{{ offer.contact["name"] }}</b> </h6></th>
                                       </tr>
                                     </table>
@@ -92,15 +88,6 @@
                                     <div class="fill-bottom">
                                             <i class="glyphicon glyphicon-thumbs-up"></i> Like
                                     </div>
-                                    <!--
-                                        <div class="fill-bottom"> 
-                                            <i class="glyphicon glyphicon-map-marker"></i>  {{ offer.place }} 
-                                            <br>
-                                            <div class="fill-size">
-                                                <i class="glyphicon glyphicon-arrow-up"></i> {{ offer.fieldActivity }} 
-                                            </div>
-                                        </div>
-                                    -->
                                         <br>
                                 </div>
                                 <div class="panel-footer">
@@ -117,15 +104,14 @@
                         </ul>
                     </section>
                 </div>
-            </div>
 
-            <div class="col-lg-5 col-md-5">
-                 <div class="content-box">
+                 <div class="content-box col-md-5">
                     <section id ="lastPortfolios">
-                    <h2> Latest Portfolios ({{portfolios.portfolios|length }}) : </h2>
-                        <ul>
+                    <h2> Portfolios </h2>
                             {% for portfolio in portfolios.portfolios %}
-                            <div class="panel panel-default">
+
+                            <div class="panel panel-default portfolioClick" onclick=window.location.href="/portfolio/{{ portfolio.portfolioId }}" >
+
                                 <div class="panel-heading">
                                     <h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ portfolio.pseudo }}</h4>
                                     <hr>
@@ -136,30 +122,31 @@
                                         <th><h6> <div class="contact-text">CONTACT</div> with <b>{{ portfolio.contact["name"] }}</b> </h6></th>
                                       </tr>
                                     </table>
-                                </div>
-                                <div class="fill-portfolio" style="background-image:url({{ url_for('static', filename='img/offer01.jpg') }})"></div>
-                                <div class="fill-portfolio-text">
-                                        <div class="fill-bottom"> 
-                                            <div class="fill-bottom"> 
+                                                                    <div class="fill-portfolio-text">
                                             <i class="glyphicon glyphicon-map-marker"></i>  {{ portfolio.place }} 
                                             <br>
-                                            <div class="fill-size">
-                                                <i class="glyphicon glyphicon-arrow-up"></i> {{ portfolio.fieldActivity }} 
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <br>
+                                            <i class="glyphicon glyphicon-arrow-up"></i> {{ portfolio.fieldActivity }} 
+                                </div>
+
+
+                                  {% if portfolio.coverPicture.id %}
+                                    {% set coverPath="/portfolio/" ~ portfolio.portfolioId ~ "/resource/" ~ portfolio.coverPicture.id ~ "/data/coverPicture" %}
+                                    {% set coverClass="customCover" %}
+                                  {% endif %}
+
+
+                                </div>
+                                <div class="fill-portfolio">
+                                    <img src="{{ coverPath }}" alt="" class="img-responsive" />
                                 </div>
                             </div>
                             {% endfor %}
-                            </ul>
+
                     </section>                   
                 </div>
             </div>
-
-
-                </div>
-            </div>
    
-
+<script>
+  $(".title-box").css("display", "none");
+</script>
 {% endblock %}

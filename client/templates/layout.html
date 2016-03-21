@@ -44,9 +44,15 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li {% if request.path == '/' %}class="active"{% endif %}><a href="/"><i class="glyphicon glyphicon-home"></i> Home <span class="sr-only">(current)</span></a></li>
-        <li {% if request.path == '/offers/number/10' %}class="active"{% endif %}> <a href="/offers/number/10"><i class="glyphicon glyphicon-search"></i> Offers <span class="sr-only"></span></a></li>
-        <li {% if request.path == '/portfolios/number/10' %}class="active"{% endif %}> <a href="#"><i class="glyphicon glyphicon-search"></i> Portfolios <span class="sr-only"></span></a></li>
+        <li {% if request.path == '/' %}class="active"{% endif %}>
+            <a href="/"><i class="glyphicon glyphicon-home"></i> Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li {% if request.path == '/offers/number/10' %}class="active"{% endif %}>
+            <a href="/offers/number/10"><i class="glyphicon glyphicon-search"></i> Offers <span class="sr-only"></span></a>
+        </li>
+        <li {% if request.path == '/portfolios/number/10' %}class="active"{% endif %}>
+            <a href="/portfolios/number/10"><i class="glyphicon glyphicon-search"></i> Portfolios <span class="sr-only"></span></a>
+        </li>
 
          {% if user %}
          
@@ -71,7 +77,10 @@
           </div><!-- /.container-fluid -->
     </nav>
 
+<div class="title-box">
     {% block title %}{% endblock %}
+</div>
+
 <section  class="clear-top content">
     {% block content %}{% endblock %}
 </section>
