@@ -1,0 +1,152 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <!-- Half Page Image Background Carousel Header -->
+    <header id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <!-- Set the first background image using inline CSS below. -->
+                <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist01.jpg') }})"></div>
+                <div class="carousel-caption">
+                        <h3>Social network between announcers and artists.</h3>
+                        Be part of a lot of projects that are developed everyday.
+                        <br><br>
+                        <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/login'">Join us !</button>
+                        <br>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the second background image using inline CSS below. -->
+                <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist02.jpg') }})"></div>
+                <div class="carousel-caption">
+                        <h3>Social network between announcers and artists.</h3>
+                        Be part of a lot of projects that are developed everyday.
+                        <br><br>
+                        <button type="button" class="btn btn-primary btn-md">View the offers</button>
+                        <br>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist03.jpg') }})"></div>
+                <div class="carousel-caption">
+                        <h3>Social network between announcers and artists.</h3>
+                        Be part of a lot of projects that are developed everyday.
+                        <br><br>
+                        <button type="button" class="btn btn-primary btn-md">View the portfolios</button>
+                        <br>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+
+    </header>
+
+       
+            <div class="container col-md-12 latestHome"> 
+                 <div class="content-box col-md-5">
+                    <section id ="lastOffers">
+                    <h2> Offers </h2>
+                        <ul>
+                            {% for offer in offers.offers %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div style="float : right;" class="heartDisplay"><i class="fa fa-heart"></i> (0)</div>
+                                    <table>
+                                      <tr>
+                                        <th><h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h4></th>
+                                      </tr>
+                                    </table>
+
+                                    <hr>
+                                    <table>
+                                      <tr>
+                                        <th><h6> <div class="wanted-text">WANTED</div><b>{{ offer.wantedProfile }}</b></h6></th>
+                                        <th><h6> <div class="period-text">PERIOD</div> from <b>{{ offer.projectDate["begin"] }}</b> to <b>{{ offer.projectDate["end"] }}</b></h6></th>                                        
+                                        <th><h6> <div class="contact-text">CONTACT</div> with <b>{{ offer.contact["name"] }}</b> </h6></th>
+                                      </tr>
+                                    </table>
+                                </div>
+                                <div class="fill-offer" style="background-image:url({{ url_for('static', filename='img/offer01.jpg') }})"></div>
+                                <div class="fill-offer-text">
+                                    <div class="fill-bottom">
+                                            <i class="glyphicon glyphicon-thumbs-up"></i> Like
+                                    </div>
+                                        <br>
+                                </div>
+                                <div class="panel-footer">
+                                    <table>
+                                    <tr>
+                                        <th><h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.offerTitle }}</h4></th>
+                                    </tr>
+                                    </table>
+                                    <hr>
+                                    <h5>{{ offer.text }}</h5>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                </div>
+
+                 <div class="content-box col-md-5">
+                    <section id ="lastPortfolios">
+                    <h2> Portfolios </h2>
+                            {% for portfolio in portfolios.portfolios %}
+
+                            <div class="panel panel-default portfolioClick" onclick=window.location.href="/portfolio/{{ portfolio.portfolioId }}" >
+
+                                <div class="panel-heading">
+                                    <h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ portfolio.pseudo }}</h4>
+                                    <hr>
+                                    <table>
+                                      <tr>
+                                        <th><h6> <div class="wanted-text">WANTED</div><b></b></h6></th>
+                                        <th><h6> <div class="period-text">AVAILABLE</div> Yes </h6></th>
+                                        <th><h6> <div class="contact-text">CONTACT</div> with <b>{{ portfolio.contact["name"] }}</b> </h6></th>
+                                      </tr>
+                                    </table>
+                                                                    <div class="fill-portfolio-text">
+                                            <i class="glyphicon glyphicon-map-marker"></i>  {{ portfolio.place }} 
+                                            <br>
+                                            <i class="glyphicon glyphicon-arrow-up"></i> {{ portfolio.fieldActivity }} 
+                                </div>
+
+
+                                  {% if portfolio.coverPicture.id %}
+                                    {% set coverPath="/portfolio/" ~ portfolio.portfolioId ~ "/resource/" ~ portfolio.coverPicture.id ~ "/data/coverPicture" %}
+                                    {% set coverClass="customCover" %}
+                                  {% endif %}
+
+
+                                </div>
+                                <div class="fill-portfolio">
+                                    <img src="{{ coverPath }}" alt="" class="img-responsive" />
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                    </section>                   
+                </div>
+            </div>
+   
+<script>
+  $(".title-box").css("display", "none");
+</script>
+{% endblock %}
