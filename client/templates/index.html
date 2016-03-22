@@ -17,10 +17,10 @@
                 <!-- Set the first background image using inline CSS below. -->
                 <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist01.jpg') }})"></div>
                 <div class="carousel-caption">
-                        <h3>Social network between announcers and artists.</h3>
+                        <h3>Professional network between announcers and artists</h3>
                         Be part of a lot of projects that are developed everyday.
                         <br><br>
-                        <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/login'">Join us !</button>
+                        <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/login'">Create your account !</button>
                         <br>
                 </div>
             </div>
@@ -28,10 +28,10 @@
                 <!-- Set the second background image using inline CSS below. -->
                 <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist02.jpg') }})"></div>
                 <div class="carousel-caption">
-                        <h3>Social network between announcers and artists.</h3>
-                        Be part of a lot of projects that are developed everyday.
+                        <h3>Like all the projects you want to work with</h3>
+                        These projects will succeed thanks to you.
                         <br><br>
-                        <button type="button" class="btn btn-primary btn-md">View the offers</button>
+                        <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/user/{{ user.id }}/offers'">Discover all our offers</button>
                         <br>
                 </div>
             </div>
@@ -39,10 +39,10 @@
                 <!-- Set the third background image using inline CSS below. -->
                 <div class="fill" style="background-image:url({{ url_for('static', filename='img/artist03.jpg') }})"></div>
                 <div class="carousel-caption">
-                        <h3>Social network between announcers and artists.</h3>
-                        Be part of a lot of projects that are developed everyday.
+                        <h3>Discover all the great artists you need for your project</h3>
+                        Collaboration goes to make sense.
                         <br><br>
-                        <button type="button" class="btn btn-primary btn-md">View the portfolios</button>
+                        <button type="button" class="btn btn-primary btn-md" onclick="window.location.href='/user/{{ user.id }}/portfolios'">Discover all our portfolios</button>
                         <br>
                 </div>
             </div>
@@ -62,12 +62,12 @@
             <div class="container col-md-12 latestHome"> 
                  <div class="content-box col-md-5">
                     <section id ="lastOffers">
-                    <h2> Offers </h2>
+                    <h2 style="text-align: center;"> Latest offers </h2>
                         <ul>
                             {% for offer in offers.offers %}
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <div style="float : right;" class="heartDisplay"><i class="fa fa-heart"></i> (0)</div>
+                                    <div style="float : right;" class="heartDisplay"><i class="fa fa-heart"></i> ({{ offer.likedBy|length }})</div>
                                     <table>
                                       <tr>
                                         <th><h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h4></th>
@@ -93,7 +93,7 @@
                                 <div class="panel-footer">
                                     <table>
                                     <tr>
-                                        <th><h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.offerTitle }}</h4></th>
+                                        <th><h4><i class="fa fa-search"></i> {{ offer.offerTitle }}</h4></th>
                                     </tr>
                                     </table>
                                     <hr>
@@ -107,11 +107,16 @@
 
                  <div class="content-box col-md-5">
                     <section id ="lastPortfolios">
-                    <h2> Portfolios </h2>
+                    <h2 style="text-align: center;"> Latest portfolios </h2>
                             {% for portfolio in portfolios.portfolios %}
 
-                            <div class="panel panel-default portfolioClick" onclick=window.location.href="/portfolio/{{ portfolio.portfolioId }}" >
-
+                            <div class="panel panel-default portfolioClick"
+                            {% if user and user.id == portfolio.userId %}
+                                onclick=window.location.href="/user/{{ user.id }}/portfolio"
+                            {% else %}
+                                onclick=window.location.href="/portfolio/{{ portfolio.portfolioId }}" 
+                            {% endif %}
+                            >
                                 <div class="panel-heading">
                                     <h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ portfolio.pseudo }}</h4>
                                     <hr>
@@ -119,7 +124,7 @@
                                       <tr>
                                         <th><h6> <div class="wanted-text">WANTED</div><b></b></h6></th>
                                         <th><h6> <div class="period-text">AVAILABLE</div> Yes </h6></th>
-                                        <th><h6> <div class="contact-text">CONTACT</div> with <b>{{ portfolio.contact["name"] }}</b> </h6></th>
+                                        <th><h6> <div class="contact-text">CONTACT</div> with <b>{{ portfolio.pseudo }}</b> </h6></th>
                                       </tr>
                                     </table>
                                                                     <div class="fill-portfolio-text">

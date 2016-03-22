@@ -19,6 +19,8 @@
         
         <div id="userInfo" class="">
         <div class="content-box col-sm-2">
+                      <h4><i class="fa fa-user"> {{ portfolio.pseudo }}</i></h4>
+            <hr />
             <h4><i class="fa fa-briefcase"></i>
               {{ portfolio.fieldActivity }}</h4>
 
@@ -41,7 +43,7 @@
             </ul>
 
             {% endif %}
-            {% if portfolio.contact is defined %}
+            {% if portfolio.contact is defined and user %}
             <h4><i class="fa fa-user"></i> Contact</h4>
               <ul>
               <li>{{ portfolio.contact["name"] }} </li>

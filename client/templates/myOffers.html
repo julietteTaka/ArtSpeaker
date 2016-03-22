@@ -25,7 +25,7 @@
                             {% for offer in offers.offers %}
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h4>
+                                    <h3><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h3>
                                     <hr>
                                     <table>
                                       <tr>
@@ -68,7 +68,7 @@
                                 <div class="panel-footer">
                                     <table>
                                       <tr>
-                                        <th><h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.offerTitle }}</h4></th>
+                                        <th><h4><i class="fa fa-search"></i> {{ offer.offerTitle }}</h4></th>
                                         <!--<th><h6> <div class="period-text">AVAILABLE</div> // available from <b>{{ offer.offerDate["begin"] }}</b> to <b>{{ offer.offerDate["end"] }}</b></h6></th>-->
                                       </tr>
                                     </table>

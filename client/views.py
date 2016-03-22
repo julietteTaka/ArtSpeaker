@@ -109,6 +109,14 @@ def newOffer():
         abort(result.status_code,  {'message': 'il y a eu une erreur lors de la soumission de votre formulaire.'})
     return jsonify(**result.json())
 
+@config.g_app.route('/offer/<offerId>/liked', methods=['POST'])
+def likeOffer(offerId):
+    header = {'content-type' : 'application/json'}
+    result = requests.post(config.serverRootUri + '/offer/'+offerId+'/liked', data=request.data, headers=header)
+    if result.status_code != 200:
+        abort(result.status_code,  {'message': 'il y a eu une erreur lors du like de l\'offre.'})
+    return jsonify(**result.json())
+
 @config.g_app.route('/offer/<offerID>', methods=['DELETE'])
 def deleteOffer(offerID):
     result = requests.delete(config.serverRootUri + '/offer/' + offerID)
@@ -169,8 +177,8 @@ def editPortfolio(userId):
     if 'google_token' in session:
         user = config.google.get('userinfo').data
         portfolio = requests.get(config.serverRootUri+"/user/"+user['id']+"/portfolio")
-        if portfolio.json() is not None:
-            return render_template("myPortfolio.html", user=user, portfolio=portfolio.json())
+        if portfolio.json()['portfolio'] is not None:
+            return render_template("myPortfolio.html", user=user, portfolio=portfolio.json()['portfolio'], offer=portfolio.json()['offerLiked'])
         else:
             return render_template("portfolioCreation.html", user=user)
     return render_template("index.html")  # toDo page erreur
@@ -181,8 +189,8 @@ def displayPortfolioFrom(portfolioId):
     logging.error(portfolio.json())
     if 'google_token' in session:
         user = config.google.get('userinfo').data
-        return render_template("portfolio.html", user=user, portfolio=portfolio.json())
-    return render_template("portfolio.html", portfolio=portfolio.json())
+        return render_template("portfolio.html", user=user, portfolio=portfolio.json()['portfolio'], offer=portfolio.json()['offerLiked'])
+    return render_template("portfolio.html", portfolio=portfolio.json()['portfolio'], offer=portfolio.json()['offerLiked'])
 
 @config.g_app.route('/portfolio', methods=['POST'])
 def newPortfolio():
