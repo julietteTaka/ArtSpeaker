@@ -19,17 +19,17 @@
             <fieldset>
                 <p>
                 <h4>Your Pseudo</h4>
-                <input style='width:800px;' type='text' id="pseudonyme" placeholder="ex:SmartSquirel">
+                <input class="form-control" style='width:800px;' type='text' id="pseudonyme" placeholder="ex:SmartSquirel">
                 </p>
                 <p>
                 <h4>Location</h4>
-                <input style='width:800px;' type='text' id="place" placeholder="ex: Paris, 75015">
+                <input class="form-control" style='width:800px;' type='text' id="place" placeholder="ex: Paris, 75015">
                  <div class="small"><small>Indicate your location, it is important for your future partners.</small></div>
                 </p>
 
                 <p>
                     <h4>Field of activity</h4>
-                <input style='width:800px;' type='text' id="fieldActivity" placeholder="ex: Graphiste 2D">
+                <input class="form-control" style='width:800px;' type='text' id="fieldActivity" placeholder="ex: Graphiste 2D">
                 <div class="small"><small>The field of your project must have a clear name.</small></div>
                             <br>
                 </p>
@@ -45,7 +45,7 @@
                             <option value="Twitter">Twitter</option>
                             <option value="Other">Custom link</option>
                           </select>
-                        <input style='width:695px;' type='text' class="link" placeholder="www.monsite.com" />
+                        <input class="form-control" style='width:695px;' type='text' class="link" placeholder="www.monsite.com" />
                     </div>
                 </div>
                 <div class="small"><small>Organize your social medias links and your references for being more interesting.</small></div>
@@ -54,12 +54,12 @@
                     <h4> Availabilities</h4> 
                     <div class="input-group" style="width : 300px; float:left" > 
                         <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
-                        <input class="form-control" type="text" id="begin" placeholder="jj/mm/aa"/>
+                        <input class="form-control" class="form-control" type="text" id="begin" placeholder="jj/mm/aa"/>
                     </div>
                       <h4 style="float:left; margin-right:20px; margin-left:20px">to</h4>
                     <div class="input-group" style="width : 300px;"> 
                         <span class="input-group-addon" id="basic-addon7"><i class="glyphicon glyphicon-calendar"></i></span>
-                        <input class="form-control" type="text" id="end" placeholder="jj/mm/aa"/>
+                        <input class="form-control" class="form-control" type="text" id="end" placeholder="jj/mm/aa"/>
                     </div>
 
                      <input type="checkbox" id="checkbox_always" value="Toujours"> Toujours 
@@ -78,7 +78,7 @@
                                             <div class="small"><small>These information are essential for being contacted properly.</small></div>
             </p>
 
-                <input style="padding : 10px;" type='submit' id="createPortfolio" value= "Create my portfolio !" data-userID="{{user.id}}">
+                <input class="form-control" style="padding : 10px;" type='submit' id="createPortfolio" value= "Create my portfolio !" data-userID="{{user.id}}">
             </fieldset>
 
             

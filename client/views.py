@@ -60,6 +60,7 @@ def logout():
     portfolios = requests.get(config.serverRootUri+"/portfolios/number/10/page/0")
 
     session.pop('google_token', None)
+    clearsession()
     redirectTarget = request.values.get('next') or request.referrer
     return render_template("index.html", offers=offers.json(), portfolios=portfolios.json())
 
@@ -67,15 +68,49 @@ def logout():
 def get_google_oauth_token():
     return session.get('google_token')
 
+
+@config.g_app.route('/register')
+def registerTemplate():
+    return render_template("register.html")
+
+@config.g_app.route('/register',methods=["POST"])
+def register():
+    header = {'content-type' : 'application/json'}
+    result = requests.post(config.serverRootUri + '/register', data=request.data, headers=header)
+    if result.status_code != 200:
+        abort(result.status_code,  {'message': 'Register impossible.'})
+    return jsonify(**result.json())
+
+@config.g_app.route('/login',methods=["POST"])
+def userLogin():
+    header = {'content-type' : 'application/json'}
+    result = requests.post(config.serverRootUri + '/login', data=request.data, headers=header)
+
+    if result.status_code != 200:
+        abort(result.status_code,  {'message': 'Login impossible.'})
+    session['user'] = { "name" : result.json()["userName"],
+                        "id" : result.json()["id"],
+                        }
+    return jsonify(**result.json())
+
+@config.g_app.route('/clear')
+def clearsession():
+    session.clear()
+    return redirect(url_for('index'))
+
 # --------- INDEX  ---------
 
 @config.g_app.route('/')
 def index():
     offers = requests.get(config.serverRootUri+"/offers/number/10/page/0")
     portfolios = requests.get(config.serverRootUri+"/portfolios/number/10/page/0")
+    user = None
+
     if 'google_token' in session:
         user = config.google.get('userinfo').data
-
+    if 'user' in session:
+        user = session["user"]
+    if user is not None:
         return render_template("index.html", user=user, offers=offers.json(), portfolios=portfolios.json())
     return render_template("index.html", offers=offers.json(), portfolios=portfolios.json())
 
@@ -87,8 +122,13 @@ def index():
 @config.g_app.route("/offers/number/<int:number>/page/<int:page>", methods=["GET"])
 def allOffers(number,page=0):
     offers = requests.get(config.serverRootUri+"/offers/number/"+str(number)+"/page/"+str(page))
+    user = None
+
     if 'google_token' in session:
         user = config.google.get('userinfo').data
+    if 'user' in session:
+        user = session["user"]
+    if user is not None:
         return render_template("offers.html", user=user, offers=offers.json())
     return render_template("offers.html", offers=offers.json())
 
@@ -96,8 +136,13 @@ def allOffers(number,page=0):
 def userOffers(userId):
     offers = requests.get(config.serverRootUri+"/user/"+userId+"/offer")
 
+    user = None
+
     if 'google_token' in session:
         user = config.google.get('userinfo').data
+    if 'user' in session:
+        user = session["user"]
+    if user is not None:
         return render_template("myOffers.html", user=user, offers=offers.json())
     return render_template("index.html")
 
@@ -143,15 +188,25 @@ def completeOffer(offerId, step):
 
 @config.g_app.route('/offer', methods=['GET'])
 def offerCreationForm():
+    user = None
+
     if 'google_token' in session:
         user = config.google.get('userinfo').data
+    if 'user' in session:
+        user = session["user"]
+    if user is not None:
         return render_template("offerCreation.html", user=user, step="1") # toDo page erreur
     return render_template("index.html")  # toDo page erreur
 
 @config.g_app.route('/offer/<offerId>/step/<step>', methods=['GET'])
 def offerCreationFormStep2(offerId, step):
+    user = None
+
     if 'google_token' in session:
         user = config.google.get('userinfo').data
+    if 'user' in session:
+        user = session["user"]
+    if user is not None:
         result = requests.get(config.serverRootUri + '/offer/'+offerId)
 
         if result.status_code != 200:
@@ -167,15 +222,25 @@ def offerCreationFormStep2(offerId, step):
 @config.g_app.route("/portfolios/number/<int:number>/page/<int:page>", methods=["GET"])
 def allPortfolios(number,page=0):
     portfolios = requests.get(config.serverRootUri+"/portfolios/number/"+str(number)+"/page/"+str(page))
+    user = None
+
     if 'google_token' in session:
         user = config.google.get('userinfo').data
+    if 'user' in session:
+        user = session["user"]
+    if user is not None:
         return render_template("portfolios.html", user=user, portfolios=portfolios.json())
     return render_template("portfolios.html", portfolios=portfolios.json())
 
 @config.g_app.route('/user/<userId>/portfolio', methods=['GET'])
 def editPortfolio(userId):
+    user = None
+
     if 'google_token' in session:
         user = config.google.get('userinfo').data
+    if 'user' in session:
+        user = session["user"]
+    if user is not None:
         portfolio = requests.get(config.serverRootUri+"/user/"+user['id']+"/portfolio")
         if portfolio.json()['portfolio'] is not None:
             return render_template("myPortfolio.html", user=user, portfolio=portfolio.json()['portfolio'], offer=portfolio.json()['offerLiked'])
@@ -187,8 +252,13 @@ def editPortfolio(userId):
 def displayPortfolioFrom(portfolioId):
     portfolio = requests.get(config.serverRootUri + '/portfolio/'+portfolioId)
     logging.error(portfolio.json())
+    user = None
+
     if 'google_token' in session:
         user = config.google.get('userinfo').data
+    if 'user' in session:
+        user = session["user"]
+    if user is not None:
         return render_template("portfolio.html", user=user, portfolio=portfolio.json()['portfolio'], offer=portfolio.json()['offerLiked'])
     return render_template("portfolio.html", portfolio=portfolio.json()['portfolio'], offer=portfolio.json()['offerLiked'])
 

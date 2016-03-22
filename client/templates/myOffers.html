@@ -77,6 +77,7 @@
                                 </div>
                                 <button id="deleteOffer" type="button" class="btn btn-primary btn-md" data-offerId="{{ offer.offerId }}" value="Delete">Delete</button>
                                 <button id="completeOffer" type="button" class="btn btn-primary btn-md" data-offerId="{{ offer.offerId }}" value="Edit">Edit</button>
+
                             </div>
                             {% endfor %}
                             </ul>
@@ -86,8 +87,5 @@
         </div>
     </div>
 {% endif %}
-
-    <script src="{{ url_for('static', filename='js/offerScripts.js') }}"></script>
-
 {% endblock %}
 
