@@ -267,6 +267,7 @@ event.preventDefault();
                         console.log(ajaxContext.responseText)
                     },
                     success : function (data){
+                        $(".content-box").html("<p>Success ! </p>");
                         $.ajax({
                             type : 'POST',
                             url : '/login',
@@ -279,13 +280,11 @@ event.preventDefault();
                                 console.log(ajaxContext.responseText)
                             },
                             success : function(data){
-                                //location.reload();
-                                console.log("login success")
+                                $(".content-box").html("<p>Success ! </p>");
                             }
                         }).done(function(data){
                             console.log("done")
                         });
-                        location.href = "/";
                     }
                     }).done(function(data){
                         console.log("OK");
@@ -316,7 +315,7 @@ event.preventDefault();
                 console.log(ajaxContext.responseText)
             },
             success : function(data){
-                location.href="/";
+                $(".content-box").html("<p>Success ! </p>");
             }
         }).done(function(data){
             console.log("done")
@@ -443,4 +442,28 @@ function pagination(){
 
     //display pagination
     $("#pagination").append(content);
+}
+
+/* -------- LIKED BY --------*/
+function setLikedBy(){
+
+    $('#likedBy li').each(function (index) {
+            console.log($(this).attr("data-portfolioId"))
+
+        $.ajax({
+                    type : 'get',
+                    url : '/portfolio/'+ $(this).attr("data-portfolioId"),
+                    success: function(data){
+                        console.log(data)
+                    },
+                    error:function(data){
+                        console.log(data);
+                    }
+                }).done(function(data){
+                    console.log(data)
+                })
+
+
+        $(this).append("lol");
+    });
 }
