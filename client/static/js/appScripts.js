@@ -117,10 +117,29 @@ $( document ).ready(function() {
 
     $(".heart").click(function(event){
         var heart = $(this).find("i");
+        var offerId = $(this).attr("data-offerId")
+        var userId = $(this).attr("data-userId")
+
+        console.log(offerId);
+
         if (heart.css('color') == "rgb(1, 1, 1)"){
             heart.css("color", "red");
+            $.ajax({
+            type : 'POST',
+            url : "/offer/"+offerId+"/liked",
+            contentType: 'application/json; charset=utf-8',
+            data : JSON.stringify({
+                    'userId' : userId,
+                    }),
+            error: function (data, ajaxContext) {
+                console.log(ajaxContext.responseText)
+            },
+        }).done(function(data){
+            console.log(data)
+        });
         }else
             heart.css("color", "#010101");
+
      });
 
 /* ------------ PORTFOLIO ---------- */

@@ -52,7 +52,20 @@
 
             <br/>
                         <h4><i class="fa fa-heart"></i> Offers I like</h4>
+              {% if offer is defined %}
+                  {% set isGood = 0 %}
+                  {% for o in offer %}
+                        {% if o.likedBy is defined and portfolio.userid in o.likedBy.values() %}
+                    <p>{{ o.offerTitle }}</p>
+                        { isGood += 1}
+                        {% endif %}
+                  {% endfor %}
+                                          {% if isGood == 0 %}
+                           <p> No offer are good enough for {{ portfolio.contact["name"] }} ... for now !<p>
+                        {% endif %}
+              {% else %}
               <p> No offer are good enough for {{ portfolio.contact["name"] }} ... for now !<p>
+              {% endif %}
             <br/>
 
             <br/>

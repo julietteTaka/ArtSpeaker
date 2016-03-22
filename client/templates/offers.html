@@ -22,9 +22,16 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     {% if user %}
-                                        <div style="float : right;" class="heart"><i class="fa fa-heart"></i></div>
+                                        <div data-offerId="{{ offer.offerId }}" data-userId="{{ user.id }}" style="float : right;" class="heart">
+                                            <i class="fa fa-heart"
+
+                                                {% if 'userId' in offer.likedBy and user.id in offer.likedBy.values() %}
+                                                    style="color : red;"
+                                                {% endif %}
+                                            ></i>
+                                        </div>
                                     {% endif %}
-                                    <h2><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h2>
+                                    <h1><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h1>
                                     <hr>
                                     <table>
                                       <tr>

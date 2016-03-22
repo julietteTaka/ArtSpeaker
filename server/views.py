@@ -137,6 +137,14 @@ def getOfferById(offerId):
     offer = config.offerTable.find_one({"offerId": offerId})
     return mongodoc_jsonify(offer)
 
+@config.g_app.route('/offer/<offerId>/liked', methods=['POST'])
+def likeOffer(offerId):
+    userId = request.get_json().get('userId', None)
+    config.offerTable.update_one(
+            {"offerId": offerId},
+            {"$set":{ "likedBy" : {"userId" : userId } }})
+    updateResult = config.offerTable.find_one({"offerId": offerId})
+    return mongodoc_jsonify(updateResult)
 
 # --------- PORTFOLIO  ---------
 
@@ -166,7 +174,7 @@ def createPortfolio():
     portfolio = Portfolio(portfolioId, userId)
     # minimal requierements
 
-    pseudo = request.get_json().get("projectTitle", None)
+    pseudo = request.get_json().get("pseudo", None)
     fieldActivity = request.get_json().get('fieldActivity', None)
     place = request.get_json().get('place', None)
     networking = request.get_json().get('networking', None)
@@ -197,13 +205,16 @@ def createPortfolio():
 
 @config.g_app.route("/portfolio/<portfolioId>", methods=["GET"])
 def getPortfolioById(portfolioId):
+    offersLiked = config.offerTable.find()
     portfolio = config.portfolioTable.find_one({"portfolioId": portfolioId})
-    return mongodoc_jsonify(portfolio)
+    return mongodoc_jsonify({"portfolio":portfolio, "offerLiked": [ result for result in offersLiked ]})
 
 @config.g_app.route("/user/<userId>/portfolio", methods=["GET"])
 def getPortfolioByUserId(userId):
     portfolio = config.portfolioTable.find_one({"userId": userId})
-    return mongodoc_jsonify(portfolio)
+    offersLiked = config.offerTable.find()
+    logging.error(offersLiked)
+    return mongodoc_jsonify({"portfolio":portfolio, "offerLiked": [ result for result in offersLiked ]})
 
 @config.g_app.route("/portfolios/number/<number>/page/<page>", methods=["GET"])
 def getPortfolioGroup(number, page):
