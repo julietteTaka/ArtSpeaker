@@ -1303,7 +1303,7 @@ h6,
   line-height: 1.1;
   color: #111111;
 }
-h3{ color: #FFF; }
+
 h1 small,
 h2 small,
 h3 small,
@@ -6310,11 +6310,11 @@ button.close {
   position: absolute;
   left: 15%;
   right: 15%;
-  bottom: 20px;
+  bottom: 70px;
   z-index: 10;
   padding-top: 20px;
   padding-bottom: 20px;
-  color: #7c2d5e;
+  color: white;
   text-align: center;
 }
 .carousel-caption .btn {
@@ -6322,7 +6322,7 @@ button.close {
 }
 
 .carousel-caption h3 {
-  color: #07a871;
+  color: white;
 }
 
 @media screen and (min-width: 768px) {

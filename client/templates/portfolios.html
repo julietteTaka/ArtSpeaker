@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+
+
+{% block title %}
+    <img src="{{ url_for('static', filename='img/portfolios.png') }}"  alt="ArtSpeaker">
+        <h2> Discover talented Artists </h2>
+        <h4> They are waiting for your wonderful project </h4>
+{% endblock %}
+
+
+{% block content %}
+        
+
+
+    <div class="sp-container"> 
+            <div class="">
+                 <div class="col-md-12">
+                    <section id ="lastPortfolios">
+                        <ul>
+                        {% for portfolio in portfolios.portfolios %}
+
+                            <div class="panel panel-default portfolioClick" onclick=window.location.href="/portfolio/{{ portfolio.portfolioId }}" >
+
+                                <div class="panel-heading">
+                                    <h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ portfolio.pseudo }}</h4>
+                                    <hr>
+                                    <table>
+                                      <tr>
+                                        <th><h6> <div class="wanted-text">WANTED</div><b></b></h6></th>
+                                        <th><h6> <div class="period-text">AVAILABLE</div> Yes </h6></th>
+                                        <th><h6> <div class="contact-text">CONTACT</div> with <b>{{ portfolio.pseudo }}</b> </h6></th>
+                                      </tr>
+                                    </table>
+                                                                    <div class="fill-portfolio-text">
+                                            <i class="glyphicon glyphicon-map-marker"></i>  {{ portfolio.place }} 
+                                            <br>
+                                            <i class="glyphicon glyphicon-arrow-up"></i> {{ portfolio.fieldActivity }} 
+                                </div>
+
+
+                                  {% if portfolio.coverPicture.id %}
+                                    {% set coverPath="/portfolio/" ~ portfolio.portfolioId ~ "/resource/" ~ portfolio.coverPicture.id ~ "/data/coverPicture" %}
+                                    {% set coverClass="customCover" %}
+                                  {% endif %}
+
+
+                                </div>
+                                <div class="fill-portfolio">
+                                    <img src="{{ coverPath }}" alt="" class="img-responsive" />
+                                </div>
+                            </div>
+                            {% endfor %}
+                            </ul>
+                    </section>
+                </div>
+        </div>
+    </div>
+
+<section id="pagination" data-page="{{ portfolios.page }}" data-totalPages="{{ portfolios.totalPages }}" data-perPage="{{ portfolios.portfolios|length }}">
+    <script>
+        pagination();
+    </script>
+</section>
+
+{% endblock %}
+

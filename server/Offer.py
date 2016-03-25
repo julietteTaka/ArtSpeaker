@@ -27,3 +27,5 @@ class Offer(object):
         self.remuneration = None
         self.workType = ""
         self.artists = []
+
+        self.likedBy = {}

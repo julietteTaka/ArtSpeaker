@@ -48,6 +48,8 @@
         
         <div id="userInfo" class="">
         <div class="content-box col-sm-2">
+            <h4><i class="fa fa-user"> {{ portfolio.pseudo }}</i></h4>
+            <hr />
             <h4><i class="fa fa-briefcase"></i>
               {{ portfolio.fieldActivity }}</h4>
 
@@ -82,7 +84,17 @@
             <br/>
             <hr />
             <h4><i class="fa fa-heart"></i> Offers I like</h4>
-              <p> No offer are good enough for me... for now !<p>
+              {% if offer is defined %}
+                {% for o in offer %}
+                      {% if o.likedBy is defined and user.id in o.likedBy.values() %}
+                  <h4>{{ o.projectTitle }}</h4>
+                      <ul> {{ o.offerTitle }} </ul>
+                    <hr/>
+                      {% endif %}
+                {% endfor %}
+              {% else %}
+                <p> No offer are good enough for me... for now !<p>
+              {% endif %}
             <br/>
             <button id="deleteportfolio" type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#deletePortfolio" value="Delete">Delete my portfolio :( </button>
         </div>

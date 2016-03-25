@@ -67,8 +67,9 @@
       <ul class="nav navbar-nav navbar-right">
 
         {% if user is defined %}
-        <li><a href="/logout">Log Out</a></li>
+        <li><a href="/logout">{{ user.name }} | Log Out</a></li>
         {% else %}
+        <li><a href="/register">Register</a></li>
         <li><a href="/login">Log in</a></li>
         {% endif %}
         </li>
