@@ -3,10 +3,12 @@ import config
 import json
 import math
 import shutil, os
+import hashlib
 
 from bson import json_util, ObjectId
 from flask import jsonify, Response, request, abort, make_response
 
+from User import User
 from Offer import Offer
 from Portfolio import Portfolio
 
@@ -61,6 +63,62 @@ def createOffer():
 
     config.offerTable.insert(offer.__dict__)
     requestResult = config.offerTable.find_one({"offerId": offerId})
+    return mongodoc_jsonify(requestResult)
+
+@config.g_app.route("/register", methods=["POST"])
+def createUser():
+    '''
+    Create a unique user
+    '''
+    ifExist = None;
+    userId = str(ObjectId())
+    userName = request.get_json().get("userName", None)
+
+    mdp = request.get_json().get("mdp", None)
+    mdpHash = hashlib.sha224(mdp).hexdigest()
+
+    ifExist = config.userTable.find_one({"userName": userName})
+
+    if  userName == None or userId == None:
+        abort(make_response("The user ID or the user name is undefined", 500))
+
+    if ifExist is not None :
+        return mongodoc_jsonify({"exist":"true"})
+    else :
+        user = User(userId, mdpHash, userName)
+        config.userTable.insert(user.__dict__)
+        requestResult = config.userTable.find_one({"id": userId})
+    return mongodoc_jsonify(requestResult)
+
+@config.g_app.route("/login", methods=["POST"])
+def getUser():
+
+    userName = request.get_json().get("userName", None)
+    mdp = request.get_json().get("mdp", None)
+
+    if  userName == None or mdp == None:
+        abort(make_response("The user ID or the user name is undefined", 500))
+
+    mdpHash = hashlib.sha224(mdp).hexdigest()
+
+    requestResult = config.userTable.find_one({"userName": userName, "mdp" : mdpHash})
+    if requestResult is None :
+        return mongodoc_jsonify({"exist":"false"})
+
+    return mongodoc_jsonify(requestResult)
+
+@config.g_app.route("/login", methods=["GET"])
+def loginUser():
+
+    userName = request.get_json().get("userName", None)
+    mdp = request.get_json().get("mdp", None)
+
+    if  userName == None or mdp == None:
+        abort(make_response("The user ID or the user name is undefined", 500))
+
+    mdpHash = hashlib.sha224(mdp).hexdigest()
+
+    requestResult = config.userTable.find_one({"id": userId}, {"mdp" : mdpHash})
     return mongodoc_jsonify(requestResult)
 
 @config.g_app.route("/offer/<offerId>/step/<int:step>", methods=["POST"])
@@ -118,7 +176,7 @@ def getOfferGroup(number, page):
 
     totalOffers = config.offerTable.count()
     totalPages = int(math.ceil(totalOffers / number)+1)
-    offers = config.offerTable.find().limit(number).skip(page)
+    offers = config.offerTable.find().sort("$natural", -1).limit(number).skip(page)
 
     return mongodoc_jsonify({"offers":[ result for result in offers ], "totalOffers":totalOffers, "page":page, "totalPages":totalPages})
 
@@ -137,6 +195,14 @@ def getOfferById(offerId):
     offer = config.offerTable.find_one({"offerId": offerId})
     return mongodoc_jsonify(offer)
 
+@config.g_app.route('/offer/<offerId>/liked', methods=['POST'])
+def likeOffer(offerId):
+    userId = request.get_json().get('userId', None)
+    config.offerTable.update_one(
+            {"offerId": offerId},
+            {"$set":{ "likedBy" : {"userId" : userId } }})
+    updateResult = config.offerTable.find_one({"offerId": offerId})
+    return mongodoc_jsonify(updateResult)
 
 # --------- PORTFOLIO  ---------
 
@@ -166,7 +232,7 @@ def createPortfolio():
     portfolio = Portfolio(portfolioId, userId)
     # minimal requierements
 
-    pseudo = request.get_json().get("projectTitle", None)
+    pseudo = request.get_json().get("pseudo", None)
     fieldActivity = request.get_json().get('fieldActivity', None)
     place = request.get_json().get('place', None)
     networking = request.get_json().get('networking', None)
@@ -197,13 +263,16 @@ def createPortfolio():
 
 @config.g_app.route("/portfolio/<portfolioId>", methods=["GET"])
 def getPortfolioById(portfolioId):
+    offersLiked = config.offerTable.find()
     portfolio = config.portfolioTable.find_one({"portfolioId": portfolioId})
-    return mongodoc_jsonify(portfolio)
+    return mongodoc_jsonify({"portfolio":portfolio, "offerLiked": [ result for result in offersLiked ]})
 
 @config.g_app.route("/user/<userId>/portfolio", methods=["GET"])
 def getPortfolioByUserId(userId):
     portfolio = config.portfolioTable.find_one({"userId": userId})
-    return mongodoc_jsonify(portfolio)
+    offersLiked = config.offerTable.find()
+    logging.error(offersLiked)
+    return mongodoc_jsonify({"portfolio":portfolio, "offerLiked": [ result for result in offersLiked ]})
 
 @config.g_app.route("/portfolios/number/<number>/page/<page>", methods=["GET"])
 def getPortfolioGroup(number, page):
@@ -214,7 +283,7 @@ def getPortfolioGroup(number, page):
 
     totalPortfolios = config.portfolioTable.count()
     totalPages = int(math.ceil(totalPortfolios / number)+1)
-    portfolios = config.portfolioTable.find().limit(number).skip(page)
+    portfolios = config.portfolioTable.find().sort("$natural", -1).limit(number).skip(page)
 
     return mongodoc_jsonify({"portfolios":[ result for result in portfolios ], "totalPortfolios":totalPortfolios, "page":page, "totalPages":totalPages})
 

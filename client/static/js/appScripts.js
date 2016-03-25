@@ -117,11 +117,32 @@ $( document ).ready(function() {
 
     $(".heart").click(function(event){
         var heart = $(this).find("i");
+        var offerId = $(this).attr("data-offerId")
+        var userId = $(this).attr("data-userId")
+
+        console.log(offerId);
+
         if (heart.css('color') == "rgb(1, 1, 1)"){
             heart.css("color", "red");
+            $.ajax({
+            type : 'POST',
+            url : "/offer/"+offerId+"/liked",
+            contentType: 'application/json; charset=utf-8',
+            data : JSON.stringify({
+                    'userId' : userId,
+                    }),
+            error: function (data, ajaxContext) {
+                console.log(ajaxContext.responseText)
+            },
+        }).done(function(data){
+            console.log(data)
+        });
         }else
             heart.css("color", "#010101");
+
      });
+
+
 
 /* ------------ PORTFOLIO ---------- */
 $('#portfolioCreation').submit(function(event){
@@ -211,6 +232,96 @@ $('#portfolioCreation').submit(function(event){
         var $img = $lightbox.find('img');
         $lightbox.find('.modal-dialog').css({'width': $img.width()});
     });
+
+
+/* ------------ LOGIN / LOGOUT ---------- */
+
+
+$('#registerForm').submit(function(event){
+event.preventDefault();
+        var userName = $("#userName").val();
+        var mdp = $("#mdp").val();
+        console.log("register");
+        $.ajax({
+            type : 'POST',
+            url : '/register',
+            contentType: 'application/json; charset=utf-8',
+            data : JSON.stringify({
+                    'userName' : userName,
+                    'mdp' : mdp,
+                    }),
+            error: function (data, ajaxContext) {
+                console.log(data);
+                console.log("ERROR register");
+            },
+            succes : function (data, ajaxContext){
+                $.ajax({
+                    type : 'POST',
+                    url : '/login',
+                    contentType: 'application/json; charset=utf-8',
+                    data : JSON.stringify({
+                            'userName' : userName,
+                            'mdp' : mdp,
+                            }),
+                    error: function (data, ajaxContext) {
+                        console.log(ajaxContext.responseText)
+                    },
+                    success : function (data){
+                        $(".content-box").html("<p>Success ! </p>");
+                        $.ajax({
+                            type : 'POST',
+                            url : '/login',
+                            contentType: 'application/json; charset=utf-8',
+                            data : JSON.stringify({
+                                    'userName' : userName,
+                                    'mdp' : mdp,
+                                    }),
+                            error: function (data, ajaxContext) {
+                                console.log(ajaxContext.responseText)
+                            },
+                            success : function(data){
+                                $(".content-box").html("<p>Success ! </p>");
+                            }
+                        }).done(function(data){
+                            console.log("done")
+                        });
+                    }
+                    }).done(function(data){
+                        console.log("OK");
+                    });
+                }
+        }).done(function (data){
+            if(data.exist){
+                $(".content-box").append("<p>Ce user name est déjà pris ! </p>");
+            }
+        });
+    });
+
+    $('#loginForm').submit(function(event){
+        event.preventDefault();
+        console.log("login");
+        var userName = $("#userName").val();
+        var mdp = $("#mdp").val();
+
+        $.ajax({
+            type : 'POST',
+            url : '/login',
+            contentType: 'application/json; charset=utf-8',
+            data : JSON.stringify({
+                    'userName' : userName,
+                    'mdp' : mdp,
+                    }),
+            error: function (data, ajaxContext) {
+                console.log(ajaxContext.responseText)
+            },
+            success : function(data){
+                $(".content-box").html("<p>Success ! </p>");
+            }
+        }).done(function(data){
+            console.log("done")
+        });
+    });
+
 
 /* ------------ FORMS ---------- */
 
@@ -331,4 +442,28 @@ function pagination(){
 
     //display pagination
     $("#pagination").append(content);
+}
+
+/* -------- LIKED BY --------*/
+function setLikedBy(){
+
+    $('#likedBy li').each(function (index) {
+            console.log($(this).attr("data-portfolioId"))
+
+        $.ajax({
+                    type : 'get',
+                    url : '/portfolio/'+ $(this).attr("data-portfolioId"),
+                    success: function(data){
+                        console.log(data)
+                    },
+                    error:function(data){
+                        console.log(data);
+                    }
+                }).done(function(data){
+                    console.log(data)
+                })
+
+
+        $(this).append("lol");
+    });
 }

@@ -3,7 +3,7 @@
 
 
 {% block title %}
-        <img src="{{ url_for('static', filename='img/new_project.png') }}"  alt="ArtSpeaker">
+        <img src="{{ url_for('static', filename='img/offers.png') }}"  alt="ArtSpeaker">
         <h2> Discover with us all our offers </h2>
         <h4> and like the creators you love </h4>
 {% endblock %}
@@ -22,9 +22,16 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     {% if user %}
-                                        <div style="float : right;" class="heart"><i class="fa fa-heart"></i></div>
+                                        <div data-offerId="{{ offer.offerId }}" data-userId="{{ user.id }}" style="float : right;" class="heart">
+                                            <i class="fa fa-heart"
+
+                                                {% if 'userId' in offer.likedBy and user.id in offer.likedBy.values() %}
+                                                    style="color : red;"
+                                                {% endif %}
+                                            ></i>
+                                        </div>
                                     {% endif %}
-                                    <h2><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h2>
+                                    <h1><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.projectTitle }}</h1>
                                     <hr>
                                     <table>
                                       <tr>
@@ -67,7 +74,7 @@
                                 <div class="panel-footer">
                                     <table>
                                       <tr>
-                                        <th><h4><img src="{{ url_for('static', filename='img/newspaper-icon.png') }}"  alt="ArtSpeaker"> {{ offer.offerTitle }}</h4></th>
+                                        <th><h4><i class="fa fa-search"></i> {{ offer.offerTitle }}</h4></th>
                                         <!--<th><h6> <div class="period-text">AVAILABLE</div> // available from <b>{{ offer.offerDate["begin"] }}</b> to <b>{{ offer.offerDate["end"] }}</b></h6></th>-->
                                       </tr>
                                     </table>
